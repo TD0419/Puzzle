@@ -1,9 +1,14 @@
 #pragma once
+
 #include <Windows.h>
+
+#pragma warning(push)
+#pragma warning(disable : 4005)
 #include <D3D11.h> 
 #include <d3dx11.h>
-#include <d3dCompiler.h>
+#pragma warning(pop)
 
+#include <d3dCompiler.h>
 
 namespace GameL
 {

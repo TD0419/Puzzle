@@ -7,8 +7,13 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+
+#pragma warning(push)
+#pragma warning(disable : 4005)
 #include <D3D11.h> 
 #include <d3dx11.h>
+#pragma warning(pop)
+
 #include <d3dCompiler.h>
 
 using namespace std;
