@@ -17,7 +17,7 @@
       <UniqueIdentifier>{00ae5a43-fe4c-4177-851d-160622032770}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Scene">
-      <UniqueIdentifier>{3df592fe-b434-4fee-9693-ffc097657800}</UniqueIdentifier>
+      <UniqueIdentifier>{85196460-727e-499b-93cf-5ba549f1dd21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +57,13 @@
     <ClCompile Include="GameL\WinInputs.cpp">
       <Filter>リソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CSceneTitle.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="CSceneMain.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneResult.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Cblock.cpp">
@@ -104,7 +110,13 @@
     <ClInclude Include="main.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneTitle.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="CSceneMain.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneResult.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Cblock.h">

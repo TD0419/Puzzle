@@ -118,6 +118,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CSceneResult.cpp" />
+    <ClCompile Include="CSceneTitle.cpp" />
     <ClCompile Include="Cblock.cpp" />
     <ClCompile Include="GameL\Audio.cpp" />
     <ClCompile Include="GameL\DirectXDevice.cpp" />
@@ -134,6 +136,8 @@
     <ClCompile Include="CSceneMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CSceneResult.h" />
+    <ClInclude Include="CSceneTitle.h" />
     <ClInclude Include="Cblock.h" />
     <ClInclude Include="GameHead.h" />
     <ClInclude Include="GameL\Audio.h" />
