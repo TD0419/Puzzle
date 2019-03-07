@@ -28,7 +28,7 @@ CSceneMain::~CSceneMain()
 //初期化メソッド
 void CSceneMain::InitScene()
 {
-	
+	//git送信テスト
 }
 
 //実行中メソッド
