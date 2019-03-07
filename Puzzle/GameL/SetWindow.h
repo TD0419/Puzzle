@@ -8,7 +8,7 @@ namespace GameL
 	typedef class LSetWindow
 	{
 		public:
-			static void NewWindow(int w,int h,wchar_t* name,HINSTANCE hInstance);
+			static void NewWindow(int w,int h,wchar_t* name,HINSTANCE hInstance, bool bFullScreen);
 			static void DeleteWindow();
 			static HWND GethWnd()	{return m_hWnd;}
 		private:

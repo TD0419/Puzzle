@@ -53,7 +53,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 	//ウィンドウステータス
 	WNDCLASSEX wcex = {
 	   sizeof(WNDCLASSEX),
-	   CS_HREDRAW | CS_VREDRAW,
+	   CS_HREDRAW | CS_VREDRAW | CS_OWNDC,
 	   WndProc,0, 0,hInstance,
 	   NULL, NULL,(HBRUSH)(COLOR_WINDOW+1),
 	   NULL,name,NULL
@@ -63,7 +63,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 	RegisterClassEx( &wcex );
 
 	//ウィンドウ作成初期化
-	LSetWindow::NewWindow(WINDOW_SIZE_W,WINDOW_SIZE_H,name,hInstance);
+	LSetWindow::NewWindow(WINDOW_SIZE_W,WINDOW_SIZE_H,name,hInstance,true);
 
 	//DirectXデバイス作成初期化
 	float color[]=BACK_COLOR;
@@ -77,7 +77,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 	CWinInputs::Init();
 
 	//オーディオ初期化
-	//CAudio::Init(SCENE_AUDIO_MAX);
+	CAudio::Init(SCENE_AUDIO_MAX);
 
 	//フォント初期化
 	CDrawFont::Init(CDirectXDeviec::GetDevice(),CDirectXDeviec::GetDeviceContext());
@@ -126,7 +126,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 	CSceneObjManager::Delete();
 	CSceneManager::Delete();
 	CDrawFont::Delete();
-	//CAudio::Delete();
+	CAudio::Delete();
 	CDrawTexture::DeleteDrawTexture();
 	CDirectXDeviec::ShutDown();
 	LSetWindow::DeleteWindow();
