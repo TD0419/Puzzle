@@ -23,17 +23,18 @@ void Cblock::Action()
 	m_f_vy = 1.0f;
 	m_f_vx = 0.0f;
 
+	//Aを押したら
 	if (Input::GetVKey('A') == true)
 	{
-		m_f_vx = -3.0f;
+		m_f_vx = -3.0f;//左に動く
 	}
+	//Dを押したら
 	else if (Input::GetVKey('D') == true)
 	{
-		m_f_vx = 3.0f;
+		m_f_vx = 3.0f;//右に動く
 	}
 
-
-
+	//移動ベクトル加算
 	m_f_px += m_f_vx;
 	m_f_py += m_f_vy;
 }
