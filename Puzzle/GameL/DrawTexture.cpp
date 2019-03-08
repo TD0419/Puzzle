@@ -357,7 +357,7 @@ void CDrawTexture::InitDraw(ID3D11Device* p_device,ID3D11DeviceContext* p_device
 }
 
 //テクスチャロード
-void  CDrawTexture::LoadImage(wchar_t* name,int id,TEX_SIZE hw)
+void  CDrawTexture::LoadImage(const wchar_t* name,int id,TEX_SIZE hw)
 {
 	if( 0  > id) 
 		return ; 

@@ -28,7 +28,11 @@ CSceneMain::~CSceneMain()
 //初期化メソッド
 void CSceneMain::InitScene()
 {
-	//git送信テスト
+	//グラフィック読み込み
+	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
+
+	Cblock* p_block = new Cblock();
+	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
 }
 
 //実行中メソッド

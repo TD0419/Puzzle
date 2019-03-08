@@ -11,6 +11,8 @@ enum OBJ_NAME
 	OBJ_KOMADAI_G,
 	OBJ_TEXT,
 	OBJ_CONNECT_TEXT,
+
+	OBJ_BLOCK,
 };
 //------------------------------------------------
 
