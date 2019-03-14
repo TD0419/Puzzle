@@ -10,7 +10,6 @@
 using namespace GameL;
 
 //使用ヘッダー
-#include "CSceneTitle.h"
 #include "GameHead.h"
 
 //コンストラクタ
@@ -28,11 +27,11 @@ CSceneTitle::~CSceneTitle()
 //初期化メソッド
 void CSceneTitle::InitScene()
 {
-	// 背景オブジェクトの代わりの画像
+	// 背景オブジェクトの代わりの画像(差し換えてください(涙))
 	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
 
-	// タイトル背景読み込み
-	CTitleBackGround* p_title_back_ground = new CTitleBackGround();
+	// タイトル背景オブジェクト
+	CTitleBackGround* p_title_back_ground = new CTitleBackGround;
 	Objs::InsertObj(p_title_back_ground, OBJ_TITLE_BACK_GROUND, 0);
 }
 

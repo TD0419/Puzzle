@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CResultBackGround.cpp" />
     <ClCompile Include="CSceneResult.cpp" />
     <ClCompile Include="CSceneTitle.cpp" />
     <ClCompile Include="Cblock.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="CSceneMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CResultBackGround.h" />
     <ClInclude Include="CSceneResult.h" />
     <ClInclude Include="CSceneTitle.h" />
     <ClInclude Include="Cblock.h" />

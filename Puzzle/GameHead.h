@@ -8,6 +8,7 @@ enum OBJ_NAME
 	//OBJ_○○と表記
 	OBJ_BLOCK,
 	OBJ_TITLE_BACK_GROUND,
+	OBJ_RESULT_BACK_GROUND,
 };
 //------------------------------------------------
 
@@ -52,6 +53,7 @@ struct UserData
 //ゲームシーンオブジェクトヘッダ------------------
 #include "Cblock.h"
 #include "CTitleBackGround.h"
+#include "CResultBackGround.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
