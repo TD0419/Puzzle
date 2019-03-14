@@ -4,7 +4,6 @@
 #define HRESULT_CHECK(hr) if(FAILED(hr)){ _asm{int 3} }	//簡単なエラーチェックマクロ
 #define SAFE_RESET(p){ if (p) { (p).reset(nullptr);}  }
 
-
 using namespace GameL;
 
 IXAudio2*						CAudio::m_pXAudio2;			//XAudio2オブジェクト
@@ -12,6 +11,7 @@ IXAudio2MasteringVoice*			CAudio::m_pMasteringVoice;	//マスターボリューム
 vector<shared_ptr<AudioData>>	CAudio::m_AudioData;		//サウンドデータ	
 int								CAudio::m_aud_max;			//オーディオ最大数
 float							CAudio::m_volume;			//マスターボリューム値
+bool							CAudio::m_audio_available;  // オーディオが使用可能かどうか true : 使用できる false: 使用できない
 
 //初期化
 void CAudio::Init(int max_audio)
@@ -19,14 +19,24 @@ void CAudio::Init(int max_audio)
 	m_aud_max=max_audio;
 	m_volume=1.0f;
 	unsigned XAudio2CreateFlags = 0;
+	m_audio_available = true;
 	
 #if DEBUG
 	XAudio2CreateFlags |= XAUDIO2_DEBUG_ENGINE;
 #endif
 	XAudio2Create(&m_pXAudio2,XAudio2CreateFlags);
-
+	
 	//マスターボイス作成
-	m_pXAudio2->CreateMasteringVoice(&m_pMasteringVoice);
+	if (m_pXAudio2->CreateMasteringVoice(&m_pMasteringVoice) == XAUDIO2_E_INVALID_CALL)
+	{
+		// マスターボイス作成失敗
+		// 詳しくはここを見る
+		// https://docs.microsoft.com/ja-jp/windows/desktop/xaudio2/xaudio2-error-codes
+
+		// オーディオ使用不可能
+		m_audio_available = false;
+		return;
+	}
 
 	//メモリ作成
 	m_AudioData.reserve(m_aud_max); //配列の許容量設定
@@ -61,33 +71,38 @@ void CAudio::Init(int max_audio)
 //クラス破棄
 void CAudio::Delete()
 {
-	//サウンド破棄
-	DeleteAudio();
-
-	//サウンドメモリ破棄
-	for(int i=0 ; i < m_aud_max ; i++ )
+	// サウンドが使用可能でないと生成されないので、削除できない
+	if (m_audio_available == true)
 	{
-		//サウンドインターフェース破棄
-		delete [] m_AudioData[i]->m_pSourceVoice;
+		//サウンド破棄
+		DeleteAudio();
 
-		//ミックスサウンド破棄
-		m_AudioData[i]->m_pSFXSubmixVoice->DestroyVoice();
+		//サウンドメモリ破棄
+		for (int i = 0; i < m_aud_max; i++)
+		{
+			//サウンドインターフェース破棄
+			delete[] m_AudioData[i]->m_pSourceVoice;
+
+			//ミックスサウンド破棄
+			m_AudioData[i]->m_pSFXSubmixVoice->DestroyVoice();
+		}
+
+		//オーディオベクター破棄
+		m_AudioData.clear();
+		m_AudioData.shrink_to_fit();
+
+
+		//マスターボイス　・XAudio2破棄
+		m_pMasteringVoice->DestroyVoice();
 	}
-	
-	//オーディオベクター破棄
-	m_AudioData.clear();
-	m_AudioData.shrink_to_fit();
 
-
-	//マスターボイス　・XAudio2破棄
-	m_pMasteringVoice->DestroyVoice();
-	
 	m_pXAudio2->Release();
 }
 
 //各ボリューム変更
 float CAudio::Volume(float t,int id)
 {
+	if (m_audio_available == false) return -1.f;
 	if(id<0)		 return -1.0f;
 	if(id>m_aud_max) return -1.0f;
 	m_AudioData[id]->m_volume+=t;
@@ -101,6 +116,7 @@ float CAudio::Volume(float t,int id)
 //マスターボリューム変更
 float CAudio::VolumeMaster(float t)
 {	
+	if (m_audio_available == false) return 0.f;
 	m_volume+=t;
 	if(m_volume< 0.0f) m_volume= 0.0f; 
 	if(m_volume>10.0f) m_volume=10.0f; 
@@ -137,6 +153,7 @@ void CAudio::DeleteAudio()
 //スタート
 void CAudio::Start(int id)
 {
+	if (m_audio_available == false) return;
 	if(id<0)		 return ;
 	if(id>m_aud_max) return ;
 
@@ -181,6 +198,7 @@ void CAudio::Start(int id)
 //ストップ
 void CAudio::Stop(int id)
 {
+	if (m_audio_available == false) return;
 	if(id<0)		 return ;
 	if(id>m_aud_max) return ;
 
@@ -192,8 +210,9 @@ void CAudio::Stop(int id)
 }
 
 //サウンドボイスデータ登録
-void CAudio::LoadAudio(int id ,wchar_t* name,SOUND_TYPE type)
+void CAudio::LoadAudio(int id ,const wchar_t* name,SOUND_TYPE type)
 {
+	if (m_audio_available == false) return;
 	if(id<0)		 return ;
 	if(id>m_aud_max) return ;
 
