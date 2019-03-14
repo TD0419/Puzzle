@@ -33,7 +33,6 @@ void CSceneMain::InitScene()
 	//後々修正が必要
 	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
 	
-	
 	//ブロックオブジェクト読み込み
 	Cblock* p_block = new Cblock();
 	Objs::InsertObj(p_block, OBJ_BLOCK, 1);

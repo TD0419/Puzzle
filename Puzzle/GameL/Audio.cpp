@@ -33,6 +33,8 @@ void CAudio::Init(int max_audio)
 		// 詳しくはここを見る
 		// https://docs.microsoft.com/ja-jp/windows/desktop/xaudio2/xaudio2-error-codes
 
+		// 不具合が出たら報告
+
 		// オーディオ使用不可能
 		m_audio_available = false;
 		return;

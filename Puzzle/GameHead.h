@@ -6,13 +6,8 @@ enum OBJ_NAME
 	OBJ_NO_NAME,	//オブジェクト名無し(禁止)
 	//ゲームで使うオブジェクトの名前
 	//OBJ_○○と表記
-	OBJ_BOARD,
-	OBJ_KOMADAI_S,
-	OBJ_KOMADAI_G,
-	OBJ_TEXT,
-	OBJ_CONNECT_TEXT,
-
 	OBJ_BLOCK,
+	OBJ_TITLE_BACK_GROUND,
 };
 //------------------------------------------------
 
@@ -56,10 +51,13 @@ struct UserData
 
 //ゲームシーンオブジェクトヘッダ------------------
 #include "Cblock.h"
+#include "CTitleBackGround.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
 #include "CSceneMain.h"
+#include "CSceneTitle.h"
+#include "CSceneResult.h"
 //-----------------------------------------------
 
 //シーンスタートクラス---------------------------

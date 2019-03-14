@@ -169,6 +169,21 @@ void CDrawTexture::DrawStr(ID3D11ShaderResourceView* ptex_res_view,float x,float
 	m_pDeviceContext->DrawIndexed(4, 0, 0);
 }
 
+// ‰æ‘œ•`‰æ(Ø‚èæ‚è‚È‚µ)
+void CDrawTexture::Draw(int id, RECT_F* dst, float col[4], float r)
+{
+	if (m_img_max < id) return;
+	if (vec_tex_data[id]->GetTexData() == nullptr) return;
+
+	RECT_F src;
+	src.m_top = 0.f;
+	src.m_left = 0.f;
+	src.m_right = (float)vec_tex_data[id]->GetTexSize();
+	src.m_bottom = (float)vec_tex_data[id]->GetTexSize();
+
+	Draw(id, &src, dst, col, r);
+}
+
 //•`‰æ
 void CDrawTexture:: Draw(int id,RECT_F* src,RECT_F* dst,float col[4],float r)
 {
