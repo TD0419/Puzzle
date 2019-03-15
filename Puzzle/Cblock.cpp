@@ -24,6 +24,7 @@ void Cblock::Action()
 	m_f_vx = 0.0f;
 
 	//A‚ğ‰Ÿ‚µ‚½‚ç
+	// XBOXƒRƒ“ g—p—á if (Input::GetJoyButton(XBoxInput::UP) == true)
 	if (Input::GetVKey('A') == true)
 	{
 		m_f_vx = -3.0f;//¶‚É“®‚­
