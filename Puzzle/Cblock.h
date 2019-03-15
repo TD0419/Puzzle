@@ -16,8 +16,9 @@ class Cblock : public CObj
 		void Action();
 		void Draw();
 	private:
-		float m_f_px;
-		float m_f_py;
-		float m_f_vx;
-		float m_f_vy;
+		float m_fPx;
+		float m_fPy;
+		float m_fVx;
+		float m_fVy;
+		float a;
 };
