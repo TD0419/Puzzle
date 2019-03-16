@@ -67,11 +67,11 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 
 	//DirectXデバイス作成初期化
 	float color[]=BACK_COLOR;
-	CDirectXDeviec::InitDevice(LSetWindow::GethWnd(), PIXEL_SIZE_W, PIXEL_SIZE_H,color);
+	CDirectXDeviec::InitDevice(LSetWindow::GethWnd(), Window::GetWidth(), Window::GetHeight(),color);
 
 	//２Ｄ用テクスチャイメージ読み込み初期化
 	CDrawTexture::InitDraw(CDirectXDeviec::GetDevice(),CDirectXDeviec::GetDeviceContext(),
-		PIXEL_SIZE_W, PIXEL_SIZE_H,SCENE_IMG_MAX);
+		Window::GetWidth(), Window::GetHeight(),SCENE_IMG_MAX);
 	
 	//インプット初期化
 	CWinInputs::Init();
