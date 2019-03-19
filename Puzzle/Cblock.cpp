@@ -4,6 +4,7 @@
 #include"GameL/SceneManager.h"
 #include"GameL/WinInputs.h"
 #include"GameL/SetWindow.h"
+#include"GameHead.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -16,14 +17,14 @@ void Cblock::Init()
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
 
-	a = 0.0f;
+	m_bStop_flag = false;
 }
 
 //アクション
 void Cblock::Action()
 {
 	//移動ベクトル初期化
-	m_fVy = 1.0f;
+	m_fVy = 3.0f;
 	m_fVx = 0.0f;
 
 	//Aを押したら
@@ -39,15 +40,27 @@ void Cblock::Action()
 	}
 
 	//ブロックが一番下に着いたら止める
-	if (m_fPy == 600.0f - 32.0f/*(float)Window::GetHeight() - 300.0f*/)
+	if (m_fPy == (float)Window::GetHeight() - 32.0f)
 	{
 		m_fVy = 0.0f;
 		m_fVx = 0.0f;
+
+		m_bStop_flag = true;
 	}
 
 	//移動ベクトル加算
 	m_fPx += m_fVx;
 	m_fPy += m_fVy;
+
+	//おかしいからコメントアウト
+	//if (m_bStop_flag == true)
+	//{
+	//	m_bStop_flag = false;
+
+	//	//新しく降らせる
+	//	Cblock* p_block = new Cblock();
+	//	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+	//}
 }
 
 //ドロー

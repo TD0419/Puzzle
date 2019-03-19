@@ -20,5 +20,6 @@ class Cblock : public CObj
 		float m_fPy;
 		float m_fVx;
 		float m_fVy;
-		float a;
+
+		bool m_bStop_flag;
 };
