@@ -93,7 +93,6 @@ void CAudio::Delete()
 		m_AudioData.clear();
 		m_AudioData.shrink_to_fit();
 
-
 		//マスターボイス　・XAudio2破棄
 		m_pMasteringVoice->DestroyVoice();
 	}
@@ -129,25 +128,29 @@ float CAudio::VolumeMaster(float t)
 //サウンド情報破棄
 void CAudio::DeleteAudio()
 {
-	for(int i=0 ; i < m_aud_max ; i++ )
+	// サウンドが使用可能でないと生成されないので、削除できない
+	if (m_audio_available == true)
 	{
-		//インターフェース破棄
-		for(int j=0 ; j < SCENE_AUDIO_EFFCT_MAX ; j++ )
+		for (int i = 0; i < m_aud_max; i++)
 		{
-			if(m_AudioData[i]->m_pSourceVoice[j]!=nullptr)
+			//インターフェース破棄
+			for (int j = 0; j < SCENE_AUDIO_EFFCT_MAX; j++)
 			{
-				m_AudioData[i]->m_pSourceVoice[j]->Stop();
-				m_AudioData[i]->m_pSourceVoice[j]->FlushSourceBuffers();
-				m_AudioData[i]->m_pSourceVoice[j]->DestroyVoice();
-				m_AudioData[i]->m_pSourceVoice[j]=nullptr;
+				if (m_AudioData[i]->m_pSourceVoice[j] != nullptr)
+				{
+					m_AudioData[i]->m_pSourceVoice[j]->Stop();
+					m_AudioData[i]->m_pSourceVoice[j]->FlushSourceBuffers();
+					m_AudioData[i]->m_pSourceVoice[j]->DestroyVoice();
+					m_AudioData[i]->m_pSourceVoice[j] = nullptr;
+				}
 			}
-		}
 
-		//サウンドデータ破棄
-		if(m_AudioData[i]->pWave != nullptr)
-		{
-			delete []m_AudioData[i]->pWave;
-			m_AudioData[i]->pWave=nullptr;
+			//サウンドデータ破棄
+			if (m_AudioData[i]->pWave != nullptr)
+			{
+				delete[]m_AudioData[i]->pWave;
+				m_AudioData[i]->pWave = nullptr;
+			}
 		}
 	}
 }

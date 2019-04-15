@@ -31,8 +31,8 @@ void CSceneResult::InitScene()
 	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
 
 	// リザルト画面背景オブジェクト
-	CResultBackGround* p_result_back_ground = new CResultBackGround;
-	Objs::InsertObj(p_result_back_ground, OBJ_RESULT_BACK_GROUND, 0);
+	CResultBackGround* pResultBackGround = new CResultBackGround;
+	Objs::InsertObj(pResultBackGround, OBJ_RESULT_BACK_GROUND, 0);
 }
 
 //実行中メソッド

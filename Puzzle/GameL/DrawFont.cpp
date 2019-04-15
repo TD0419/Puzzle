@@ -202,7 +202,7 @@ list< unique_ptr<CFontCharTex>>::iterator CDrawFont::SetChar(wchar_t c)
 
 
 //文字列描画メソッド
-void CDrawFont::StrDraw(wchar_t* str,float x,float y,float size,float color[4])
+void CDrawFont::StrDraw(const wchar_t* str,float x,float y,float size,float color[4])
 {
 	list<unique_ptr<CFontCharTex>>::iterator itr;	//登録文字検索用
 	bool hit;										//登録ヒットしているかチェック

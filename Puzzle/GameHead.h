@@ -54,12 +54,14 @@ struct UserData
 #include "Cblock.h"
 #include "CTitleBackGround.h"
 #include "CResultBackGround.h"
+#include "CConnectBackGround.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------
 #include "CSceneMain.h"
 #include "CSceneTitle.h"
 #include "CSceneResult.h"
+#include "CSceneConnect.h"
 //-----------------------------------------------
 
 //シーンスタートクラス---------------------------

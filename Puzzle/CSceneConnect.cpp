@@ -13,30 +13,30 @@ using namespace GameL;
 #include "GameHead.h"
 
 //コンストラクタ
-CSceneTitle::CSceneTitle()
+CSceneConnect::CSceneConnect()
 {
 
 }
 
 //デストラクタ
-CSceneTitle::~CSceneTitle()
+CSceneConnect::~CSceneConnect()
 {
 
 }
 
 //初期化メソッド
-void CSceneTitle::InitScene()
+void CSceneConnect::InitScene()
 {
 	// 背景オブジェクトの代わりの画像(差し換えてください(涙))
 	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
 
-	// タイトル背景オブジェクト
-	CTitleBackGround* pTitleBackGround = new CTitleBackGround;
-	Objs::InsertObj(pTitleBackGround, OBJ_TITLE_BACK_GROUND, 0);
+	// ネットワーク接続画面背景オブジェクト
+	CConnectBackGround* pConnectBackGround = new CConnectBackGround;
+	Objs::InsertObj(pConnectBackGround, OBJ_RESULT_BACK_GROUND, 0);
 }
 
 //実行中メソッド
-void CSceneTitle::Scene()
+void CSceneConnect::Scene()
 {
 
 }

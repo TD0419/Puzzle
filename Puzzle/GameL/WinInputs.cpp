@@ -99,7 +99,7 @@ bool CWinInputs::GetJoyButton(XBoxInput xBoxButton)
 		return true;
 	}
 
-	// 移動入力確認
+	// スティック入力確認
 	// 上
 	if (xBoxButton == XBoxInput::UP &&
 		joyinfoex.dwYpos < STICK_INITIAL_POSITION)
