@@ -17,7 +17,7 @@ void Cblock::Init()
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
 
-	m_bColornum = rand() % 2;
+	m_bColornum = rand() % 2;//色決めのためのランダム
 
 	m_bStop_flag = false;
 }
@@ -28,7 +28,7 @@ void Cblock::Action()
 	//停止なら
 	if (m_bStop_flag == true)
 	{
-		return;
+		return;//とりあえず何もしない
 	}
 
 
@@ -40,9 +40,10 @@ void Cblock::Action()
 	// XBOXコン 使用例 if (Input::GetJoyButton(XBoxInput::UP) == true)
 	if (Input::GetVKey('A') == true)
 	{
+		//移動先が160fより小さくなるなら
 		if (m_fPx - 32.0f <= 160.0f)
 		{
-			;
+			;//何もしない
 		}
 		else
 		{
@@ -52,9 +53,10 @@ void Cblock::Action()
 	//Dを押したら
 	else if (Input::GetVKey('D') == true)
 	{
+		//移動先が576fより大きくなるから
 		if (m_fPx + 32.0f >= 576.0f)
 		{
-			;
+			;//何もしない
 		}
 		else
 		{
@@ -69,6 +71,7 @@ void Cblock::Action()
 	//ブロックが一番下に着いたら止める
 	if (m_fPy == (float)Window::GetHeight() - 32.0f)
 	{
+		//移動ベクトル停止
 		m_fVy = 0.0f;
 		m_fVx = 0.0f;
 
@@ -103,13 +106,14 @@ void Cblock::Draw()
 	dst.m_right = dst.m_left + 32.0f;
 	dst.m_bottom = dst.m_top + 32.0f;
 
+	//色決め
 	if (m_bColornum == 0)
 	{
-		Draw::Draw(0, &src, &dst, c, 0.0f);
+		Draw::Draw(0, &src, &dst, c, 0.0f);//オレンジ
 	}
 
 	else if (m_bColornum == 1)
 	{
-		Draw::Draw(1, &src, &dst, c, 0.0f);
+		Draw::Draw(1, &src, &dst, c, 0.0f);//水色
 	}
 }
