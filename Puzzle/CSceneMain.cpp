@@ -32,6 +32,8 @@ void CSceneMain::InitScene()
 	//ここでエラーが出たのでLoadImageWのwchar_t*にconstをつけて確かめた
 	//後々修正が必要
 	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
+
+	Draw::LoadImageW(L"blue_block.png", 1, TEX_SIZE_32);
 	
 	//ブロックオブジェクト読み込み
 	Cblock* p_block = new Cblock();

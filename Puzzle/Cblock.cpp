@@ -12,10 +12,12 @@ using namespace GameL;
 //イニシャライズ
 void Cblock::Init()
 {
-	m_fPx = 400.0f;
+	m_fPx = 416.0f;
 	m_fPy = 32.0f;
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
+
+	m_bColornum = rand() % 2;
 
 	m_bStop_flag = false;
 }
@@ -23,6 +25,13 @@ void Cblock::Init()
 //アクション
 void Cblock::Action()
 {
+	//停止なら
+	if (m_bStop_flag == true)
+	{
+		return;
+	}
+
+
 	//移動ベクトル初期化
 	m_fVy = 3.0f;
 	m_fVx = 0.0f;
@@ -31,13 +40,31 @@ void Cblock::Action()
 	// XBOXコン 使用例 if (Input::GetJoyButton(XBoxInput::UP) == true)
 	if (Input::GetVKey('A') == true)
 	{
-		m_fVx = -3.0f;//左に動く
+		if (m_fPx - 32.0f <= 160.0f)
+		{
+			;
+		}
+		else
+		{
+			m_fVx = -32.0f;//左に動く
+		}
 	}
 	//Dを押したら
 	else if (Input::GetVKey('D') == true)
 	{
-		m_fVx = 3.0f;//右に動く
+		if (m_fPx + 32.0f >= 576.0f)
+		{
+			;
+		}
+		else
+		{
+			m_fVx = 32.0f;//右に動く
+		}
 	}
+
+	//移動ベクトル加算
+	m_fPx += m_fVx;
+	m_fPy += m_fVy;
 
 	//ブロックが一番下に着いたら止める
 	if (m_fPy == (float)Window::GetHeight() - 32.0f)
@@ -46,21 +73,14 @@ void Cblock::Action()
 		m_fVx = 0.0f;
 
 		m_bStop_flag = true;
+
+		//新しく降らせる
+		Cblock* p_block = new Cblock();
+		Objs::InsertObj(p_block, OBJ_BLOCK, 1);
 	}
 
-	//移動ベクトル加算
-	m_fPx += m_fVx;
-	m_fPy += m_fVy;
 
-	//おかしいからコメントアウト
-	//if (m_bStop_flag == true)
-	//{
-	//	m_bStop_flag = false;
 
-	//	//新しく降らせる
-	//	Cblock* p_block = new Cblock();
-	//	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
-	//}
 }
 
 //ドロー
@@ -83,5 +103,13 @@ void Cblock::Draw()
 	dst.m_right = dst.m_left + 32.0f;
 	dst.m_bottom = dst.m_top + 32.0f;
 
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+	if (m_bColornum == 0)
+	{
+		Draw::Draw(0, &src, &dst, c, 0.0f);
+	}
+
+	else if (m_bColornum == 1)
+	{
+		Draw::Draw(1, &src, &dst, c, 0.0f);
+	}
 }

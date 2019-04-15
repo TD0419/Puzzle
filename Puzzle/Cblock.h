@@ -22,4 +22,7 @@ class Cblock : public CObj
 		float m_fVy;
 
 		bool m_bStop_flag;
+
+
+		int m_bColornum;
 };
