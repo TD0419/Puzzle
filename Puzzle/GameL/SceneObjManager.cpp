@@ -163,3 +163,26 @@ CObj* CSceneObjManager::GetObj(int name)
 
 	return NULL;
 }
+
+// OBJ_NAMEからオブジェクト情報をすべて取得
+// 引数1 int		    : 取得したいオブジェクトネーム
+// 引数2 vector<CObj*>* : オブジェクト情報を入れるvector
+// 戻り値 int			: 見つかったオブジェクトの総数
+int CSceneObjManager::GetObj(int name, vector<CObj*>* objectvec)
+{
+	// 戻り値に使う見つけたオブジェクトの総数
+	int find_object_num = 0;
+
+	for (auto itr = m_ListData->begin(); itr != m_ListData->end(); itr++)
+	{
+		// 探しているオブジェクトを見つけたら
+		if ((*itr)->GetName() == name)
+		{
+			find_object_num++;
+			// オブジェクトデータを追加
+			objectvec->push_back((*itr).get());
+		}
+	}
+
+	return find_object_num;
+}

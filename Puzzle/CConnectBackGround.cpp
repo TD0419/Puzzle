@@ -19,7 +19,7 @@ void CConnectBackGround::Init()
 void CConnectBackGround::Action()
 {
 	// 仮のシーン遷移処理(画像ができたら、処理を変えてください)--
-	if (Input::GetVKey('Z') == true)
+	if (Input::GetVKeyDown('Z') == true)
 	{
 		// タイトル画面へ
 		CSceneManager::SetScene(new CSceneMain);
