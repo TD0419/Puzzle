@@ -22,8 +22,7 @@ void CConnectBackGround::Action()
 	if (Input::GetVKeyDown('Z') == true)
 	{
 		// ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
-		//CSceneManager::SetScene(new CSceneMain);
-		int a = 0;
+		CSceneManager::SetScene(new CSceneMain);
 	}
 	// ----------------------------------------------------------
 }
