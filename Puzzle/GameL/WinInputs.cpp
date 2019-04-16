@@ -126,7 +126,7 @@ int CWinInputs::GetPosY()
 
 // xBoxのジョイコンのボタン入力を取得する
 // 引数1 XBoxInput : 入力を確認したいボタン 
-// 戻り値 bool	   : 押されているかどうかを返す false : 押されていない true : 押されている
+// 戻り値 bool : 押された瞬間 true  押されていないor押しっぱなし false
 bool CWinInputs::GetJoyButton(XBoxInput xBoxButton)
 {
 	JOYINFOEX joyinfoex; // 入力情報取得

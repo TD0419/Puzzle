@@ -13,6 +13,8 @@ using namespace GameL;
 #include "CSceneMain.h"
 #include "GameHead.h"
 
+#include <vector>
+
 //コンストラクタ
 CSceneMain::CSceneMain()
 {

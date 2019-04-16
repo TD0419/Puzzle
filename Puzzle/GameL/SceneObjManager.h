@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <list>
+#include <vector>
 #include <algorithm>
 
 using namespace std;
@@ -40,11 +41,12 @@ namespace GameL
 			static void Init();
 			static void Delete();
 			static void InsertObj(CObj* obj,int name,unsigned int prio);//オブジェクト登録
-			static void ObjAction();			//アクション実行
-			static void ObjDraw();				//ドロー実行
-			static void ListDeleteSceneObj();	//オブジェクトリスト削除命令メソッド
-			static CObj* GetObj(int name);		//OBJ_NEMEからオブジェクト情報取得
-			static void ResetPrio();			//優先順位変更
+			static void ObjAction();								//アクション実行
+			static void ObjDraw();									//ドロー実行
+			static void ListDeleteSceneObj();						//オブジェクトリスト削除命令メソッド
+			static CObj* GetObj(int name);							//OBJ_NAMEからオブジェクト情報取得
+			static int  GetObj(int name, vector<CObj*>* objectvec);	// OBJ_NAMEからオブジェクト情報をすべて取得 
+			static void ResetPrio();								//優先順位変更
 		private:
 			static list<shared_ptr<CObj>>* m_ListData;	//ゲーム実行リスト
 	}Objs;
