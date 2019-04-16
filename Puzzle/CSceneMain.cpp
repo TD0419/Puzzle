@@ -35,9 +35,15 @@ void CSceneMain::InitScene()
 
 	Draw::LoadImageW(L"blue_block.png", 1, TEX_SIZE_32);
 	
+	Draw::LoadImageW(L"side_block.png", 2, TEX_SIZE_32);
+
 	//ブロックオブジェクト読み込み
 	Cblock* p_block = new Cblock();
 	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+
+	//マップオブジェクト読み込み
+	CMap* p_map = new CMap();
+	Objs::InsertObj(p_map, OBJ_MAP, 1);
 }
 
 //実行中メソッド

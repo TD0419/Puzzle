@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CConnectBackGround.cpp" />
+    <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CResultBackGround.cpp" />
     <ClCompile Include="CSceneConnect.cpp" />
     <ClCompile Include="CSceneResult.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CConnectBackGround.h" />
+    <ClInclude Include="CMap.h" />
     <ClInclude Include="CResultBackGround.h" />
     <ClInclude Include="CSceneConnect.h" />
     <ClInclude Include="CSceneResult.h" />

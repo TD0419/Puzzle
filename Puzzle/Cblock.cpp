@@ -1,7 +1,7 @@
 //使用するヘッダーファイル
 #include"Cblock.h"
 #include"GameL/DrawTexture.h"
-#include"GameL/SceneManager.h"
+#include"GameL/SceneObjManager.h"
 #include"GameL/WinInputs.h"
 #include"GameL/SetWindow.h"
 #include"GameHead.h"
@@ -69,7 +69,7 @@ void Cblock::Action()
 	m_fPy += m_fVy;
 
 	//ブロックが一番下に着いたら止める
-	if (m_fPy == (float)Window::GetHeight() - 32.0f)
+	if (m_fPy > 384.0f-32.0f/*(float)Window::GetHeight() - 32.0f*/)
 	{
 		//移動ベクトル停止
 		m_fVy = 0.0f;
