@@ -3,6 +3,8 @@
 
 namespace GameL
 {
+	#define KEYCODE_MAX (256) // 使用できるキーコードの数
+
 	// XBoxボタン
 	enum class XBoxInput
 	{
@@ -14,7 +16,7 @@ namespace GameL
 		RB = 32,
 		BACK = 64,
 		START = 128,
-		UP = 10000,
+		UP,
 		LEFT,
 		DOWN,
 		RIGHT,
@@ -23,22 +25,25 @@ namespace GameL
 	typedef class CWinInputs
 	{
 		public:
-			static bool WmInput(HWND hWnd,UINT* uMsg, LPARAM* lParam);//ウィンドウプロジーシャーコールバック関数登録用
+			static bool WmInput(HWND hWnd,UINT* uMsg, LPARAM* lParam);// ウィンドウプロジーシャーコールバック関数登録用
 			static bool GetVKey(int v_key);
+			static bool GetVKeyDown(int v_key);						  // キーを押していない状態から押した時のキー入力を取得
 			static bool GetJoyButton(XBoxInput xBoxButton);
+			static bool GetJoyButtonDown(XBoxInput xBoxButton);		  // キーを押していない
 			static bool GetMouButtonL();
 			static bool GetMouButtonR();
-		
+			static void Update();									
+
 			static int GetPosX();
 			static int GetPosY();
 
 			static void Init();
-		
+			
 
 		private:
 			static int   m_x,m_y;		//マウス座標
 			static bool  m_ButtonL;		//マウスクリック
 			static bool  m_ButtonR;
-			static BYTE m_KeyBoard[256];//キーボード配列
+			static bool m_KeyCode[256]; // キーコード配列(押しっぱなしを検出する用)
 	}Input;
 };
