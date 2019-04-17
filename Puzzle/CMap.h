@@ -19,7 +19,8 @@ class CMap : public CObj
 		void Init();
 		void Action();
 		void Draw();
-
+		int GetMap(int x, int y);
+		void SetMap(int x, int y, int id);
 
 	private:
 		int m_map[MAP_Y][MAP_X];

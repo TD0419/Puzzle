@@ -64,3 +64,61 @@ void CMap::Draw()
 		}
 	}
 }
+
+
+//移動できるようにx,yの値が正しい値か調べる関数
+int CMap::GetMap(int x, int y)
+{
+	//x,yが例外な値の場合、-1を返す
+	if (x < 0)
+	{
+		return -1;
+	}
+
+	if (y < 0)
+	{
+		return -1;
+	}
+
+	if (x >= MAP_X)
+	{
+		return -1;
+	}
+
+	if (y >= MAP_Y)
+	{
+		return -1;
+	}
+
+	//要素を返す
+	return m_map[y][x];
+}
+
+//動かなくなったブロックをマップに格納する関数
+void CMap::SetMap(int x, int y, int id)
+{
+	//x,yが例外な値の場合、-1を返す
+	if (x < 0)
+	{
+		return ;
+	}
+
+	if (y < 0)
+	{
+		return ;
+	}
+
+	if (x >= MAP_X)
+	{
+		return ;
+	}
+
+	if (y >= MAP_Y)
+	{
+		return ;
+	}
+
+	m_map[y][x] = id;
+
+	return;
+}

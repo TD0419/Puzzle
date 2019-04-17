@@ -20,11 +20,17 @@ void Cblock::Init()
 	m_bColornum = rand() % 2;//色決めのためのランダム
 
 	m_bStop_flag = false;
+
+	m_a_key_push = false;
+	m_d_key_push = false;
 }
 
 //アクション
 void Cblock::Action()
 {
+	//マップオブジェクト取得
+	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
+
 	//停止なら
 	if (m_bStop_flag == true)
 	{
@@ -33,49 +39,79 @@ void Cblock::Action()
 
 
 	//移動ベクトル初期化
-	m_fVy = 3.0f;
+	m_fVy = 2.0f;
 	m_fVx = 0.0f;
+
+	//位置を32=1のようにする
+	int x = ((int)m_fPx - 160) / 32;
+	int y = (int)m_fPy / 32;
 
 	//Aを押したら
 	// XBOXコン 使用例 if (Input::GetJoyButton(XBoxInput::UP) == true)
 	if (Input::GetVKey('A') == true)
 	{
-		//移動先が160fより小さくなるなら
-		if (m_fPx - 32.0f <= 160.0f)
+		//長押し防止
+		if (m_a_key_push == false)
 		{
-			;//何もしない
-		}
-		else
-		{
-			m_fVx = -32.0f;//左に動く
+			//移動先が160fより小さくなるなら
+			if (obj_map->GetMap(x - 1, y) != 0)
+			{
+				;//何もしない
+			}
+			else
+			{
+				m_fVx = -32.0f;//左に動く
+
+				m_a_key_push = true;
+			}
 		}
 	}
-	//Dを押したら
-	else if (Input::GetVKey('D') == true)
+	else
 	{
-		//移動先が576fより大きくなるから
-		if (m_fPx + 32.0f >= 576.0f)
+		m_a_key_push = false;
+	}
+
+
+	//Dを押したら
+	if (Input::GetVKey('D') == true)
+	{
+		//長押し防止
+		if (m_d_key_push == false)
 		{
-			;//何もしない
-		}
-		else
-		{
-			m_fVx = 32.0f;//右に動く
+			//移動先が576fより大きくなるから
+			if (obj_map->GetMap(x + 1, y) != 0)
+			{
+				;//何もしない
+			}
+			else
+			{
+				m_fVx = 32.0f;//右に動く
+
+				m_d_key_push = true;
+			}
 		}
 	}
+	else
+	{
+		m_d_key_push = false;
+	}
+
 
 	//移動ベクトル加算
 	m_fPx += m_fVx;
 	m_fPy += m_fVy;
 
 	//ブロックが一番下に着いたら止める
-	if (m_fPy > 384.0f-32.0f/*(float)Window::GetHeight() - 32.0f*/)
+	if ( obj_map->GetMap(x,y+1) != 0/*383.0f-32.0f*//*(float)Window::GetHeight() - 32.0f*/)
 	{
 		//移動ベクトル停止
 		m_fVy = 0.0f;
 		m_fVx = 0.0f;
 
-		m_bStop_flag = true;
+		//マップに停止したブロックの情報を入れる
+		obj_map->SetMap(x, y, m_bColornum + 1);
+
+		m_bStop_flag = true;//色きめ/停止フラグON
 
 		//新しく降らせる
 		Cblock* p_block = new Cblock();
