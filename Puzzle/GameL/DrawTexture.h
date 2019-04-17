@@ -75,6 +75,8 @@ namespace GameL
 
 		private:
 			static void Set2DDraw();	//２D使用設定
+			static void SendShader(RECT_F* src, RECT_F* dst, float size,
+				float color[4], float r, ID3D11ShaderResourceView** ptex_res_view);	// シェーダーにデータを送る
 
 			//デバイス
 			static ID3D11DeviceContext* m_pDeviceContext;
