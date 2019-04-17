@@ -111,62 +111,31 @@ void  CDrawTexture::Set2DDraw()
 //当たり判定描画
 void CDrawTexture::DrawHitBox(float x,float y,float h,float w,float col[4])
 {
-	//２D使用設定
-	Set2DDraw();
+	RECT_F src, dst;
+
+	src.m_left = 0.f; src.m_top = 0.f;
+	src.m_right = 1.f; src.m_bottom = 1.f;
+
+	dst.m_left = x;			dst.m_top = y;
+	dst.m_right = x + w; dst.m_bottom = y + h;
+
 	//シェーダデータ輸送
-	D3D11_MAPPED_SUBRESOURCE pData;
-	if( SUCCEEDED( m_pDeviceContext->Map( m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData ) ) )
-	{
-		DRAW_2D_TEX  data;
-		data.color[0]=col[0];	data.color[1]=col[1];	data.color[2]=col[2];	data.color[3]=col[3];
-
-		data.size[0]=0.0f;				data.size[1]=0.0f;
-		data.size[2]=(float)m_width;	data.size[3]=(float)m_height;
-
-		data.rect_out[0]=(float)x;		data.rect_out[1]=(float)y;
-		data.rect_out[2]=(float)x+w;	data.rect_out[3]=(float)y+h;
-
-		data.rect_in[0]=0.0f;			data.rect_in[1]=0.0f;
-		data.rect_in[2]=0.0f;			data.rect_in[3]=0.0f;
-		memcpy_s( pData.pData, pData.RowPitch, (void*)&data, sizeof( DRAW_2D_TEX  ) );
-
-		m_pDeviceContext->Unmap( m_pConstantBuffer, 0 );
-	}
-
-	//プリミティブをレンダリング
-	m_pDeviceContext->DrawIndexed(4, 0, 0);
+	SendShader(&src, &dst, 0.f, col, 0.f, NULL);
 }
 
 //文字描画
 void CDrawTexture::DrawStr(ID3D11ShaderResourceView* ptex_res_view,float x,float y,float size,float col[4])
 {
-	//２D使用設定
-	Set2DDraw();
-	//シェーダデータ輸送
-	D3D11_MAPPED_SUBRESOURCE pData;
-	if( SUCCEEDED( m_pDeviceContext->Map( m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData ) ) )
-	{
-		DRAW_2D_TEX  data;
-		data.color[0]=col[0];	data.color[1]=col[1];	data.color[2]=col[2];	data.color[3]=col[3];
+	RECT_F src, dst;
 
-		data.size[0]=1.0f;				data.size[1]=0.0f;
-		data.size[2]=(float)m_width;	data.size[3]=(float)m_height;
+	src.m_left  = 0.f; src.m_top = 0.f;
+	src.m_right = 1.f; src.m_bottom = 1.f;
 
-		data.rect_out[0]=(float)x;		data.rect_out[1]=(float)y;
-		data.rect_out[2]=(float)x+size;	data.rect_out[3]=(float)y+size;
+	dst.m_left = x;			dst.m_top = y;
+	dst.m_right = x + size; dst.m_bottom = y + size;
 
-		data.rect_in[0]=0.0f;			data.rect_in[1]=0.0f;
-		data.rect_in[2]=1.0f;			data.rect_in[3]=1.0f;
-		memcpy_s( pData.pData, pData.RowPitch, (void*)&data, sizeof( DRAW_2D_TEX  ) );
-
-		m_pDeviceContext->Unmap( m_pConstantBuffer, 0 );
-	}
-
-	//テクスチャ設定
-	m_pDeviceContext->PSSetShaderResources(0,1, &ptex_res_view);
-
-	//プリミティブをレンダリング
-	m_pDeviceContext->DrawIndexed(4, 0, 0);
+	// シェーダデータ輸送
+	SendShader(&src, &dst, 1.f, col, 0.f, &ptex_res_view);
 }
 
 // 画像描画(切り取りなし)
@@ -185,40 +154,60 @@ void CDrawTexture::Draw(int id, RECT_F* dst, float col[4], float r)
 }
 
 //描画
-void CDrawTexture:: Draw(int id,RECT_F* src,RECT_F* dst,float col[4],float r)
+void CDrawTexture::Draw(int id,RECT_F* src,RECT_F* dst,float col[4],float r)
 {
 	if(m_img_max < id ) return ;
 	if(vec_tex_data[id]->GetTexData()==nullptr) return ; 
 
+	// シェーダデータ輸送
+	SendShader(src, dst, (float)vec_tex_data[id]->GetTexSize(), col, r, vec_tex_data[id].get()->GetTexData());
+}
+
+// シェーダーに情報を送る
+// 引数1 RECT_F*					: 切り取り位置
+// 引数2 RECT_F*					: 描画位置
+// 引数3 float						: 画像の大きさ
+// 引数4 float[4]					: 画像の色を指定
+// 引数5 float						: 画像回転
+// 引数6 ID3D11ShaderResourceView** : 画像データ
+void CDrawTexture::SendShader(RECT_F* src, RECT_F* dst, float size, float color[4], float r, ID3D11ShaderResourceView** ptex_res_view)
+{
 	//２D使用設定
 	Set2DDraw();
-
 	//シェーダデータ輸送
 	D3D11_MAPPED_SUBRESOURCE pData;
-	if( SUCCEEDED( m_pDeviceContext->Map( m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData ) ) )
+	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
 	{
 		DRAW_2D_TEX  data;
-		data.color[0]=col[0];	data.color[1]=col[1];	data.color[2]=col[2];	data.color[3]=col[3];
+		data.color[0] = color[0];	data.color[1] = color[1];	data.color[2] = color[2];	data.color[3] = color[3];
 
-		data.size[0]=(float)vec_tex_data[id]->GetTexSize();	data.size[1]=r;
-		data.size[2]=(float)m_width;		data.size[3]=(float)m_height;
+		data.size[0] = size;				data.size[1] = r;
+		data.size[2] = (float)m_width;	data.size[3] = (float)m_height;
 
-		data.rect_out[0]=dst->m_left;		data.rect_out[1]=dst->m_top;
-		data.rect_out[2]=dst->m_right;		data.rect_out[3]=dst->m_bottom;
+		// RECT_Fで設定する基準値の大きさ
+		float w = 1280.f, h = 1024.f;
 
-		data.rect_in[0]=src->m_left;		data.rect_in[1]=src->m_top;
-		data.rect_in[2]=src->m_right;		data.rect_in[3]=src->m_bottom;
-		memcpy_s( pData.pData, pData.RowPitch, (void*)&data, sizeof( DRAW_2D_TEX  ) );
+		// ウィンドウの大きさと基準値の大きさの割合によって、描画位置を変える
+		data.rect_out[0] = dst->m_left   * (m_width  / w);
+		data.rect_out[1] = dst->m_top    * (m_height / h);
+		data.rect_out[2] = dst->m_right  * (m_width  / w);
+		data.rect_out[3] = dst->m_bottom * (m_height / h);
 
-		m_pDeviceContext->Unmap( m_pConstantBuffer, 0 );
+		data.rect_in[0] = src->m_left;	data.rect_in[1] = src->m_top;
+		data.rect_in[2] = src->m_right;	data.rect_in[3] = src->m_bottom;
+		memcpy_s(pData.pData, pData.RowPitch, (void*)&data, sizeof(DRAW_2D_TEX));
+
+		m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
 	}
 
-	//テクスチャ設定
-	m_pDeviceContext->PSSetShaderResources(0,1,vec_tex_data[id].get()->GetTexData());
+	if (ptex_res_view != NULL)
+	{
+		//テクスチャ設定
+		m_pDeviceContext->PSSetShaderResources(0, 1, ptex_res_view);
+	}
 
 	//プリミティブをレンダリング
 	m_pDeviceContext->DrawIndexed(4, 0, 0);
-
 }
 
 
