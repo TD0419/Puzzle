@@ -17,7 +17,7 @@ void Cblock::Init()
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
 
-	m_bColornum = rand() % 2;//色決めのためのランダム
+	m_bColornum = rand() % 6;//色決めのためのランダム
 
 	m_bStop_flag = false;
 
@@ -54,7 +54,7 @@ void Cblock::Action()
 		if (m_a_key_push == false)
 		{
 			//移動先が160fより小さくなるなら
-			if (obj_map->GetMap(x - 1, y) != 0)
+			if (obj_map->GetMap(x - 1, y+1) != 0)
 			{
 				;//何もしない
 			}
@@ -79,7 +79,7 @@ void Cblock::Action()
 		if (m_d_key_push == false)
 		{
 			//移動先が576fより大きくなるから
-			if (obj_map->GetMap(x + 1, y) != 0)
+			if (obj_map->GetMap(x + 1, y+1) != 0)
 			{
 				;//何もしない
 			}
@@ -97,6 +97,7 @@ void Cblock::Action()
 	}
 
 
+
 	//移動ベクトル加算
 	m_fPx += m_fVx;
 	m_fPy += m_fVy;
@@ -111,14 +112,12 @@ void Cblock::Action()
 		//マップに停止したブロックの情報を入れる
 		obj_map->SetMap(x, y, m_bColornum + 1);
 
-		m_bStop_flag = true;//色きめ/停止フラグON
+		m_bStop_flag = true;//停止フラグON
 
 		//新しく降らせる
 		Cblock* p_block = new Cblock();
 		Objs::InsertObj(p_block, OBJ_BLOCK, 1);
 	}
-
-
 
 }
 
@@ -151,5 +150,25 @@ void Cblock::Draw()
 	else if (m_bColornum == 1)
 	{
 		Draw::Draw(1, &src, &dst, c, 0.0f);//水色
+	}
+
+	else if (m_bColornum == 2)
+	{
+		Draw::Draw(2, &src, &dst, c, 0.0f);//黄色
+	}
+
+	else if (m_bColornum == 3)
+	{
+		Draw::Draw(3, &src, &dst, c, 0.0f);//オレンジ星
+	}
+
+	else if (m_bColornum == 4)
+	{
+		Draw::Draw(4, &src, &dst, c, 0.0f);//水色星
+	}
+
+	else if (m_bColornum == 5)
+	{
+		Draw::Draw(5, &src, &dst, c, 0.0f);//黄色星
 	}
 }

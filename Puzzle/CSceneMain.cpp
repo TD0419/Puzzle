@@ -33,11 +33,19 @@ void CSceneMain::InitScene()
 	//グラフィック読み込み
 	//ここでエラーが出たのでLoadImageWのwchar_t*にconstをつけて確かめた
 	//後々修正が必要
-	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
+	Draw::LoadImageW(L"orange_block.png", 0, TEX_SIZE_32);
 
 	Draw::LoadImageW(L"blue_block.png", 1, TEX_SIZE_32);
+
+	Draw::LoadImageW(L"yellow_block.png", 2, TEX_SIZE_32);
+
+	Draw::LoadImageW(L"orange_star_block.png", 3, TEX_SIZE_32);
+
+	Draw::LoadImageW(L"blue_star_block.png", 4, TEX_SIZE_32);
+
+	Draw::LoadImageW(L"yellow_star_block.png", 5, TEX_SIZE_32);
 	
-	Draw::LoadImageW(L"side_block.png", 2, TEX_SIZE_32);
+	Draw::LoadImageW(L"side_block.png", 10, TEX_SIZE_32);
 
 	//ブロックオブジェクト読み込み
 	Cblock* p_block = new Cblock();
