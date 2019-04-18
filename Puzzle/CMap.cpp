@@ -122,3 +122,39 @@ void CMap::SetMap(int x, int y, int id)
 
 	return;
 }
+
+//右・左・下に同じブロックがあるか調べる
+void CMap::confirmblock(int x, int y, int id)
+{
+	//ブロックが星型じゃなかったら
+	if (id <= 3)
+	{
+		return;//調べず終了
+	}
+
+	if (m_map[y + 2][x] == id)
+	{
+		for (int a = 0; a <= 2; a++)
+		{
+			m_map[y + a][x] = 0;
+		}
+	}
+
+	if (m_map[y][x + 2] == id)
+	{
+		for (int a = 0; a <= 2; a++)
+		{
+			m_map[y][x + a] = 0;
+		}
+	}
+
+	if (m_map[y][x - 2] == id)
+	{
+		for (int a = 0; a <= 2; a++)
+		{
+			m_map[y][x - a] = 0;
+		}
+	}
+
+	return;
+}

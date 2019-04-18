@@ -21,6 +21,7 @@ class CMap : public CObj
 		void Draw();
 		int GetMap(int x, int y);
 		void SetMap(int x, int y, int id);
+		void confirmblock(int x, int y, int id);
 
 	private:
 		int m_map[MAP_Y][MAP_X];

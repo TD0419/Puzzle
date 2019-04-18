@@ -84,6 +84,9 @@
     <ClCompile Include="CMap.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
+    <ClCompile Include="CDeleteBlock.cpp">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameL\Audio.h">
@@ -150,6 +153,9 @@
       <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="CMap.h">
+      <Filter>ソース ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeleteBlock.h">
       <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
   </ItemGroup>

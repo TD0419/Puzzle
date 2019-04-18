@@ -23,6 +23,11 @@ void Cblock::Init()
 
 	m_a_key_push = false;
 	m_d_key_push = false;
+
+	m_elementX_storage = 0;
+	m_elementY_storage = 0;
+
+	m_Again_fall_on = false;
 }
 
 //アクション
@@ -34,6 +39,17 @@ void Cblock::Action()
 	//停止なら
 	if (m_bStop_flag == true)
 	{
+		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage) == 0)
+		{
+			this->SetStatus(false);
+		}
+
+		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage + 1) == 0)
+		{
+			m_bStop_flag = false;
+			m_Again_fall_on = true;
+			obj_map->SetMap(m_elementX_storage, m_elementY_storage, 0);
+		}
 		return;//とりあえず何もしない
 	}
 
@@ -51,7 +67,7 @@ void Cblock::Action()
 	if (Input::GetVKey('A') == true)
 	{
 		//長押し防止
-		if (m_a_key_push == false)
+		if (m_a_key_push == false && m_Again_fall_on == false)
 		{
 			//移動先が160fより小さくなるなら
 			if (obj_map->GetMap(x - 1, y+1) != 0)
@@ -76,7 +92,7 @@ void Cblock::Action()
 	if (Input::GetVKey('D') == true)
 	{
 		//長押し防止
-		if (m_d_key_push == false)
+		if (m_d_key_push == false && m_Again_fall_on == false)
 		{
 			//移動先が576fより大きくなるから
 			if (obj_map->GetMap(x + 1, y+1) != 0)
@@ -106,17 +122,27 @@ void Cblock::Action()
 	if ( obj_map->GetMap(x,y+1) != 0/*383.0f-32.0f*//*(float)Window::GetHeight() - 32.0f*/)
 	{
 		//移動ベクトル停止
-		m_fVy = 0.0f;
-		m_fVx = 0.0f;
+		//m_fVy = 0.0f;
+		//m_fVx = 0.0f;
+
+		//停止したブロックの要素番号を保存する
+		m_elementX_storage = x;
+		m_elementY_storage = y;
 
 		//マップに停止したブロックの情報を入れる
 		obj_map->SetMap(x, y, m_bColornum + 1);
 
+
+		obj_map->confirmblock(x, y, m_bColornum + 1);
+
 		m_bStop_flag = true;//停止フラグON
 
-		//新しく降らせる
-		Cblock* p_block = new Cblock();
-		Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+		if (m_Again_fall_on == false)
+		{
+			//新しく降らせる
+			Cblock* p_block = new Cblock();
+			Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+		}
 	}
 
 }
