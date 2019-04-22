@@ -47,6 +47,8 @@ void CSceneMain::InitScene()
 	
 	Draw::LoadImageW(L"side_block.png", 10, TEX_SIZE_32);
 
+	Draw::LoadImageW(L"TestEffect.png", 11, TEX_SIZE_64);
+
 	//ブロックオブジェクト読み込み
 	Cblock* p_block = new Cblock();
 	Objs::InsertObj(p_block, OBJ_BLOCK, 1);

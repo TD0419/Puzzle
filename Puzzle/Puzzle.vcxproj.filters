@@ -1,167 +1,170 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\Object">
-      <UniqueIdentifier>{00ae5a43-fe4c-4177-851d-160622032770}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Scene">
-      <UniqueIdentifier>{85196460-727e-499b-93cf-5ba549f1dd21}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="GameL\Audio.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\DirectXDevice.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\DrawFont.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\DrawTexture.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\GameL_Main.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\HitBoxManager.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\MultiThread.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\SceneManager.cpp">
-      <Filter>リソース ファイル</Filter>
+    <ClCompile Include="GameL\SetWindow.cpp">
+      <Filter>リソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameL\SceneObjManager.cpp">
-      <Filter>リソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameL\SetWindow.cpp">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameL\UserData.cpp">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="GameL\WinInputs.cpp">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CSceneTitle.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
+    <ClCompile Include="GameL\MultiThread.cpp">
+      <Filter>リソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CSceneMain.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
+    <ClCompile Include="GameL\SceneManager.cpp">
+      <Filter>リソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CSceneResult.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
+    <ClCompile Include="GameL\GameL_Main.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameL\DrawTexture.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameL\DrawFont.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameL\DirectXDevice.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameL\Audio.cpp">
+      <Filter>リソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="Cblock.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CTitleBackGround.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CResultBackGround.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CSceneConnect.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
+      <Filter>ソースファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="CConnectBackGround.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CMap.cpp">
-      <Filter>ソース ファイル\Object</Filter>
+      <Filter>ソースファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="CDeleteBlock.cpp">
-      <Filter>ソース ファイル\Object</Filter>
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CMap.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameL\HitBoxManager.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CResultBackGround.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleBackGround.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneConnect.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneMain.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneResult.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneTitle.cpp">
+      <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameL\Audio.h">
-      <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameL\DirectXDevice.h">
-      <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameL\DrawFont.h">
-      <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameL\DrawTexture.h">
-      <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameL\HitBoxManager.h">
-      <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameL\MultiThread.h">
-      <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameL\SceneManager.h">
-      <Filter>リソース ファイル</Filter>
+    <ClInclude Include="GameL\SetWindow.h">
+      <Filter>リソースファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameL\SceneObjManager.h">
-      <Filter>リソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameL\SetWindow.h">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソースファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameL\UserData.h">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソースファイル</Filter>
     </ClInclude>
     <ClInclude Include="GameL\WinInputs.h">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソースファイル</Filter>
     </ClInclude>
-    <ClInclude Include="GameHead.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="GameL\MultiThread.h">
+      <Filter>リソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameL\SceneManager.h">
+      <Filter>リソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameL\DrawTexture.h">
+      <Filter>リソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameL\DrawFont.h">
+      <Filter>リソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameL\DirectXDevice.h">
+      <Filter>リソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameL\Audio.h">
+      <Filter>リソースファイル</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CSceneTitle.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CSceneMain.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CSceneResult.h">
-      <Filter>ソース ファイル\Scene</Filter>
+    <ClInclude Include="GameHead.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Cblock.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CTitleBackGround.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CResultBackGround.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CSceneConnect.h">
-      <Filter>ソース ファイル\Scene</Filter>
+      <Filter>ソースファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="CConnectBackGround.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CMap.h">
-      <Filter>ソース ファイル\Object</Filter>
+      <Filter>ソースファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="CDeleteBlock.h">
-      <Filter>ソース ファイル\Object</Filter>
+      <Filter>ソースファイル\Object</Filter>
     </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>ソースファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CMap.h">
+      <Filter>ソースファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameL\HitBoxManager.h">
+      <Filter>リソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CResultBackGround.h">
+      <Filter>ソースファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitleBackGround.h">
+      <Filter>ソースファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneConnect.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneMain.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneResult.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneTitle.h">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="リソースファイル">
+      <UniqueIdentifier>{5edb3bbf-e9d5-4822-bb31-17700778bb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{41a8f551-73ac-48c4-b9cf-9c7185443dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{65b6a0d3-411f-4d44-8a5f-ab2942357a79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Object">
+      <UniqueIdentifier>{91ed7c77-1b4e-45ce-9358-22c809e1483e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Scene">
+      <UniqueIdentifier>{a44a7b5b-531b-4edf-ad1b-104630e52eda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="GameL\Draw2DTex.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソースファイル</Filter>
     </None>
   </ItemGroup>
 </Project>
