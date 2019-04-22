@@ -134,6 +134,7 @@
     <ClCompile Include="CSceneTitle.cpp" />
     <ClCompile Include="Cblock.cpp" />
     <ClCompile Include="CTitleBackGround.cpp" />
+    <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="GameL\Audio.cpp" />
     <ClCompile Include="GameL\DirectXDevice.cpp" />
     <ClCompile Include="GameL\DrawFont.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="CSceneTitle.h" />
     <ClInclude Include="Cblock.h" />
     <ClInclude Include="CTitleBackGround.h" />
+    <ClInclude Include="CEffect.h" />
     <ClInclude Include="GameHead.h" />
     <ClInclude Include="GameL\Audio.h" />
     <ClInclude Include="GameL\DirectXDevice.h" />

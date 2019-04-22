@@ -150,7 +150,8 @@ void CDrawTexture::Draw(int id, RECT_F* dst, float col[4], float r)
 	src.m_right = (float)vec_tex_data[id]->GetTexSize();
 	src.m_bottom = (float)vec_tex_data[id]->GetTexSize();
 
-	Draw(id, &src, dst, col, r);
+	// シェーダデータ輸送
+	SendShader(&src, dst, (float)vec_tex_data[id]->GetTexSize(), col, r, vec_tex_data[id].get()->GetTexData());
 }
 
 //描画

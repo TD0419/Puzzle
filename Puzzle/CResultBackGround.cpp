@@ -45,4 +45,7 @@ void CResultBackGround::Draw()
 
 	// リザルト画面と分かるように文字を描画
 	Font::StrDraw(L"Result", 0.f, 0.f, 360.f, c);
+
+	// 遷移方法を表示
+	Font::StrDraw(L"Next ZKey", 0.f, 400.f, 120.f, c);
 }
