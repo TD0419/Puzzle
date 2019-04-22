@@ -39,17 +39,23 @@ void Cblock::Action()
 	//停止なら
 	if (m_bStop_flag == true)
 	{
+		//マップのデータがブロックの消去で無くなっていたら
 		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage) == 0)
 		{
-			this->SetStatus(false);
+			this->SetStatus(false);//ブロック消す
 		}
 
+		//下にブロックがあって、消える処理で消えていたら
 		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage + 1) == 0)
 		{
+			//停止フラグを切って、再落下させる
 			m_bStop_flag = false;
 			m_Again_fall_on = true;
 			obj_map->SetMap(m_elementX_storage, m_elementY_storage, 0);
+
+			return;
 		}
+
 		return;//とりあえず何もしない
 	}
 
@@ -67,6 +73,7 @@ void Cblock::Action()
 	if (Input::GetVKey('A') == true)
 	{
 		//長押し防止
+		//再落下時に入らないように
 		if (m_a_key_push == false && m_Again_fall_on == false)
 		{
 			//移動先が160fより小さくなるなら
@@ -92,6 +99,7 @@ void Cblock::Action()
 	if (Input::GetVKey('D') == true)
 	{
 		//長押し防止
+		//再落下時に入らないように
 		if (m_d_key_push == false && m_Again_fall_on == false)
 		{
 			//移動先が576fより大きくなるから
@@ -137,6 +145,7 @@ void Cblock::Action()
 
 		m_bStop_flag = true;//停止フラグON
 
+		//再落下時に反応しないように
 		if (m_Again_fall_on == false)
 		{
 			//新しく降らせる

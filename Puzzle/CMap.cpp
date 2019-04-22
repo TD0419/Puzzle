@@ -132,6 +132,7 @@ void CMap::confirmblock(int x, int y, int id)
 		return;//’²‚×‚¸I—¹
 	}
 
+	//‰º•ûŒü
 	if (m_map[y + 2][x] == id)
 	{
 		for (int a = 0; a <= 2; a++)
@@ -140,6 +141,7 @@ void CMap::confirmblock(int x, int y, int id)
 		}
 	}
 
+	//‰E•ûŒü
 	if (m_map[y][x + 2] == id)
 	{
 		for (int a = 0; a <= 2; a++)
@@ -148,6 +150,7 @@ void CMap::confirmblock(int x, int y, int id)
 		}
 	}
 
+	//¶•ûŒü
 	if (m_map[y][x - 2] == id)
 	{
 		for (int a = 0; a <= 2; a++)
