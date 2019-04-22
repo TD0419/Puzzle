@@ -7,7 +7,7 @@
 using namespace GameL;
 
 //定数
-#define MAP_Y 13
+#define MAP_Y 18
 #define MAP_X 14
 
 //オブジェクト：マップ
