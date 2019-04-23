@@ -162,30 +162,96 @@ void CMap::confirmblock(int x, int y, int id)
 		return;//調べず終了
 	}
 
-	//下方向
-	if (m_map[y + 2][x] == id)
+	//置いたとこから下方向に調べる
+	//m_search_under・・・同じブロックがあるかの検索、値の設定
+	//m_del_under・・・ブロックを消すために回すfor文の変数
+	//5つ先までを検索
+	for (int m_search_under = 2; m_search_under < 5; m_search_under++)
 	{
-		for (int a = 0; a <= 2; a++)
+		//同じやつがあれば
+		if (m_map[y + m_search_under][x] == id)
 		{
-			m_map[y + a][x] = 0;
+			//あった場所までのブロックを消す
+			for (int m_del_under = 0; m_del_under <= m_search_under; m_del_under++)
+			{
+				//途中に色の違う星ブロックがあれば
+				if (m_map[y + m_del_under][x] >= 4 && m_map[y + m_del_under][x] != id)
+				{
+					;//スルー
+				}
+				else
+				{
+					m_map[y + m_del_under][x] = 0;
+				}
+			}
+
+			break;//2つ以上あった場合、消えないようにするために脱出
 		}
 	}
 
-	//右方向
-	if (m_map[y][x + 2] == id)
+	//置いたとこから右方向に調べる
+	//m_search_right・・・同じブロックがあるかの検索、値の設定
+	//m_del_right・・・ブロックを消すために回すfor文の変数
+	//5つ先までを検索
+	for (int m_search_right = 2; m_search_right < 5; m_search_right++)
 	{
-		for (int a = 0; a <= 2; a++)
+		//同じやつがあれば
+		if (m_map[y][x + m_search_right] == id)
 		{
-			m_map[y][x + a] = 0;
+			//あった場所までのブロックを消す
+			for (int m_del_right = 0; m_del_right <= m_search_right; m_del_right++)
+			{
+				//検索先に空白（ブロックがない）なら全部消さない
+				if (m_map[y][x + m_del_right + 1] == 0 || m_map[y][x + m_del_right + 2] == 0 || m_map[y][x + m_del_right + 3] == 0)
+				{
+					break;//ループ脱出
+				}
+
+				//途中に色の違う星ブロックがあれば
+				if (m_map[y][x + m_del_right] >= 4 && m_map[y][x + m_del_right] != id)
+				{
+					;//スルー
+				}
+				else
+				{
+					m_map[y][x + m_del_right] = 0;
+				}
+			}
+
+			break;//2つ以上あった場合、消えないようにするために脱出
 		}
 	}
 
-	//左方向
-	if (m_map[y][x - 2] == id)
+	//置いたとこから左方向に調べる
+	//m_search_left・・・同じブロックがあるかの検索、値の設定
+	//m_del_left・・・ブロックを消すために回すfor文の変数
+	//5つ先までを検索
+	for (int m_search_left = 2; m_search_left < 5; m_search_left++)
 	{
-		for (int a = 0; a <= 2; a++)
+		//同じやつがあれば
+		if (m_map[y][x - m_search_left] == id)
 		{
-			m_map[y][x - a] = 0;
+			//あった場所までのブロックを消す
+			for (int m_del_left = 0; m_del_left <= m_search_left; m_del_left++)
+			{
+				//検索先に空白（ブロックがない）なら全部消さない
+				if (m_map[y][x - m_del_left - 1] == 0 || m_map[y][x - m_del_left - 2] == 0 || m_map[y][x - m_del_left - 3] == 0)
+				{
+					break;//ループ脱出
+				}
+
+				//途中に色の違う星ブロックがあれば
+				if (m_map[y][x - m_del_left] >= 4 && m_map[y][x - m_del_left] != id)
+				{
+					;
+				}
+				else
+				{
+					m_map[y][x - m_del_left] = 0;
+				}
+			}
+
+			break;//2つ以上あった場合、消えないようにするために脱出
 		}
 	}
 
