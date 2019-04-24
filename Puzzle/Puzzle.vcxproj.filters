@@ -70,6 +70,9 @@
     <ClCompile Include="CSceneTitle.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="CFreezeblock.cpp">
+      <Filter>ソースファイル\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameL\SetWindow.h">
@@ -143,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="CSceneTitle.h">
       <Filter>ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CFreezeblock.h">
+      <Filter>ソースファイル\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

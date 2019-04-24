@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="CConnectBackGround.cpp" />
     <ClCompile Include="CDeleteBlock.cpp" />
+    <ClCompile Include="CFreezeblock.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CResultBackGround.cpp" />
     <ClCompile Include="CSceneConnect.cpp" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="CConnectBackGround.h" />
     <ClInclude Include="CDeleteBlock.h" />
+    <ClInclude Include="CFreezeblock.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CResultBackGround.h" />
     <ClInclude Include="CSceneConnect.h" />

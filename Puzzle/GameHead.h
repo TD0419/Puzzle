@@ -57,6 +57,7 @@ struct UserData
 #include "CResultBackGround.h"
 #include "CConnectBackGround.h"
 #include "CMap.h"
+#include "CFreezeblock.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------

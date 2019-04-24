@@ -35,6 +35,8 @@ void CMap::Init()
 
 	memcpy(m_map, map, sizeof(int) * MAP_Y * MAP_X);
 
+	freezeblock_num = 0;
+
 	//// エフェクト使用例
 	//RECT_F src, dst, dst2;
 	//src.m_top = 0.f;
@@ -182,6 +184,8 @@ void CMap::confirmblock(int x, int y, int id)
 				else
 				{
 					m_map[y + m_del_under][x] = 0;
+
+					freezeblock_num += 1;
 				}
 			}
 
@@ -215,6 +219,8 @@ void CMap::confirmblock(int x, int y, int id)
 				else
 				{
 					m_map[y][x + m_del_right] = 0;
+
+					freezeblock_num += 1;
 				}
 			}
 
@@ -248,6 +254,8 @@ void CMap::confirmblock(int x, int y, int id)
 				else
 				{
 					m_map[y][x - m_del_left] = 0;
+
+					freezeblock_num += 1;
 				}
 			}
 

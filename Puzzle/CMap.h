@@ -26,4 +26,6 @@ class CMap : public CObj
 	private:
 		int m_map[MAP_Y][MAP_X];
 
+		int freezeblock_num;
+
 };
