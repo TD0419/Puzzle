@@ -129,10 +129,6 @@ void Cblock::Action()
 	//ブロックが一番下に着いたら止める
 	if ( obj_map->GetMap(x,y+1) != 0/*383.0f-32.0f*//*(float)Window::GetHeight() - 32.0f*/)
 	{
-		//移動ベクトル停止
-		//m_fVy = 0.0f;
-		//m_fVx = 0.0f;
-
 		//停止したブロックの要素番号を保存する
 		m_elementX_storage = x;
 		m_elementY_storage = y;

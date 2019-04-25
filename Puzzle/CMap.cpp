@@ -185,7 +185,7 @@ void CMap::confirmblock(int x, int y, int id)
 				{
 					m_map[y + m_del_under][x] = 0;
 
-					freezeblock_num += 1;
+					freezeblock_num = 1;
 				}
 			}
 
@@ -220,7 +220,7 @@ void CMap::confirmblock(int x, int y, int id)
 				{
 					m_map[y][x + m_del_right] = 0;
 
-					freezeblock_num += 1;
+					//freezeblock_num += 1;
 				}
 			}
 
@@ -255,13 +255,28 @@ void CMap::confirmblock(int x, int y, int id)
 				{
 					m_map[y][x - m_del_left] = 0;
 
-					freezeblock_num += 1;
+					//freezeblock_num += 1;
 				}
 			}
 
 			break;//2つ以上あった場合、消えないようにするために脱出
 		}
 	}
+
+	if (freezeblock_num != 0)
+	{
+		for (int a = 0; a < freezeblock_num; a++)
+		{
+			m_map[0][2] = 7;
+
+			//お邪魔ブロック読み込み
+			CFreezeblock* p_fblock = new CFreezeblock(2,0,7);
+			Objs::InsertObj(p_fblock, OBJ_FREEZE_BLOCK, 1);
+
+			freezeblock_num = 0;
+		}
+	}
+
 
 	return;
 }

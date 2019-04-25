@@ -44,6 +44,8 @@ void CSceneMain::InitScene()
 	Draw::LoadImageW(L"blue_star_block.png", 4, TEX_SIZE_32);
 
 	Draw::LoadImageW(L"yellow_star_block.png", 5, TEX_SIZE_32);
+
+	Draw::LoadImageW(L"freeze_block.png", 8, TEX_SIZE_32);
 	
 	Draw::LoadImageW(L"side_block.png", 10, TEX_SIZE_32);
 
@@ -56,6 +58,8 @@ void CSceneMain::InitScene()
 	//マップオブジェクト読み込み
 	CMap* p_map = new CMap();
 	Objs::InsertObj(p_map, OBJ_MAP, 1);
+
+
 }
 
 //実行中メソッド

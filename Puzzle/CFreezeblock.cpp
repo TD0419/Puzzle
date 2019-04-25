@@ -8,20 +8,23 @@
 //使用するネームスペース
 using namespace GameL;
 
+
+CFreezeblock::CFreezeblock(int x,int y,int id)
+{
+	m_fPx = x * 32.0f + 160.0f;
+	m_fPy = y * 32.0f;
+	m_bColornum = 7;
+	m_elementX_storage = x;
+	m_elementY_storage = y;
+}
+
 //イニシャライズ
 void CFreezeblock::Init()
 {
-	m_fPx = 0.0f;
-	m_fPy = 0.0f;
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
 
 	m_bStop_flag = false;
-
-	m_bColornum = 0;
-
-	m_elementX_storage = 0;
-	m_elementY_storage = 0;
 }
 
 //アクション
@@ -30,18 +33,33 @@ void CFreezeblock::Action()
 	//マップオブジェクト取得
 	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
 
-
-	for (int y = 0; y < 18; y++)
+	//停止なら
+	if (m_bStop_flag == true)
 	{
-		for (int x = 0; x < 14; x++)
-		{
-			if (obj_map->GetMap(x, y) == 7)
-			{
-				m_elementX_storage = x;
-				m_elementY_storage = y;
-				m_bColornum = 7;
-			}
-		}
+		return;//とりあえず何もしない
+	}
+
+
+	//移動ベクトル設定
+	m_fVy = 4.0f;
+
+	//ベクトル加算
+	m_fPy += m_fVy;
+
+	int x = ((int)m_fPx - 160) / 32;
+	int y = (int)m_fPy / 32;
+
+	//ブロックが一番下に着いたら止める
+	if (obj_map->GetMap(x, y + 1) != 0)
+	{
+		//停止したブロックの要素番号を保存する
+		m_elementX_storage = x;
+		m_elementY_storage = y;
+
+		//マップに停止したブロックの情報を入れる
+		obj_map->SetMap(x, y, m_bColornum);
+
+		m_bStop_flag = true;//停止フラグON
 	}
 }
 
@@ -66,6 +84,6 @@ void CFreezeblock::Draw()
 	dst.m_bottom = dst.m_top + 32.0f;
 
 	//色決め
-	Draw::Draw(0, &src, &dst, c, 0.0f);
+	Draw::Draw(8, &src, &dst, c, 0.0f);
 
 }

@@ -10,7 +10,7 @@ using namespace GameL;
 class CFreezeblock : public CObj
 {
 	public:
-		CFreezeblock() {};
+		CFreezeblock(int x,int y,int id);
 		~CFreezeblock() {};
 		void Init();
 		void Action();
