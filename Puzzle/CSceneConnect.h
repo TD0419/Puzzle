@@ -1,6 +1,7 @@
 #pragma once
 //使用するヘッダーファイル
 #include "GameL\SceneManager.h"
+#include "GameL\NetWork.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -9,8 +10,8 @@ using namespace GameL;
 class CSceneConnect : public CScene
 {
 public:
-	CSceneConnect();
-	~CSceneConnect();
+	CSceneConnect(ConnectKind connectkind);
+	~CSceneConnect() {}
 	void InitScene();//初期化メソッド
 	void Scene();	 //実行中メソッド
 private:

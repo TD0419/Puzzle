@@ -28,7 +28,7 @@ CSceneTitle::~CSceneTitle()
 void CSceneTitle::InitScene()
 {
 	// 背景オブジェクトの代わりの画像(差し換えてください(涙))
-	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
+	//Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
 
 	// タイトル背景オブジェクト
 	CTitleBackGround* pTitleBackGround = new CTitleBackGround;

@@ -73,6 +73,15 @@
     <ClCompile Include="CFreezeblock.cpp">
       <Filter>ソースファイル\Object</Filter>
     </ClCompile>
+    <ClCompile Include="GameL\Cilent.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameL\Server.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameL\NetWork.cpp">
+      <Filter>リソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameL\SetWindow.h">
@@ -149,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="CFreezeblock.h">
       <Filter>ソースファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameL\NetWork.h">
+      <Filter>リソースファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
