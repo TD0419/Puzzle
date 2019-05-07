@@ -30,6 +30,7 @@
 #include "SceneObjManager.h"
 #include "HitBoxManager.h"
 #include "UserData.h"
+#include "NetWork.h"
 
 #include "..\GameHead.h"
 #include "..\main.h"
@@ -63,7 +64,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 	RegisterClassEx( &wcex );
 
 	//ウィンドウ作成初期化
-	LSetWindow::NewWindow(WINDOW_SIZE_W,WINDOW_SIZE_H,name,hInstance,true);
+	LSetWindow::NewWindow(WINDOW_SIZE_W,WINDOW_SIZE_H,name,hInstance, FULL_SCREEN);
 
 	//DirectXデバイス作成初期化
 	float color[]=BACK_COLOR;
@@ -120,6 +121,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 
 	}while( msg.message != WM_QUIT );
 
+	NetWork::Delete();
 	CMultiThread::Delete();
 	CUserData::Delete();
 	CHitBoxManager::Delete();

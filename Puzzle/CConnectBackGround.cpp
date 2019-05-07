@@ -18,13 +18,7 @@ void CConnectBackGround::Init()
 
 void CConnectBackGround::Action()
 {
-	// 仮のシーン遷移処理(画像ができたら、処理を変えてください)--
-	if (Input::GetVKeyDown('Z') == true)
-	{
-		// タイトル画面へ
-		CSceneManager::SetScene(new CSceneMain);
-	}
-	// ----------------------------------------------------------
+	
 }
 
 void CConnectBackGround::Draw()
@@ -33,19 +27,16 @@ void CConnectBackGround::Draw()
 	//カラー情報
 	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
 
-	RECT_F dst;//表示位置
+	//RECT_F dst;//表示位置
 
-	dst.m_top = 0.0f;
-	dst.m_left = 0.0f;
-	dst.m_right = dst.m_left + (float)Window::GetWidth(); // ウィンドウの幅
-	dst.m_bottom = dst.m_top + (float)Window::GetHeight();// ウィンドウの高さ
+	//dst.m_top = 0.0f;
+	//dst.m_left = 0.0f;
+	//dst.m_right = dst.m_left + (float)Window::GetWidth(); // ウィンドウの幅
+	//dst.m_bottom = dst.m_top + (float)Window::GetHeight();// ウィンドウの高さ
 
-	Draw::Draw(0, &dst, c, 0.0f);
+	//Draw::Draw(0, &dst, c, 0.0f);
 	// -----------------------------------------------------------------
 
 	// ネットワーク接続画面と分かるように文字を描画
 	Font::StrDraw(L"NetWorkConnect", 0.f, 0.f, 360.f, c);
-
-	// 遷移方法を表示
-	Font::StrDraw(L"Next ZKey", 0.f, 400.f, 120.f, c);
 }

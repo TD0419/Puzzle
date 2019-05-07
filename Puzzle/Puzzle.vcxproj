@@ -138,14 +138,17 @@
     <ClCompile Include="CTitleBackGround.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="GameL\Audio.cpp" />
+    <ClCompile Include="GameL\Cilent.cpp" />
     <ClCompile Include="GameL\DirectXDevice.cpp" />
     <ClCompile Include="GameL\DrawFont.cpp" />
     <ClCompile Include="GameL\DrawTexture.cpp" />
     <ClCompile Include="GameL\GameL_Main.cpp" />
     <ClCompile Include="GameL\HitBoxManager.cpp" />
     <ClCompile Include="GameL\MultiThread.cpp" />
+    <ClCompile Include="GameL\NetWork.cpp" />
     <ClCompile Include="GameL\SceneManager.cpp" />
     <ClCompile Include="GameL\SceneObjManager.cpp" />
+    <ClCompile Include="GameL\Server.cpp" />
     <ClCompile Include="GameL\SetWindow.cpp" />
     <ClCompile Include="GameL\UserData.cpp" />
     <ClCompile Include="GameL\WinInputs.cpp" />
@@ -170,6 +173,7 @@
     <ClInclude Include="GameL\DrawTexture.h" />
     <ClInclude Include="GameL\HitBoxManager.h" />
     <ClInclude Include="GameL\MultiThread.h" />
+    <ClInclude Include="GameL\NetWork.h" />
     <ClInclude Include="GameL\SceneManager.h" />
     <ClInclude Include="GameL\SceneObjManager.h" />
     <ClInclude Include="GameL\SetWindow.h" />

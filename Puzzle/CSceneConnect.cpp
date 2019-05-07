@@ -5,6 +5,7 @@
 //GameLで使用するヘッダー
 #include "GameL\SceneObjManager.h"
 #include "GameL\DrawTexture.h"
+#include "GameL\NetWork.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -12,23 +13,17 @@ using namespace GameL;
 //使用ヘッダー
 #include "GameHead.h"
 
-//コンストラクタ
-CSceneConnect::CSceneConnect()
+// 引数1 ConnectKind : クライアントorサーバー
+CSceneConnect::CSceneConnect(ConnectKind connectkind)
 {
-
-}
-
-//デストラクタ
-CSceneConnect::~CSceneConnect()
-{
-
+	NetWork::Init(connectkind);
 }
 
 //初期化メソッド
 void CSceneConnect::InitScene()
 {
 	// 背景オブジェクトの代わりの画像(差し換えてください(涙))
-	Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
+	//Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
 
 	// ネットワーク接続画面背景オブジェクト
 	CConnectBackGround* pConnectBackGround = new CConnectBackGround;
@@ -38,5 +33,9 @@ void CSceneConnect::InitScene()
 //実行中メソッド
 void CSceneConnect::Scene()
 {
-
+	if (NetWork::Connect() == true)
+	{
+		// ゲーム画面へ
+		Scene::SetScene(new CSceneMain());
+	}
 }
