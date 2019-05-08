@@ -171,6 +171,10 @@ void CMap::SetMap(int x, int y, int id)
 //右・左・下に同じブロックがあるか調べる
 void CMap::confirmblock(int x, int y, int id)
 {
+	//ここで使う関数
+	bool right_delete_check = true;
+	bool left_delete_check = true;
+
 	//ブロックが星型じゃなかったら
 	if (id <= 3)
 	{
@@ -198,7 +202,7 @@ void CMap::confirmblock(int x, int y, int id)
 				{
 					m_map[y + m_del_under][x] = 0;
 
-					freezeblock_num = 1;
+					freezeblock_num += 1;
 				}
 			}
 
@@ -215,25 +219,33 @@ void CMap::confirmblock(int x, int y, int id)
 		//同じやつがあれば
 		if (m_map[y][x + m_search_right] == id)
 		{
-			//あった場所までのブロックを消す
-			for (int m_del_right = 0; m_del_right <= m_search_right; m_del_right++)
+			for (int a = 1; a < m_search_right; a++)
 			{
 				//検索先に空白（ブロックがない）なら全部消さない
-				if (m_map[y][x + m_del_right + 1] == 0 || m_map[y][x + m_del_right + 2] == 0 || m_map[y][x + m_del_right + 3] == 0)
+				if (m_map[y][x + a] == 0)
 				{
-					break;//ループ脱出
+					right_delete_check = false;
+					//break;//ループ脱出
 				}
+			}
 
-				//途中に色の違う星ブロックがあれば
-				if (m_map[y][x + m_del_right] >= 4 && m_map[y][x + m_del_right] != id)
+			if (right_delete_check == true)
+			{
+				//あった場所までのブロックを消す
+				for (int m_del_right = 0; m_del_right <= m_search_right; m_del_right++)
 				{
-					;//スルー
-				}
-				else
-				{
-					m_map[y][x + m_del_right] = 0;
+					//途中に色の違う星ブロックがあれば
+					if (m_map[y][x + m_del_right] >= 4 && m_map[y][x + m_del_right] != id)
+					{
+						;//スルー
+					}
+					else
+					{
+						m_map[y][x + m_del_right] = 0;
 
-					//freezeblock_num += 1;
+						freezeblock_num += 1;
+
+					}
 				}
 			}
 
@@ -250,25 +262,32 @@ void CMap::confirmblock(int x, int y, int id)
 		//同じやつがあれば
 		if (m_map[y][x - m_search_left] == id)
 		{
-			//あった場所までのブロックを消す
-			for (int m_del_left = 0; m_del_left <= m_search_left; m_del_left++)
+			for (int a = 1; a < m_search_left; a++)
 			{
 				//検索先に空白（ブロックがない）なら全部消さない
-				if (m_map[y][x - m_del_left - 1] == 0 || m_map[y][x - m_del_left - 2] == 0 || m_map[y][x - m_del_left - 3] == 0)
+				if (m_map[y][x - a] == 0)
 				{
-					break;//ループ脱出
+					left_delete_check = false;
+					//break;//ループ脱出
 				}
+			}
 
-				//途中に色の違う星ブロックがあれば
-				if (m_map[y][x - m_del_left] >= 4 && m_map[y][x - m_del_left] != id)
+			if (left_delete_check == true)
+			{
+				//あった場所までのブロックを消す
+				for (int m_del_left = 0; m_del_left <= m_search_left; m_del_left++)
 				{
-					;
-				}
-				else
-				{
-					m_map[y][x - m_del_left] = 0;
+					//途中に色の違う星ブロックがあれば
+					if (m_map[y][x - m_del_left] >= 4 && m_map[y][x - m_del_left] != id)
+					{
+						;
+					}
+					else
+					{
+						m_map[y][x - m_del_left] = 0;
 
-					//freezeblock_num += 1;
+						freezeblock_num += 1;
+					}
 				}
 			}
 
@@ -276,20 +295,61 @@ void CMap::confirmblock(int x, int y, int id)
 		}
 	}
 
-	if (freezeblock_num != 0)
-	{
-		for (int a = 0; a < freezeblock_num; a++)
-		{
-			m_map[0][2] = 7;
-
-			//お邪魔ブロック読み込み
-			CFreezeblock* p_fblock = new CFreezeblock(2,0,7);
-			Objs::InsertObj(p_fblock, OBJ_FREEZE_BLOCK, 1);
-
-			freezeblock_num = 0;
-		}
-	}
-
+	//FreezeBlock_Generate();
 
 	return;
+}
+
+bool CMap::FreezeBlock_Check()
+{
+	//if (freezeblock_num != 0)
+	//{
+	//	return true;
+	//}
+
+	//return false;
+}
+
+//お邪魔ブロック生成
+int CMap::FreezeBlock_Generate()
+{
+	//お邪魔ブロックが沸いた下のブロックがどこにあるか調べる用関数
+	int y_num = 0;
+
+	//お邪魔ブロックの数が０じゃなかったら
+	if (freezeblock_num != 0)
+	{
+		//お邪魔ブロックの数分回す
+		for (int freeze_x = 0; freeze_x < freezeblock_num; freeze_x++)
+		{
+			//お邪魔ブロックを出す
+			m_map[0][freeze_x + 1] = 7;
+
+			//下列にある一番上のブロックの位置を調べる
+			for (int y = 0; y < 18; y++)
+			{
+				if (m_map[y][freeze_x + 1] != 0)
+				{
+					if (y_num < y)
+					{
+						//今までの数字より大きいならそれにする
+						y_num = y;
+
+						break;
+					}
+				}
+			}
+
+			//お邪魔ブロック出現
+			CFreezeblock* p_fblock = new CFreezeblock(freeze_x + 1,0,7);
+			Objs::InsertObj(p_fblock, OBJ_FREEZE_BLOCK, 1);
+
+		}
+
+		//お邪魔ブロックの数をなくす
+		freezeblock_num = 0;
+	}
+
+	//お邪魔ブロックが落下するフレーム数を返す
+	return y_num * 32 / 4;
 }

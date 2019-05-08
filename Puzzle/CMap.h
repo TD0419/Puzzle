@@ -22,6 +22,8 @@ class CMap : public CObj
 		int GetMap(int x, int y);
 		void SetMap(int x, int y, int id);
 		void confirmblock(int x, int y, int id);
+		int FreezeBlock_Generate();
+		bool FreezeBlock_Check();
 
 	private:
 		int m_map[MAP_Y][MAP_X];
