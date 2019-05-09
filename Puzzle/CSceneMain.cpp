@@ -51,6 +51,8 @@ void CSceneMain::InitScene()
 
 	Draw::LoadImageW(L"TestEffect.png", 11, TEX_SIZE_64);
 
+	Draw::LoadImageW(L"next_block_space.png", 15, TEX_SIZE_64);
+
 	//ブロックオブジェクト読み込み
 	Cblock* p_block = new Cblock();
 	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
@@ -59,7 +61,8 @@ void CSceneMain::InitScene()
 	CMap* p_map = new CMap();
 	Objs::InsertObj(p_map, OBJ_MAP, 1);
 
-
+	CNextBlock* p_next = new CNextBlock();
+	Objs::InsertObj(p_next, OBJ_NEXT_BLOCK, 1);
 }
 
 //実行中メソッド

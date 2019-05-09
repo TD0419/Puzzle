@@ -307,7 +307,7 @@ bool CMap::FreezeBlock_Check()
 	//	return true;
 	//}
 
-	//return false;
+	return false;
 }
 
 //‚¨×–‚ƒuƒƒbƒN¶¬
