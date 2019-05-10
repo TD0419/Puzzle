@@ -23,12 +23,12 @@ void CTitleBackGround::Action()
 	if (Input::GetVKeyDown('Z') == true)
 	{
 		// ネットワーク接続画面へ
-		CSceneManager::SetScene(new CSceneConnect(ConnectKind::Server));
+		CSceneManager::SetScene(new CSceneConnect(NetWork::ConnectKind::Server));
 	}
 	else if (Input::GetVKeyDown('X') == true)
 	{
 		// ネットワーク接続画面へ
-		CSceneManager::SetScene(new CSceneConnect(ConnectKind::Client));
+		CSceneManager::SetScene(new CSceneConnect(NetWork::ConnectKind::Client));
 	}
 	// ----------------------------------------------------------
 }

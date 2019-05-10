@@ -64,20 +64,24 @@ void CMap::Init()
 void CMap::Action()
 {
 	//// TCPでのデータの受け渡し方法の例
-	//if (NetWork::GetConnectKind() == ConnectKind::Server)
+	//if (NetWork::GetConnectKind() == NetWork::ConnectKind::Server)
 	//{
 	//	int data = 100;
 	//	NetWork::Send((char*)&data, sizeof(data));
 	//}
-	//else if(NetWork::GetConnectKind() == ConnectKind::Client)
+	//else if(NetWork::GetConnectKind() == NetWork::ConnectKind::Client)
 	//{
 	//	int data = 0;
-	//	if (NetWork::Recv((char*)&data, sizeof(data)) == true)
+	//	RecvState State = NetWork::Recv((char*)&data, sizeof(data));
+
+	//	// 切断されていないかの確認
+	//	if (State == RecvState::Connect_Cut)
 	//	{
-	//		int a = 0;
+	//		// 切断された
+	//		// タイトルに戻す
+	//		Scene::SetScene(new CSceneTitle);
 	//	}
 	//}
-
 }
 
 void CMap::Draw()

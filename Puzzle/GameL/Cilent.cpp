@@ -32,16 +32,41 @@ bool Client::Connect()
 	addr.sin_family = AF_INET;				// IPv4
 	addr.sin_addr.s_addr = inet_addr(IP);	// 通信するIPアドレス
 	addr.sin_port = htons(PORT);			// 使用するポート設定
-	
+
+	// ノンブロッキングモードにする
+	u_long val = 1;
+	ioctlsocket(m_Socket, FIONBIO, &val);   // ソケットのI/Oモードを制御
+
 	// ここでサーバーに接続する
-	if (connect(m_Socket, (struct sockaddr*)&addr, sizeof(addr)) == 0)
+	connect(m_Socket, (struct sockaddr*)&addr, sizeof(addr));
+
+	if (m_Socket == INVALID_SOCKET)
 	{
-		// 接続成功
-		return true;
+		// 接続失敗
+		return false;
 	}
 
-	// 接続失敗
-	return false;
+	// 正しくサーバーに接続できているかのテスト
+	bool bData = false;
+
+	while (1)
+	{
+		// 確認用データ取得
+		RecvState ReState = Recv((char*)&bData, sizeof(bData));
+		
+		if (ReState == RecvState::Recv_Successful)
+		{
+			break;
+		}
+		else if(ReState == RecvState::Connect_Cut)
+		{
+			// サーバーが立ち上がっていません
+			return false;
+		}
+	}
+
+	// 接続成功
+	return true;
 }
 
 // データを送る
@@ -61,19 +86,26 @@ bool Client::Send(char* pData, int nDataLen)
 }
 
 // データを受け取る
-// 引数1 char* : 受け取りたいデータ
-// 引数2 int   : 受け取りたいデータの大きさ
-// 戻り値 bool : 受け取り成功したかどうか
-bool Client::Recv(char* pData, int nDataLen)
+// 引数1 char*		: 受け取りたいデータ
+// 引数2 int		: 受け取りたいデータの大きさ
+// 戻り値 RecvState : 受け取った結果(サーバーとの接続切れもここで調べる)
+RecvState Client::Recv(char* pData, int nDataLen)
 {
 	if (recv(m_Socket, pData, nDataLen, 0) > 0)
 	{
 		// データ受け取り成功
-		return true;
+		return RecvState::Recv_Successful;
+	}
+	
+	int nError = WSAGetLastError();
+	if (nError == WSAEWOULDBLOCK || nError == 0)
+	{
+		// データ受け取り中
+		return RecvState::Recv_Middle;
 	}
 
-	// データ受け取り失敗
-	return false;
+	// サーバーとの接続が切れている
+	return RecvState::Connect_Cut;
 }
 
 // サーバーとの接続遮断

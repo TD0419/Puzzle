@@ -3,18 +3,28 @@
 using namespace GameL;
 
 NetWorkStandard* NetWork::m_NetWork = 0;
-ConnectKind NetWork::m_ConnectKind;
+NetWork::ConnectKind NetWork::m_ConnectKind;
 
 // 引数1 ConnectKind : 自分がサーバー側かクライアント側か
 void NetWork::Init(ConnectKind connectkind)
 {
+	// サーバーオブジェクトまたは、クライアントオブジェクトをすでに生成していれば、作り直す
+	if (m_NetWork != 0)
+	{
+		m_NetWork->Close();
+		m_NetWork->Delete();
+
+		delete m_NetWork;
+		m_NetWork = 0;
+	}
+
 	// 接続方法によって変える
 	switch (connectkind)
 	{
-	case GameL::ConnectKind::Server:
+	case ConnectKind::Server:
 		m_NetWork = new Server;
 		break;
-	case GameL::ConnectKind::Client:
+	case ConnectKind::Client:
 		m_NetWork = new Client;
 		break;
 	default:
@@ -22,7 +32,7 @@ void NetWork::Init(ConnectKind connectkind)
 	}
 
 	m_NetWork->Init();
-	m_ConnectKind = connectkind;
+	m_ConnectKind = connectkind; // 自分はサーバーかクライアントかを調べる用の情報
 }
 
 void NetWork::Delete()
@@ -31,6 +41,7 @@ void NetWork::Delete()
 	{
 		m_NetWork->Delete();
 		delete m_NetWork;
+		m_NetWork = 0;
 	}
 }
 
@@ -53,8 +64,8 @@ bool NetWork::Send(char* pData, int nDataLen)
 // データを受け取る
 // 引数1 char* : 受け取りたいデータ
 // 引数2 int   : 受け取りたいデータの大きさ
-// 戻り値 bool : 受け取り成功したかどうか
-bool NetWork::Recv(char* pData, int nDataLen)
+// 戻り値 bool : 受け取り結果(サーバーとの接続切れもここで調べる)
+RecvState NetWork::Recv(char* pData, int nDataLen)
 { 
 	return m_NetWork->Recv(pData, nDataLen); 
 }

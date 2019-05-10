@@ -10,7 +10,7 @@ using namespace GameL;
 class CSceneConnect : public CScene
 {
 public:
-	CSceneConnect(ConnectKind connectkind);
+	CSceneConnect(NetWork::ConnectKind connectkind);
 	~CSceneConnect() {}
 	void InitScene();//初期化メソッド
 	void Scene();	 //実行中メソッド

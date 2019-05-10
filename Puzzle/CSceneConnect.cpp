@@ -14,8 +14,9 @@ using namespace GameL;
 #include "GameHead.h"
 
 // 引数1 ConnectKind : クライアントorサーバー
-CSceneConnect::CSceneConnect(ConnectKind connectkind)
+CSceneConnect::CSceneConnect(NetWork::ConnectKind connectkind)
 {
+	// ネットワーク情報初期化
 	NetWork::Init(connectkind);
 }
 
@@ -33,9 +34,5 @@ void CSceneConnect::InitScene()
 //実行中メソッド
 void CSceneConnect::Scene()
 {
-	if (NetWork::Connect() == true)
-	{
-		// ゲーム画面へ
-		Scene::SetScene(new CSceneMain());
-	}
+	
 }

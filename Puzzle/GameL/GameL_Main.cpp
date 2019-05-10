@@ -121,12 +121,12 @@ int APIENTRY wWinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPTSTR szCmdLi
 
 	}while( msg.message != WM_QUIT );
 
-	NetWork::Delete();
 	CMultiThread::Delete();
 	CUserData::Delete();
 	CHitBoxManager::Delete();
 	CSceneObjManager::Delete();
 	CSceneManager::Delete();
+	NetWork::Delete();
 	CDrawFont::Delete();
 	CAudio::Delete();
 	CDrawTexture::DeleteDrawTexture();
@@ -162,5 +162,3 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
-
-
