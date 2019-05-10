@@ -11,6 +11,7 @@ enum OBJ_NAME
 	OBJ_TITLE_BACK_GROUND,
 	OBJ_RESULT_BACK_GROUND,
 	OBJ_MAP,
+	OBJ_NEXT_BLOCK,
 };
 //------------------------------------------------
 
@@ -59,6 +60,7 @@ struct UserData
 #include "CConnectBackGround.h"
 #include "CMap.h"
 #include "CFreezeblock.h"
+#include "CNextBlock.h"
 //------------------------------------------------
 
 //ゲームシーンクラスヘッダ------------------------

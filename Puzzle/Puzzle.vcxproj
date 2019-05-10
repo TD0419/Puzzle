@@ -130,6 +130,7 @@
     <ClCompile Include="CDeleteBlock.cpp" />
     <ClCompile Include="CFreezeblock.cpp" />
     <ClCompile Include="CMap.cpp" />
+    <ClCompile Include="CNextBlock.cpp" />
     <ClCompile Include="CResultBackGround.cpp" />
     <ClCompile Include="CSceneConnect.cpp" />
     <ClCompile Include="CSceneResult.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="CDeleteBlock.h" />
     <ClInclude Include="CFreezeblock.h" />
     <ClInclude Include="CMap.h" />
+    <ClInclude Include="CNextBlock.h" />
     <ClInclude Include="CResultBackGround.h" />
     <ClInclude Include="CSceneConnect.h" />
     <ClInclude Include="CSceneResult.h" />

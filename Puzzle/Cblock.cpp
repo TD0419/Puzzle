@@ -33,6 +33,8 @@ void Cblock::Init()
 //アクション
 void Cblock::Action()
 {
+	bool a = false;
+
 	//マップオブジェクト取得
 	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
 
@@ -61,7 +63,7 @@ void Cblock::Action()
 
 
 	//移動ベクトル初期化
-	m_fVy = 2.0f;
+	m_fVy = 4.0f;
 	m_fVx = 0.0f;
 
 	//位置を32=1のようにする
@@ -136,11 +138,12 @@ void Cblock::Action()
 		//マップに停止したブロックの情報を入れる
 		obj_map->SetMap(x, y, m_bColornum + 1);
 
-
 		obj_map->confirmblock(x, y, m_bColornum + 1);
 
 		m_bStop_flag = true;//停止フラグON
-
+		
+		int a = obj_map->FreezeBlock_Generate();
+		
 		//再落下時に反応しないように
 		if (m_Again_fall_on == false)
 		{
