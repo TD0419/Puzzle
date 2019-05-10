@@ -184,7 +184,7 @@ void Cblock::Draw()
 	src.m_right = 32.0f;
 	src.m_bottom = 32.0f;
 
-	dst.m_top = 0.0f + m_fPy;
+	dst.m_top = 0.0f + m_fPy - 4.0f;
 	dst.m_left = 0.0f + m_fPx;
 	dst.m_right = dst.m_left + 32.0f;
 	dst.m_bottom = dst.m_top + 32.0f;
