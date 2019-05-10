@@ -54,7 +54,7 @@ void CSceneMain::InitScene()
 	Draw::LoadImageW(L"next_block_space.png", 15, TEX_SIZE_64);
 
 	//ブロックオブジェクト読み込み
-	Cblock* p_block = new Cblock();
+	Cblock* p_block = new Cblock(100);
 	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
 
 	//マップオブジェクト読み込み

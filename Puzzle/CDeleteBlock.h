@@ -11,7 +11,7 @@ using namespace GameL;
 class CDeleteBlock : public Cblock
 {
 	public:
-		CDeleteBlock() {};
+		CDeleteBlock(int num);
 		~CDeleteBlock() {};
 		void Init();
 		void Action();

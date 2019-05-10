@@ -13,7 +13,7 @@ void CDeleteBlock::Init()
 
 void CDeleteBlock::Action()
 {
-	Cblock nor_block;
+	//Cblock nor_block;
 
 	
 }

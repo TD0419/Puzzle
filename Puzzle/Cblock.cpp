@@ -9,15 +9,26 @@
 //使用するネームスペース
 using namespace GameL;
 
+Cblock::Cblock(int num)
+{
+	if (num == 100)
+	{
+		m_bColornum = rand() % 6;
+	}
+	else
+	{
+		m_bColornum = num;
+	}
+}
+
+
 //イニシャライズ
 void Cblock::Init()
 {
 	m_fPx = 416.0f;
-	m_fPy = 32.0f;
+	m_fPy = 0.0f;
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
-
-	m_bColornum = rand() % 6;//色決めのためのランダム
 
 	m_bStop_flag = false;
 
@@ -28,12 +39,12 @@ void Cblock::Init()
 	m_elementY_storage = 0;
 
 	m_Again_fall_on = false;
+	m_block_fall_ok = false;
 }
 
 //アクション
 void Cblock::Action()
 {
-	bool a = false;
 
 	//マップオブジェクト取得
 	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
@@ -142,14 +153,17 @@ void Cblock::Action()
 
 		m_bStop_flag = true;//停止フラグON
 		
-		int a = obj_map->FreezeBlock_Generate();
-		
 		//再落下時に反応しないように
 		if (m_Again_fall_on == false)
 		{
-			//新しく降らせる
-			Cblock* p_block = new Cblock();
-			Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+			//次ブロックオブジェクト取得
+			CNextBlock* obj_NBlock = (CNextBlock*)Objs::GetObj(OBJ_NEXT_BLOCK);
+
+			//落下おっけーのフラグを入れる
+			m_block_fall_ok = true;
+
+			//落下オッケーフラグが変わったら入れる
+			obj_NBlock->Setblock_fall(m_block_fall_ok);
 		}
 	}
 

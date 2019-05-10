@@ -10,11 +10,14 @@ using namespace GameL;
 class Cblock : public CObj
 {
 	public:
-		Cblock() {};
+		Cblock(int num);
 		~Cblock() {};
 		void Init();
 		void Action();
 		void Draw();
+		bool Getblock_fall() { return m_block_fall_ok; };
+
+
 	private:
 
 
@@ -28,6 +31,7 @@ class Cblock : public CObj
 		bool m_a_key_push;//aキーの長押し入力防止フラグ
 		bool m_d_key_push;//dキーの長押し入力防止フラグ
 		bool m_Again_fall_on;
+		bool m_block_fall_ok;
 
 		int m_bColornum;//ブロックの色
 		int m_elementX_storage;//ブロックの要素番号Xの保存
