@@ -69,13 +69,16 @@ void Cblock::Action()
 			return;
 		}
 
-		return;//とりあえず何もしない
+		return;
 	}
 
 
 	//移動ベクトル初期化
 	m_fVy = 4.0f;
 	m_fVx = 0.0f;
+
+	//移動ベクトル加算
+	m_fPy += m_fVy;
 
 	//位置を32=1のようにする
 	int x = ((int)m_fPx - 160) / 32;
@@ -133,11 +136,7 @@ void Cblock::Action()
 		m_d_key_push = false;
 	}
 
-
-
-	//移動ベクトル加算
 	m_fPx += m_fVx;
-	m_fPy += m_fVy;
 
 	//ブロックが一番下に着いたら止める
 	if ( obj_map->GetMap(x,y+1) != 0/*383.0f-32.0f*//*(float)Window::GetHeight() - 32.0f*/)
@@ -184,7 +183,7 @@ void Cblock::Draw()
 	src.m_right = 32.0f;
 	src.m_bottom = 32.0f;
 
-	dst.m_top = 0.0f + m_fPy - 4.0f;
+	dst.m_top = 0.0f + m_fPy;
 	dst.m_left = 0.0f + m_fPx;
 	dst.m_right = dst.m_left + 32.0f;
 	dst.m_bottom = dst.m_top + 32.0f;

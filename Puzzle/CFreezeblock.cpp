@@ -13,7 +13,7 @@ CFreezeblock::CFreezeblock(int x,int y,int id)
 {
 	m_fPx = x * 32.0f + 160.0f;
 	m_fPy = y * 32.0f;
-	m_bColornum = 7;
+	m_bColornum = id;
 	m_elementX_storage = x;
 	m_elementY_storage = y;
 }
@@ -36,6 +36,23 @@ void CFreezeblock::Action()
 	//停止なら
 	if (m_bStop_flag == true)
 	{
+		//マップのデータがブロックの消去で無くなっていたら
+		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage) == 0)
+		{
+			this->SetStatus(false);//ブロック消す
+		}
+
+		//下にブロックがあって、消える処理で消えていたら
+		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage + 1) == 0)
+		{
+			//停止フラグを切って、再落下させる
+			m_bStop_flag = false;
+			//m_Again_fall_on = true;
+			obj_map->SetMap(m_elementX_storage, m_elementY_storage, 0);
+
+			return;
+		}
+
 		return;//とりあえず何もしない
 	}
 
