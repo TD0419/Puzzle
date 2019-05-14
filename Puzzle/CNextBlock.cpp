@@ -11,11 +11,12 @@ void CNextBlock::Init()
 	m_Px = 608.0f;
 	m_Py = 192.0f;
 
-	freeze_block_late = 0;
-	generate_block_flag = false;
+	m_freeze_block_late = 0;
+	m_generate_block_flag = false;
 
 
 	m_block_num = 0;
+
 }
 
 void CNextBlock::Action()
@@ -26,7 +27,7 @@ void CNextBlock::Action()
 	Cblock* obj_block = (Cblock*)Objs::GetObj(OBJ_BLOCK);
 
 	//ブロッククラスのm_block_fall_okを持ってくる
-	generate_block_flag = obj_block->Getblock_fall();
+	m_generate_block_flag = obj_block->Getblock_fall();
 
 	//FreezeBlock_Generateの戻り値をとってくる
 	int freeze_time = obj_map->FreezeBlock_Generate();
@@ -35,17 +36,17 @@ void CNextBlock::Action()
 	if (freeze_time != 0)
 	{
 		//freeze_timeに代入する
-		freeze_block_late = freeze_time;
+		m_freeze_block_late = freeze_time;
 	}
 
 	//下に落ちた時のフラグがtrueなら
-	if (generate_block_flag == true)
+	if (m_generate_block_flag == true)
 	{
 		//freeze_block_lateが0じゃなかったら
-		if (freeze_block_late > 0)
+		if (m_freeze_block_late > 0)
 		{
 			//1減らす
-			freeze_block_late--;
+			m_freeze_block_late--;
 		}
 		else
 		{
@@ -57,7 +58,7 @@ void CNextBlock::Action()
 			Objs::InsertObj(p_block, OBJ_BLOCK, 1);
 
 			//落下フラグを変える
-			generate_block_flag = false;
+			m_generate_block_flag = false;
 		}
 	}
 
@@ -79,8 +80,8 @@ void CNextBlock::Draw()
 
 	dst.m_top = 0.0f + m_Py;
 	dst.m_left = 0.0f + m_Px;
-	dst.m_right = dst.m_left + 64.0f;
-	dst.m_bottom = dst.m_top + 64.0f;
+	dst.m_right = dst.m_left + 96.0f;
+	dst.m_bottom = dst.m_top + 96.0f;
 
 	Draw::Draw(15, &src, &dst, c, 0);
 }
