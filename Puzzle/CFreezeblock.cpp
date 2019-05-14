@@ -11,8 +11,8 @@ using namespace GameL;
 
 CFreezeblock::CFreezeblock(int x,int y,int id)
 {
-	m_fPx = x * 32.0f + 160.0f;
-	m_fPy = y * 32.0f + 192.0f;
+	m_fPx = x * 32.0f + MAP_SHIFT_X;
+	m_fPy = y * 32.0f + MAP_SHIFT_Y;
 	m_bColornum = id;
 	m_elementX_storage = x;
 	m_elementY_storage = y;
@@ -63,7 +63,7 @@ void CFreezeblock::Action()
 	//ベクトル加算
 	m_fPy += m_fVy;
 
-	int x = ((int)m_fPx - 160) / 32;
+	int x = ((int)m_fPx - 96) / 32;
 	int y = ((int)m_fPy - 192) / 32;
 
 	//ブロックが一番下に着いたら止める

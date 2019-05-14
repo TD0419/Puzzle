@@ -10,7 +10,7 @@ using namespace GameL;
 #define MAP_Y 18
 #define MAP_X 12
 
-#define MAP_SHIFT_X 160.0f
+#define MAP_SHIFT_X 96.0f
 #define MAP_SHIFT_Y 192.0f
 
 
@@ -18,7 +18,8 @@ using namespace GameL;
 class CMap : public CObj
 {
 	public:
-		CMap() {};
+		CMap(float a);
+		//CMap() {};
 		~CMap() {};
 		void Init();
 		void Action();
@@ -31,6 +32,7 @@ class CMap : public CObj
 
 	private:
 		int m_map[MAP_Y][MAP_X];
+		float shift_x;
 
 		int freezeblock_num;
 		int delete_freezeblock;

@@ -9,6 +9,12 @@
 //使用するネームスペース
 using namespace GameL;
 
+
+CMap::CMap(float a)
+{
+	shift_x = MAP_SHIFT_X + a;
+}
+
 void CMap::Init()
 {
 	int map[MAP_Y][MAP_X] =
@@ -104,23 +110,7 @@ void CMap::Draw()
 		for (int x = 0; x < MAP_X; x++)
 		{
 			dst.m_top = MAP_SHIFT_Y + y * 32.0f;
-			dst.m_left = MAP_SHIFT_X + x * 32.0f;
-			dst.m_right = dst.m_left + 32.0f;
-			dst.m_bottom = dst.m_top + 32.0f;
-
-			if (m_map[y][x] == 99)
-			{
-				Draw::Draw(10, &src, &dst, c, 0.0f);
-			}
-		}
-	}
-
-	for (int y = 0; y < MAP_Y; y++)
-	{
-		for (int x = 0; x < MAP_X; x++)
-		{
-			dst.m_top = MAP_SHIFT_Y + y * 32.0f;
-			dst.m_left = 800.0f + x * 32.0f;
+			dst.m_left = shift_x + x * 32.0f;
 			dst.m_right = dst.m_left + 32.0f;
 			dst.m_bottom = dst.m_top + 32.0f;
 
