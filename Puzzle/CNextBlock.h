@@ -15,7 +15,7 @@ class CNextBlock : public CObj
 		void Init();
 		void Action();
 		void Draw();
-		void Setblock_fall(bool a) { a = generate_block_flag; };
+		void Setblock_fall(bool a) { generate_block_flag = a; }
 
 	private:
 		float m_Px;

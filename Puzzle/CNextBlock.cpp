@@ -14,7 +14,6 @@ void CNextBlock::Init()
 	freeze_block_late = 0;
 	generate_block_flag = false;
 
-
 	m_block_num = 0;
 }
 
@@ -24,9 +23,6 @@ void CNextBlock::Action()
 	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
 	//ブロックオブジェクト取得
 	Cblock* obj_block = (Cblock*)Objs::GetObj(OBJ_BLOCK);
-
-	//ブロッククラスのm_block_fall_okを持ってくる
-	generate_block_flag = obj_block->Getblock_fall();
 
 	//FreezeBlock_Generateの戻り値をとってくる
 	int freeze_time = obj_map->FreezeBlock_Generate();
