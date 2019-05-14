@@ -9,7 +9,7 @@ using namespace GameL;
 void CNextBlock::Init()
 {
 	m_Px = 608.0f;
-	m_Py = 0.0f;
+	m_Py = 192.0f;
 
 	freeze_block_late = 0;
 	generate_block_flag = false;

@@ -36,6 +36,8 @@ void CMap::Init()
 	memcpy(m_map, map, sizeof(int) * MAP_Y * MAP_X);
 
 	freezeblock_num = 0;
+	delete_freezeblock = 0;
+
 
 	//// エフェクト使用例
 	//RECT_F src, dst, dst2;
@@ -101,7 +103,7 @@ void CMap::Draw()
 	{
 		for (int x = 0; x < MAP_X; x++)
 		{
-			dst.m_top = 0.0f + y * 32.0f;
+			dst.m_top = 192.0f + y * 32.0f;
 			dst.m_left = 160.0f + x * 32.0f;
 			dst.m_right = dst.m_left + 32.0f;
 			dst.m_bottom = dst.m_top + 32.0f;
@@ -204,6 +206,39 @@ void CMap::confirmblock(int x, int y, int id)
 				}
 				else
 				{
+					//１マス上方向にお邪魔ブロックがあれば
+					if (m_map[(y + m_del_under) - 1][x] == 8)
+					{
+						delete_freezeblock += 1;
+
+						m_map[(y + m_del_under) - 1][x] = 0;
+					}
+
+					//１マス下方向にお邪魔ブロックがあれば
+					if (m_map[(y + m_del_under) + 1][x] == 8)
+					{
+						delete_freezeblock += 1;
+
+						m_map[(y + m_del_under) + 1][x] = 0;
+					}
+
+					//１マス左方向にお邪魔ブロックがあれば
+					if (m_map[y + m_del_under][x - 1] == 8)
+					{
+						delete_freezeblock += 1;
+
+						m_map[y + m_del_under][x - 1] = 0;
+					}
+					
+					//１マス右方向にお邪魔ブロックがあれば
+					if (m_map[y + m_del_under][x + 1] == 8)
+					{
+						delete_freezeblock += 1;
+
+						m_map[y + m_del_under][x + 1] = 0;
+					}
+
+
 					m_map[y + m_del_under][x] = 0;
 
 					freezeblock_num += 1;
@@ -245,6 +280,38 @@ void CMap::confirmblock(int x, int y, int id)
 					}
 					else
 					{
+						//１マス上方向にお邪魔ブロックがあれば
+						if (m_map[y - 1][x + m_del_right] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y - 1][x + m_del_right] = 0;
+						}
+
+						//１マス下方向にお邪魔ブロックがあれば
+						if (m_map[y + 1][x + m_del_right] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y + 1][x + m_del_right] = 0;
+						}
+
+						//１マス左方向にお邪魔ブロックがあれば
+						if (m_map[y][(x + m_del_right) - 1] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y][(x + m_del_right) - 1] = 0;
+						}
+
+						//１マス右方向にお邪魔ブロックがあれば
+						if (m_map[y][(x + m_del_right) + 1] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y][(x + m_del_right) + 1] = 0;
+						}
+
 						m_map[y][x + m_del_right] = 0;
 
 						freezeblock_num += 1;
@@ -288,6 +355,38 @@ void CMap::confirmblock(int x, int y, int id)
 					}
 					else
 					{
+						//１マス上方向にお邪魔ブロックがあれば
+						if (m_map[y - 1][x - m_del_left] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y - 1][x - m_del_left] = 0;
+						}
+
+						//１マス下方向にお邪魔ブロックがあれば
+						if (m_map[y + 1][x - m_del_left] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y + 1][x - m_del_left] = 0;
+						}
+
+						//１マス左方向にお邪魔ブロックがあれば
+						if (m_map[y][(x - m_del_left) - 1] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y][(x - m_del_left) - 1] = 0;
+						}
+
+						//１マス右方向にお邪魔ブロックがあれば
+						if (m_map[y][(x - m_del_left) + 1] == 8)
+						{
+							delete_freezeblock += 1;
+
+							m_map[y][(x - m_del_left) + 1] = 0;
+						}
+
 						m_map[y][x - m_del_left] = 0;
 
 						freezeblock_num += 1;
@@ -299,8 +398,10 @@ void CMap::confirmblock(int x, int y, int id)
 		}
 	}
 
-	//FreezeBlock_Generate();
+	freezeblock_num += delete_freezeblock / 2;//お邪魔ブロック生成の総数に消えたお邪魔ブロックの半数を追加する
 
+	delete_freezeblock = 0;
+	
 	return;
 }
 
@@ -345,7 +446,7 @@ int CMap::FreezeBlock_Generate()
 			}
 
 			//お邪魔ブロック出現
-			CFreezeblock* p_fblock = new CFreezeblock(freeze_x + 1,0,7);
+			CFreezeblock* p_fblock = new CFreezeblock(freeze_x + 1,0,8);
 			Objs::InsertObj(p_fblock, OBJ_FREEZE_BLOCK, 1);
 
 		}
