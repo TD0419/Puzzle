@@ -103,7 +103,7 @@ void CMap::Draw()
 	{
 		for (int x = 0; x < MAP_X; x++)
 		{
-			dst.m_top = 0.0f + y * 32.0f;
+			dst.m_top = 192.0f + y * 32.0f;
 			dst.m_left = 160.0f + x * 32.0f;
 			dst.m_right = dst.m_left + 32.0f;
 			dst.m_bottom = dst.m_top + 32.0f;
@@ -400,6 +400,8 @@ void CMap::confirmblock(int x, int y, int id)
 
 	freezeblock_num += delete_freezeblock / 2;//お邪魔ブロック生成の総数に消えたお邪魔ブロックの半数を追加する
 
+	delete_freezeblock = 0;
+	
 	return;
 }
 

@@ -12,7 +12,7 @@ using namespace GameL;
 CFreezeblock::CFreezeblock(int x,int y,int id)
 {
 	m_fPx = x * 32.0f + 160.0f;
-	m_fPy = y * 32.0f;
+	m_fPy = y * 32.0f + 192.0f;
 	m_bColornum = id;
 	m_elementX_storage = x;
 	m_elementY_storage = y;
@@ -64,7 +64,7 @@ void CFreezeblock::Action()
 	m_fPy += m_fVy;
 
 	int x = ((int)m_fPx - 160) / 32;
-	int y = (int)m_fPy / 32;
+	int y = ((int)m_fPy - 192) / 32;
 
 	//ƒuƒƒbƒN‚ªˆê”Ô‰º‚É’…‚¢‚½‚ç~‚ß‚é
 	if (obj_map->GetMap(x, y + 1) != 0)

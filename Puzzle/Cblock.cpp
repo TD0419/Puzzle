@@ -26,7 +26,7 @@ Cblock::Cblock(int num)
 void Cblock::Init()
 {
 	m_fPx = 416.0f;
-	m_fPy = 0.0f;
+	m_fPy = 192.0f;
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
 
@@ -82,7 +82,7 @@ void Cblock::Action()
 
 	//位置を32=1のようにする
 	int x = ((int)m_fPx - 160) / 32;
-	int y = (int)m_fPy / 32;
+	int y = ((int)m_fPy - 192) / 32;
 
 	//Aを押したら
 	// XBOXコン 使用例 if (Input::GetJoyButton(XBoxInput::UP) == true)
