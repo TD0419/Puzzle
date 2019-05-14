@@ -25,8 +25,8 @@ Cblock::Cblock(int num)
 //イニシャライズ
 void Cblock::Init()
 {
-	m_fPx = 416.0f;
-	m_fPy = 192.0f;
+	m_fPx = MAP_SHIFT_X + (MAP_X * 32.0f / 2);
+	m_fPy = MAP_SHIFT_Y;
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
 

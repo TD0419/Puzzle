@@ -8,7 +8,11 @@ using namespace GameL;
 
 //定数
 #define MAP_Y 18
-#define MAP_X 14
+#define MAP_X 12
+
+#define MAP_SHIFT_X 160.0f
+#define MAP_SHIFT_Y 192.0f
+
 
 //オブジェクト：マップ
 class CMap : public CObj
