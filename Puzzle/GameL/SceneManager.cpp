@@ -48,7 +48,8 @@ void CSceneManager::GameLoop()
 	m_Time+= m_TimeEnd - m_TimeStart;
 
 	//FPS----------------
-	if(DRAW_FPS)
+	// デバッグ時のみ表示
+	#ifdef _DEBUG
 	{
 		static wchar_t  c[8];
 		static float cl[4]={1.0f,1.0f,1.0f,1.0f};
@@ -60,6 +61,7 @@ void CSceneManager::GameLoop()
 		}
 		CDrawFont::StrDraw(c,0,0,16,cl);
 	}
+	#endif
 	//-------------------
 
 	CDirectXDeviec::ViewFlip();		//スワップ

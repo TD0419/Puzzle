@@ -11,7 +11,9 @@ enum OBJ_NAME
 	OBJ_TITLE_BACK_GROUND,
 	OBJ_RESULT_BACK_GROUND,
 	OBJ_MAP,
+	OBJ_MAP_PLAY2,
 	OBJ_NEXT_BLOCK,
+	OBJ_NEXT_BLOCK_2,
 };
 //------------------------------------------------
 
