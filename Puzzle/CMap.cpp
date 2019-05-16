@@ -1,7 +1,6 @@
 //使用するヘッダーファイル
 #include "CMap.h"
 #include "GameL/SceneObjManager.h"
-#include "GameL/DrawTexture.h"
 #include "GameHead.h"
 
 #include "CEffect.h"
@@ -253,7 +252,7 @@ void CMap::confirmblock(int x, int y, int id)
 
 						m_map[y + m_del_under][x - 1] = 0;
 					}
-					
+
 					//１マス右方向にお邪魔ブロックがあれば
 					if (m_map[y + m_del_under][x + 1] == 8)
 					{
@@ -269,7 +268,17 @@ void CMap::confirmblock(int x, int y, int id)
 				}
 			}
 
-			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
+			// エフェクトの表示位置
+			RECT_F dst;
+			dst.m_top = MAP_SHIFT_Y + y * 32.f;
+			dst.m_left = shift_x + x * 32.f;
+			dst.m_right = dst.m_left + 32.f;
+			dst.m_bottom = MAP_SHIFT_Y + (y + m_search_under + 1) * 32.f;
+
+			// エフェクトの生成
+			CreateEffect(dst, 90.f);
+
+			break;//2つ以上あった場合、消えないようにするために脱出
 		}
 	}
 
@@ -349,6 +358,15 @@ void CMap::confirmblock(int x, int y, int id)
 					}
 				}
 			}
+			// エフェクトの表示位置を設定
+			RECT_F dst;
+			dst.m_top = MAP_SHIFT_Y + y * 32.f;
+			dst.m_left = shift_x + x * 32.f;
+			dst.m_right = shift_x + (x + m_search_right + 1) * 32.f;
+			dst.m_bottom = dst.m_top + 32.f;
+
+			// エフェクトを生成
+			CreateEffect(dst, 180.f);
 
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
@@ -430,7 +448,17 @@ void CMap::confirmblock(int x, int y, int id)
 				}
 			}
 
-			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
+			// エフェクトの表示位置を設定
+			RECT_F dst;
+			dst.m_top = MAP_SHIFT_Y + y * 32.f;
+			dst.m_left = shift_x + (x - m_search_left) * 32.f;
+			dst.m_right = shift_x + (x + 1) * 32.f;
+			dst.m_bottom = dst.m_top + 32.f;
+
+			// エフェクトを生成
+			CreateEffect(dst, 0.f);
+
+			break;//2つ以上あった場合、消えないようにするために脱出
 		}
 	}
 
@@ -490,4 +518,26 @@ int CMap::FreezeBlock_Generate()
 
 	//お邪魔ブロックが落下するフレーム数を返す
 	return y_num * 32 / 4;
+}
+
+// エフェクトを生成する
+// 引数1 RECT_F : エフェクトの表示位置
+// 引数2 float  : エフェクトの角度(度数法)
+void CMap::CreateEffect(RECT_F dst, float fRotation)
+{
+	// エフェクトの切り取り位置
+	RECT_F src;
+	src.m_top = 0.f;
+	src.m_left = 0.f;
+	src.m_right = 512.f;
+	src.m_bottom = 512.f;
+	float fWhiteColor[4] = { 1.f,1.f,1.f,1.f };			// 白色
+	float fTranslucentColor[4] = { 1.f,1.f,1.f,0.5f };  // 半透明
+
+	// エフェクトを表示するシステム
+	CEffectSystem* pEffectSystem = new CEffectSystem(new CExEffect(11, &src, &dst, 20, fTranslucentColor, fWhiteColor, fRotation));
+	CSceneObjManager::InsertObj(pEffectSystem, 100, 10);
+	// 次に表示したいエフェクトを追加
+	pEffectSystem->AddNextEffect(new CExEffect(12, &src, &dst, 20, fWhiteColor, fWhiteColor, fRotation));
+	pEffectSystem->AddNextEffect(new CExEffect(13, &src, &dst, 20, fWhiteColor, fTranslucentColor, fRotation));
 }

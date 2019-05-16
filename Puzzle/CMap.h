@@ -2,6 +2,7 @@
 
 //使用するヘッダー
 #include "GameL/SceneObjManager.h"
+#include "GameL/DrawTexture.h"
 #include "CNextBlock.h"
 
 //使用するネームスペース
@@ -33,6 +34,9 @@ class CMap : public CObj
 		void confirmblock(int x, int y, int id);
 		int FreezeBlock_Generate();
 		bool FreezeBlock_Check();
+
+	private:
+		void CreateEffect(RECT_F dst, float fRotation);
 
 	private:
 		int m_map[MAP_Y][MAP_X];

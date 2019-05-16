@@ -25,6 +25,23 @@ CEffect::CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime)
 // 引数3 RECT_F*  : 画像の表示位置
 // 引数4 int	  : エフェクトの表示時間 
 // 引数5 float    : 画像回転(度数法)
+CEffect::CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime, float fRotation)
+{
+	float fColor[4] = { 1.f, 1.f, 1.f, 1.f };
+	m_nId = nId;
+	m_RectSrc = *pRectSrc;
+	m_RectDst = *pRectDst;
+	m_nLiveTime = nLiveTime;
+	m_nElapsedTime = 0;
+	m_fRotation = fRotation;
+	memcpy_s(m_fColor, sizeof(m_fColor), fColor, sizeof(float) * 4);
+}
+
+// 引数1 int	  : エフェクトに使う画像ID
+// 引数2 RECT_F*  : 画像の切り取り位置
+// 引数3 RECT_F*  : 画像の表示位置
+// 引数4 int	  : エフェクトの表示時間 
+// 引数5 float    : 画像回転(度数法)
 // 引数6 float[4] : 色情報
 CEffect::CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime, float fRotation, float fColor[4])
 {
@@ -64,13 +81,47 @@ void CEffect::Draw()
 // 引数1 int	  : エフェクトに使う画像のID
 // 引数2 RECT_F*  : 画像の切り取り位置
 // 引数3 RECT_F*  : 画像の表示位置
-// 引数4 int	  : エフェクトの表示時間 
-// 引数5 float    : 画像回転(度数法)
-// 引数6 float[4] : エフェクトが生成された時の色情報
-// 引数7 float[4] : エフェクトの寿命が尽きた時の色情報
+// 引数4 int	  : エフェクトの表示時間
+// 引数5 float[4] : エフェクトが生成された時の色情報
+// 引数6 float[4] : エフェクトの寿命が尽きた時の色情報
 CExEffect::CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
 	float fFirstColor[4], float fLastColor[4])
 	: CEffect(nId, pRectSrc, pRectDst, nLiveTime)
+{
+	memcpy_s(m_fFirstColor, sizeof(m_fFirstColor), fFirstColor, sizeof(float) * 4);
+	memcpy_s(m_fLastColor, sizeof(m_fLastColor), fLastColor, sizeof(float) * 4);
+
+	m_RectFirst = *pRectDst;
+	m_RectLast = *pRectDst;
+}
+
+// 引数1 int	  : エフェクトに使う画像ID
+// 引数2 RECT_F*  : 画像の切り取り位置
+// 引数3 RECT_F*  : 画像の表示位置
+// 引数4 int	  : エフェクトの表示時間 
+// 引数5 float[4] : エフェクトが生成された時の色情報
+// 引数6 float[4] : エフェクトの寿命が尽きた時の色情報
+// 引数7 RECT_F*  : エフェクトの寿命が尽きた時の表示位置
+CExEffect::CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
+	float fFirstColor[4], float fLastColor[4], RECT_F* pRectDstLast)
+	: CEffect(nId, pRectSrc, pRectDst, nLiveTime)
+{
+	memcpy_s(m_fFirstColor, sizeof(m_fFirstColor), fFirstColor, sizeof(float) * 4);
+	memcpy_s(m_fLastColor, sizeof(m_fLastColor), fLastColor, sizeof(float) * 4);
+
+	m_RectFirst = *pRectDst;
+	m_RectLast = *pRectDstLast;
+}
+
+// 引数1 int	  : エフェクトに使う画像のID
+// 引数2 RECT_F*  : 画像の切り取り位置
+// 引数3 RECT_F*  : 画像の表示位置
+// 引数4 int	  : エフェクトの表示時間
+// 引数5 float[4] : エフェクトが生成された時の色情報
+// 引数6 float[4] : エフェクトの寿命が尽きた時の色情報
+CExEffect::CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
+	float fFirstColor[4], float fLastColor[4], float fRotation)
+	: CEffect(nId, pRectSrc, pRectDst, nLiveTime, fRotation)
 {
 	memcpy_s(m_fFirstColor, sizeof(m_fFirstColor), fFirstColor, sizeof(float) * 4);
 	memcpy_s(m_fLastColor, sizeof(m_fLastColor), fLastColor, sizeof(float) * 4);
@@ -88,8 +139,8 @@ CExEffect::CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
 // 引数7 float[4] : エフェクトの寿命が尽きた時の色情報
 // 引数8 RECT_F*  : エフェクトの寿命が尽きた時の表示位置
 CExEffect::CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
-	float fFirstColor[4], float fLastColor[4], RECT_F* pRectDstLast)
-	: CEffect(nId, pRectSrc, pRectDst, nLiveTime)
+	float fFirstColor[4], float fLastColor[4], RECT_F* pRectDstLast, float fRotation)
+	: CEffect(nId, pRectSrc, pRectDst, nLiveTime, fRotation)
 {
 	memcpy_s(m_fFirstColor, sizeof(m_fFirstColor), fFirstColor, sizeof(float) * 4);
 	memcpy_s(m_fLastColor, sizeof(m_fLastColor), fLastColor, sizeof(float) * 4);

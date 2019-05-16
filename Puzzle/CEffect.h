@@ -13,8 +13,9 @@ using namespace GameL;
 class CEffect : public CObj
 {
 public:
-	CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int LiveTime, float fRotation, float fColor[4]);
-	CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int LiveTime);
+	CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime, float fRotation, float fColor[4]);
+	CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime, float fRotation);
+	CEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime);
 	~CEffect() {}
 	void Init() {}
 	virtual void Action();
@@ -36,9 +37,16 @@ class CExEffect : public CEffect
 {
 public:
 	CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
-		float fFirstColor[4], float fLastColor[4]);
-	CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
 		float fFirstColor[4], float fLastColor[4], RECT_F* pRectDstLast);
+
+	CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
+		float fFirstColor[4], float fLastColor[4]);
+
+	CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
+		float fFirstColor[4], float fLastColor[4], RECT_F* pRectDstLast, float fRotation);
+
+	CExEffect(int nId, RECT_F* pRectSrc, RECT_F* pRectDst, int nLiveTime,
+		float fFirstColor[4], float fLastColor[4], float fRotation);
 	~CExEffect() {}
 	void Action();
 

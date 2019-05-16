@@ -1,8 +1,13 @@
 #include "DrawTexture.h"
+
 using namespace GameL;
 
 #define SAFE_RELEASE(p)      { if (p) { (p)->Release();    (p)=nullptr;  }	}
 #define SAFE_RESET(p)		 { if (p) { (p).reset(nullptr);				 }  }
+
+// 画像データが入っているディレクトリを指定
+// (ここで指定することでわざわざ全てのディレクトリを書かなくてもよくなる)
+#define GRAPHIC_DIRECTORY (L"Asset\\Graphic\\")
 
 //ポリゴン構造体
 struct DRAW_POLYGON
@@ -362,7 +367,7 @@ void CDrawTexture::InitDraw(ID3D11Device* p_device,ID3D11DeviceContext* p_device
 }
 
 //テクスチャロード
-void  CDrawTexture::LoadImage(const wchar_t* name,int id,TEX_SIZE hw)
+void CDrawTexture::LoadImage(const wchar_t* name,int id,TEX_SIZE hw)
 {
 	if( 0  > id) 
 		return ; 
@@ -393,9 +398,24 @@ void  CDrawTexture::LoadImage(const wchar_t* name,int id,TEX_SIZE hw)
     ImageLoadInfoDesc.pSrcInfo	= 0;
 	ImageLoadInfoDesc.MipLevels = 1;
 
+	// ディレクトリ情報を追加する
+	wchar_t filename[256];
+	swprintf_s(filename, L"%s%s", GRAPHIC_DIRECTORY, name);
+
 	//テクスチャー作成
 	ID3D11ShaderResourceView* tex;
-	D3DX11CreateShaderResourceViewFromFile(m_pDevice,name,&ImageLoadInfoDesc, NULL, &tex, NULL );
+	HRESULT hr;
+	hr = D3DX11CreateShaderResourceViewFromFile(m_pDevice, filename,&ImageLoadInfoDesc, NULL, &tex, NULL );
+	// 失敗
+	if (hr != S_OK)
+	{
+		// ファイルがないのことを知らせる
+		wchar_t str[256];
+		swprintf_s(str, L"%sがないんじゃぼけぇ！", name);
+		MessageBox(NULL, str, L"エラー", MB_OK);
+		// あってはならないことなので、強制終了
+		exit(0);
+	}
 	vec_tex_data[id]->SetTexData(tex);
 	vec_tex_data[id]->SetTexSize(hw);
 	return ;

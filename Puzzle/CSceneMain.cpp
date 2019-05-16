@@ -49,7 +49,11 @@ void CSceneMain::InitScene()
 	
 	Draw::LoadImageW(L"side_block.png", 10, TEX_SIZE_32);
 
-	Draw::LoadImageW(L"TestEffect.png", 11, TEX_SIZE_64);
+	Draw::LoadImageW(L"Effect1_1.png", 11, TEX_SIZE_512);
+
+	Draw::LoadImageW(L"Effect1_2.png", 12, TEX_SIZE_512);
+
+	Draw::LoadImageW(L"Effect1_3.png", 13, TEX_SIZE_512);
 
 	Draw::LoadImageW(L"next_block_space.png", 15, TEX_SIZE_64);
 
