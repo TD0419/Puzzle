@@ -1,4 +1,5 @@
 #include "DrawTexture.h"
+
 using namespace GameL;
 
 #define SAFE_RELEASE(p)      { if (p) { (p)->Release();    (p)=nullptr;  }	}
@@ -395,7 +396,18 @@ void CDrawTexture::LoadImage(const wchar_t* name,int id,TEX_SIZE hw)
 
 	//テクスチャー作成
 	ID3D11ShaderResourceView* tex;
-	D3DX11CreateShaderResourceViewFromFile(m_pDevice,name,&ImageLoadInfoDesc, NULL, &tex, NULL );
+	HRESULT hr;
+	hr = D3DX11CreateShaderResourceViewFromFile(m_pDevice,name,&ImageLoadInfoDesc, NULL, &tex, NULL );
+	// 失敗
+	if (hr != S_OK)
+	{
+		// ファイルがないのことを知らせる
+		wchar_t str[256];
+		swprintf_s(str, L"%sがないんじゃぼけぇ！", name);
+		MessageBox(NULL, str, L"エラー", MB_OK);
+		// あってはならないことなので、強制終了
+		exit(0);
+	}
 	vec_tex_data[id]->SetTexData(tex);
 	vec_tex_data[id]->SetTexSize(hw);
 	return ;
