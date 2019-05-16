@@ -6,10 +6,14 @@
 //使用するネームスペース
 using namespace GameL;
 
+CNextBlock::CNextBlock(float a)
+{
+	m_Px = MAP_X * 32.0f + MAP_SHIFT_X + a;
+}
+
 void CNextBlock::Init()
 {
-
-	m_Px = MAP_X * 32.0f + 160.0f;
+	//m_Px = MAP_X * 32.0f + MAP_SHIFT_X;
 	m_Py = MAP_SHIFT_Y;
 
 	m_freeze_block_late = 0;

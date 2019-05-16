@@ -81,7 +81,7 @@ void Cblock::Action()
 	m_fPy += m_fVy;
 
 	//ˆÊ’u‚ð32=1‚Ì‚æ‚¤‚É‚·‚é
-	int x = ((int)m_fPx - 160) / 32;
+	int x = ((int)m_fPx - 96) / 32;
 	int y = ((int)m_fPy - 192) / 32;
 
 	//A‚ð‰Ÿ‚µ‚½‚ç
