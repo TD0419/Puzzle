@@ -50,7 +50,7 @@ void CTitleBackGround::Draw()
 	// -------------------------------------------------------------
 
 	// タイトル画面と分かるように文字を描画
-	Font::StrDraw(L"Title", 0.f, 0.f, 360.f, c);
+	Font::StrDraw(L"ジュウオウ断", 0.f, 0.f, 200.f, c);
 
 	// 遷移方法を表示
 	Font::StrDraw(L"部屋を作る ZKey", 0.f, 400.f, 120.f, c);
