@@ -6,9 +6,11 @@
 //使用するネームスペース
 using namespace GameL;
 
-CNextBlock::CNextBlock(float a)
+CNextBlock::CNextBlock(float a,int b)
 {
 	m_Px = MAP_X * 32.0f + MAP_SHIFT_X + a;
+
+	m_map_LR_judg = b;
 }
 
 void CNextBlock::Init()
@@ -51,9 +53,17 @@ void CNextBlock::Action()
 		}
 		else
 		{
-			//新しく降らせる・数値も渡す
-			Cblock* p_block = new Cblock(m_block_num);
-			Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+			if (m_map_LR_judg == LEFT_MAP)
+			{
+				//新しく降らせる・数値も渡す
+				Cblock* p_block = new Cblock(m_block_num, LEFT_MAP);
+				Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+			}
+			else if (m_map_LR_judg == RIGHT_MAP)
+			{
+				Cblock* p_block_2 = new Cblock(m_block_num, RIGHT_MAP);
+				Objs::InsertObj(p_block_2, OBJ_BLOCK_2, 1);
+			}
 
 			//ブロックの数値を決める
 			m_block_num = rand() % 6;

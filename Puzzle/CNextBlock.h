@@ -10,7 +10,7 @@ using namespace GameL;
 class CNextBlock : public CObj
 {
 	public:
-		CNextBlock(float a);
+		CNextBlock(float a,int b);
 		//CNextBlock() {};
 		~CNextBlock() {};
 		void Init();
@@ -26,4 +26,5 @@ class CNextBlock : public CObj
 
 		int m_block_num;
 		int m_freeze_block_late;
+		int m_map_LR_judg;
 };

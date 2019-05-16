@@ -13,6 +13,16 @@ using namespace GameL;
 CMap::CMap(float a)
 {
 	shift_x = MAP_SHIFT_X + a;
+	nextblock_class_pos = a;
+
+	if (a < 400)
+	{
+		m_mapLR_judg = LEFT_MAP;
+	}
+	else
+	{
+		m_mapLR_judg = RIGHT_MAP;
+	}
 }
 
 void CMap::Init()
@@ -44,6 +54,8 @@ void CMap::Init()
 	freezeblock_num = 0;
 	delete_freezeblock = 0;
 
+	CNextBlock* m_nextblockclass = new CNextBlock(nextblock_class_pos,LEFT_MAP);
+	Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
 
 	//// エフェクト使用例
 	//RECT_F src, dst, dst2;
@@ -199,6 +211,12 @@ void CMap::confirmblock(int x, int y, int id)
 	//5つ先までを検索
 	for (int m_search_under = 2; m_search_under < 5; m_search_under++)
 	{
+		//1つ下または、２つ下がマップ外の時、強制的にループを抜ける
+		if (m_map[y + 1][x] == 99 || m_map[y + 2][x] == 99)
+		{
+			break;
+		}
+
 		//同じやつがあれば
 		if (m_map[y + m_search_under][x] == id)
 		{
@@ -251,7 +269,7 @@ void CMap::confirmblock(int x, int y, int id)
 				}
 			}
 
-			break;//2つ以上あった場合、消えないようにするために脱出
+			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
 
@@ -261,6 +279,12 @@ void CMap::confirmblock(int x, int y, int id)
 	//5つ先までを検索
 	for (int m_search_right = 2; m_search_right < 5; m_search_right++)
 	{
+		//1つ右または、２つ右がマップ外の時、強制的にループを抜ける
+		if (m_map[y][x + 1] == 99 || m_map[y][x + 2] == 99)
+		{
+			break;
+		}
+
 		//同じやつがあれば
 		if (m_map[y][x + m_search_right] == id)
 		{
@@ -326,7 +350,7 @@ void CMap::confirmblock(int x, int y, int id)
 				}
 			}
 
-			break;//2つ以上あった場合、消えないようにするために脱出
+			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
 
@@ -336,6 +360,12 @@ void CMap::confirmblock(int x, int y, int id)
 	//5つ先までを検索
 	for (int m_search_left = 2; m_search_left < 5; m_search_left++)
 	{
+		//1つ左または、２つ左がマップ外の時、強制的にループを抜ける
+		if (m_map[y][x - 1] == 99 || m_map[y][x - 2] == 99)
+		{
+			break;
+		}
+
 		//同じやつがあれば
 		if (m_map[y][x - m_search_left] == id)
 		{
@@ -400,7 +430,7 @@ void CMap::confirmblock(int x, int y, int id)
 				}
 			}
 
-			break;//2つ以上あった場合、消えないようにするために脱出
+			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
 
@@ -433,9 +463,6 @@ int CMap::FreezeBlock_Generate()
 		//お邪魔ブロックの数分回す
 		for (int freeze_x = 0; freeze_x < freezeblock_num; freeze_x++)
 		{
-			//お邪魔ブロックを出す
-			m_map[0][freeze_x + 1] = 7;
-
 			//下列にある一番上のブロックの位置を調べる
 			for (int y = 0; y < 18; y++)
 			{

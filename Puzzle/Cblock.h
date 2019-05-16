@@ -10,7 +10,7 @@ using namespace GameL;
 class Cblock : public CObj
 {
 	public:
-		Cblock(int num);
+		Cblock(int num,int a);
 		~Cblock() {};
 		void Init();
 		void Action();
@@ -36,4 +36,5 @@ class Cblock : public CObj
 		int m_bColornum;//ブロックの色
 		int m_elementX_storage;//ブロックの要素番号Xの保存
 		int m_elementY_storage;//ブロックの要素番号Yの保存
+		int m_map_LR_judg;
 };

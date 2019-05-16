@@ -9,7 +9,7 @@
 //使用するネームスペース
 using namespace GameL;
 
-Cblock::Cblock(int num)
+Cblock::Cblock(int num,int a)
 {
 	if (num == 100)
 	{
@@ -19,13 +19,22 @@ Cblock::Cblock(int num)
 	{
 		m_bColornum = num;
 	}
-}
 
+	m_map_LR_judg = a;
+}
 
 //イニシャライズ
 void Cblock::Init()
 {
-	m_fPx = MAP_SHIFT_X + (MAP_X * 32.0f / 2);
+	if(m_map_LR_judg == LEFT_MAP)
+	{
+		m_fPx = MAP_SHIFT_X + (MAP_X * 32.0f / 2);
+	}
+	else if (m_map_LR_judg == RIGHT_MAP)
+	{
+		m_fPx = 620.0f + MAP_SHIFT_X + (MAP_X * 32.0f / 2);
+	}
+	
 	m_fPy = MAP_SHIFT_Y;
 	m_fVx = 0.0f;
 	m_fVy = 0.0f;
@@ -45,7 +54,6 @@ void Cblock::Init()
 //アクション
 void Cblock::Action()
 {
-
 	//マップオブジェクト取得
 	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
 
@@ -138,8 +146,13 @@ void Cblock::Action()
 
 	m_fPx += m_fVx;
 
+	if (m_map_LR_judg == RIGHT_MAP)
+	{
+		x = x - 20;
+	}
+
 	//ブロックが一番下に着いたら止める
-	if ( obj_map->GetMap(x,y+1) != 0/*383.0f-32.0f*//*(float)Window::GetHeight() - 32.0f*/)
+	if ( obj_map->GetMap(x,y+1) != 0)
 	{
 		//停止したブロックの要素番号を保存する
 		m_elementX_storage = x;

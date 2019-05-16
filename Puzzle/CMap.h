@@ -2,6 +2,7 @@
 
 //使用するヘッダー
 #include "GameL/SceneObjManager.h"
+#include "CNextBlock.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -12,6 +13,9 @@ using namespace GameL;
 
 #define MAP_SHIFT_X 96.0f
 #define MAP_SHIFT_Y 192.0f
+
+#define LEFT_MAP 1000
+#define RIGHT_MAP 2000
 
 
 //オブジェクト：マップ
@@ -33,7 +37,12 @@ class CMap : public CObj
 	private:
 		int m_map[MAP_Y][MAP_X];
 		float shift_x;
+		float nextblock_class_pos;
 
 		int freezeblock_num;
 		int delete_freezeblock;
+
+		int m_mapLR_judg;
+
+		//CNextBlock* m_nextblockclass;
 };
