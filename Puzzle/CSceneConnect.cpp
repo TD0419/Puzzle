@@ -23,8 +23,8 @@ CSceneConnect::CSceneConnect(NetWork::ConnectKind connectkind)
 //初期化メソッド
 void CSceneConnect::InitScene()
 {
-	// 背景オブジェクトの代わりの画像(差し換えてください(涙))
-	//Draw::LoadImageW(L"block.png", 0, TEX_SIZE_32);
+	// 背景画像
+	Draw::LoadImageW(L"ConnectBackGround.jpg", 0, TEX_SIZE_512);
 
 	// ネットワーク接続画面背景オブジェクト
 	CConnectBackGround* pConnectBackGround = new CConnectBackGround;
