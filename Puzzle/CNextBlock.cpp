@@ -6,11 +6,11 @@
 //使用するネームスペース
 using namespace GameL;
 
-CNextBlock::CNextBlock(float a,int b)
+CNextBlock::CNextBlock(float a,CMap* pMap)
 {
 	m_Px = MAP_X * 32.0f + MAP_SHIFT_X + a;
 
-	m_map_LR_judg = b;
+	m_pMap = pMap;
 }
 
 void CNextBlock::Init()
@@ -27,13 +27,8 @@ void CNextBlock::Init()
 
 void CNextBlock::Action()
 {
-	//マップオブジェクト取得
-	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
-	//ブロックオブジェクト取得
-	Cblock* obj_block = (Cblock*)Objs::GetObj(OBJ_BLOCK);
-
 	//FreezeBlock_Generateの戻り値をとってくる
-	int freeze_time = obj_map->FreezeBlock_Generate();
+	int freeze_time = m_pMap->FreezeBlock_Generate();
 	
 	//freeze_timeがじゃなかったら
 	if (freeze_time != 0)
@@ -53,17 +48,8 @@ void CNextBlock::Action()
 		}
 		else
 		{
-			if (m_map_LR_judg == LEFT_MAP)
-			{
-				//新しく降らせる・数値も渡す
-				Cblock* p_block = new Cblock(m_block_num, LEFT_MAP);
-				Objs::InsertObj(p_block, OBJ_BLOCK, 1);
-			}
-			else if (m_map_LR_judg == RIGHT_MAP)
-			{
-				Cblock* p_block_2 = new Cblock(m_block_num, RIGHT_MAP);
-				Objs::InsertObj(p_block_2, OBJ_BLOCK_2, 1);
-			}
+			Cblock* p_block = new Cblock(m_block_num, m_Px - 192.f,this, m_pMap);
+			Objs::InsertObj(p_block, OBJ_BLOCK_2, 1);
 
 			//ブロックの数値を決める
 			m_block_num = rand() % 6;

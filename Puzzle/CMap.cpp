@@ -11,17 +11,15 @@ using namespace GameL;
 
 CMap::CMap(float a)
 {
-	shift_x = MAP_SHIFT_X + a;
+	m_shift_x = MAP_SHIFT_X + a;
 	nextblock_class_pos = a;
 
-	if (a < 400)
-	{
-		m_mapLR_judg = LEFT_MAP;
-	}
-	else
-	{
-		m_mapLR_judg = RIGHT_MAP;
-	}
+	CNextBlock* m_nextblockclass = new CNextBlock(nextblock_class_pos, this);
+	Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
+
+	//ブロックオブジェクト読み込み
+	Cblock* p_block = new Cblock(100, m_shift_x + (MAP_X * 32.0f / 2), m_nextblockclass, this);
+	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
 }
 
 void CMap::Init()
@@ -52,9 +50,6 @@ void CMap::Init()
 
 	freezeblock_num = 0;
 	delete_freezeblock = 0;
-
-	CNextBlock* m_nextblockclass = new CNextBlock(nextblock_class_pos,LEFT_MAP);
-	Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
 }
 
 void CMap::Action()
@@ -98,7 +93,7 @@ void CMap::Draw()
 		for (int x = 0; x < MAP_X; x++)
 		{
 			dst.m_top = MAP_SHIFT_Y + y * 32.0f;
-			dst.m_left = shift_x + x * 32.0f;
+			dst.m_left = m_shift_x + x * 32.0f;
 			dst.m_right = dst.m_left + 32.0f;
 			dst.m_bottom = dst.m_top + 32.0f;
 
@@ -248,7 +243,7 @@ void CMap::confirmblock(int x, int y, int id)
 			// エフェクトの表示位置
 			RECT_F dst;
 			dst.m_top = MAP_SHIFT_Y + y * 32.f;
-			dst.m_left = shift_x + x * 32.f;
+			dst.m_left = m_shift_x + x * 32.f;
 			dst.m_right = dst.m_left + 32.f;
 			dst.m_bottom = MAP_SHIFT_Y + (y + m_search_under + 1) * 32.f;
 
@@ -338,8 +333,8 @@ void CMap::confirmblock(int x, int y, int id)
 			// エフェクトの表示位置を設定
 			RECT_F dst;
 			dst.m_top = MAP_SHIFT_Y + y * 32.f;
-			dst.m_left = shift_x + x * 32.f;
-			dst.m_right = shift_x + (x + m_search_right + 1) * 32.f;
+			dst.m_left = m_shift_x + x * 32.f;
+			dst.m_right = m_shift_x + (x + m_search_right + 1) * 32.f;
 			dst.m_bottom = dst.m_top + 32.f;
 
 			// エフェクトを生成
@@ -428,8 +423,8 @@ void CMap::confirmblock(int x, int y, int id)
 			// エフェクトの表示位置を設定
 			RECT_F dst;
 			dst.m_top = MAP_SHIFT_Y + y * 32.f;
-			dst.m_left = shift_x + (x - m_search_left) * 32.f;
-			dst.m_right = shift_x + (x + 1) * 32.f;
+			dst.m_left = m_shift_x + (x - m_search_left) * 32.f;
+			dst.m_right = m_shift_x + (x + 1) * 32.f;
 			dst.m_bottom = dst.m_top + 32.f;
 
 			// エフェクトを生成
@@ -512,9 +507,9 @@ void CMap::CreateEffect(RECT_F dst, float fRotation)
 	float fTranslucentColor[4] = { 1.f,1.f,1.f,0.5f };  // 半透明
 
 	// エフェクトを表示するシステム
-	CEffectSystem* pEffectSystem = new CEffectSystem(new CExEffect(11, &src, &dst, 20, fTranslucentColor, fWhiteColor, fRotation));
+	CEffectSystem* pEffectSystem = new CEffectSystem(new CExEffect(11, &src, &dst, 15, fTranslucentColor, fWhiteColor, fRotation));
 	CSceneObjManager::InsertObj(pEffectSystem, 100, 10);
 	// 次に表示したいエフェクトを追加
 	pEffectSystem->AddNextEffect(new CExEffect(12, &src, &dst, 20, fWhiteColor, fWhiteColor, fRotation));
-	pEffectSystem->AddNextEffect(new CExEffect(13, &src, &dst, 20, fWhiteColor, fTranslucentColor, fRotation));
+	pEffectSystem->AddNextEffect(new CExEffect(13, &src, &dst, 15, fWhiteColor, fTranslucentColor, fRotation));
 }

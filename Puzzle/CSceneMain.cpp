@@ -57,12 +57,12 @@ void CSceneMain::InitScene()
 
 	Draw::LoadImageW(L"next_block_space.png", 15, TEX_SIZE_64);
 
-	//ブロックオブジェクト読み込み
-	Cblock* p_block = new Cblock(100,LEFT_MAP);
-	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+	////ブロックオブジェクト読み込み
+	//Cblock* p_block = new Cblock(100,LEFT_MAP);
+	//Objs::InsertObj(p_block, OBJ_BLOCK, 1);
 
-	Cblock* p_block_2 = new Cblock(100, RIGHT_MAP);
-	Objs::InsertObj(p_block_2, OBJ_BLOCK_2, 1);
+	//Cblock* p_block_2 = new Cblock(100, RIGHT_MAP);
+	//Objs::InsertObj(p_block_2, OBJ_BLOCK_2, 1);
 
 	//マップオブジェクト読み込み
 	CMap* p_map = new CMap(0);

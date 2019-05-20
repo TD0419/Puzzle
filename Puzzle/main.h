@@ -12,7 +12,7 @@
 //バックグラウンド色
 #define BACK_COLOR      {0.0f, 0.0f, 0.0f, 1.0f}
 
-#define FULL_SCREEN		(true)
+#define FULL_SCREEN		(false)
 
 //ウィンドウゲームタイトル名
 #define GAME_NAME L"ライブラリ"

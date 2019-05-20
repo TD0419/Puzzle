@@ -3,6 +3,9 @@
 //使用するヘッダー
 #include"GameL/SceneObjManager.h"
 
+#include "CNextBlock.h"
+#include "CMap.h"
+
 //使用するネームスペース
 using namespace GameL;
 
@@ -10,16 +13,12 @@ using namespace GameL;
 class Cblock : public CObj
 {
 	public:
-		Cblock(int num,int a);
+		Cblock(int num,float fPosX, CNextBlock* pNextBlock, CMap* pMap);
 		~Cblock() {};
 		void Init();
 		void Action();
 		void Draw();
 		bool Getblock_fall() { return m_block_fall_ok; };
-
-
-	private:
-
 
 	protected:
 		float m_fPx;//位置X
@@ -37,4 +36,7 @@ class Cblock : public CObj
 		int m_elementX_storage;//ブロックの要素番号Xの保存
 		int m_elementY_storage;//ブロックの要素番号Yの保存
 		int m_map_LR_judg;
+
+		CNextBlock* m_pNextBlock;
+		CMap*		m_pMap;
 };
