@@ -437,6 +437,19 @@ void CMap::confirmblock(int x, int y, int id)
 	freezeblock_num += delete_freezeblock / 2;//お邪魔ブロック生成の総数に消えたお邪魔ブロックの半数を追加する
 
 	delete_freezeblock = 0;
+
+	if (GetName() == OBJ_MAP)
+	{
+		((CMap*)Objs::GetObj(OBJ_MAP_PLAY2))->SetFreezeBlock_num(freezeblock_num);
+
+		freezeblock_num = 0;
+	}
+	else if (GetName() == OBJ_MAP_PLAY2)
+	{
+		((CMap*)Objs::GetObj(OBJ_MAP))->SetFreezeBlock_num(freezeblock_num);
+
+		freezeblock_num = 0;
+	}
 	
 	return;
 }
@@ -479,7 +492,7 @@ int CMap::FreezeBlock_Generate()
 			}
 
 			//お邪魔ブロック出現
-			CFreezeblock* p_fblock = new CFreezeblock(freeze_x + 1,0,8);
+			CFreezeblock* p_fblock = new CFreezeblock(freeze_x + 1,0,8,this);
 			Objs::InsertObj(p_fblock, OBJ_FREEZE_BLOCK, 1);
 
 		}

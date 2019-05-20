@@ -23,12 +23,16 @@ void CNextBlock::Init()
 
 	m_block_num = rand() % 6;
 
+	freeze_time = 0;
 }
 
 void CNextBlock::Action()
 {
-	//FreezeBlock_Generateの戻り値をとってくる
-	int freeze_time = m_pMap->FreezeBlock_Generate();
+	if (m_generate_block_flag == true)
+	{
+		//FreezeBlock_Generateの戻り値をとってくる
+		freeze_time = m_pMap->FreezeBlock_Generate();
+	}
 	
 	//freeze_timeがじゃなかったら
 	if (freeze_time != 0)
@@ -57,6 +61,8 @@ void CNextBlock::Action()
 
 			//落下フラグを変える
 			m_generate_block_flag = false;
+
+			freeze_time = 0;
 		}
 	}
 

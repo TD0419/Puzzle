@@ -5,17 +5,28 @@
 #include"GameL/WinInputs.h"
 #include"GameHead.h"
 
+
 //使用するネームスペース
 using namespace GameL;
 
 
-CFreezeblock::CFreezeblock(int x,int y,int id)
+CFreezeblock::CFreezeblock(int x,int y,int id, CMap* pMap)
 {
-	m_fPx = x * 32.0f + MAP_SHIFT_X;
+	if (pMap->GetName() == OBJ_MAP)
+	{
+		m_fPx = x * 32.0f + MAP_SHIFT_X;
+	}
+	else if (pMap->GetName() == OBJ_MAP_PLAY2)
+	{
+		m_fPx = x * 32.0f + MAP_SHIFT_X + 620.0f;
+	}
+
 	m_fPy = y * 32.0f + MAP_SHIFT_Y;
 	m_bColornum = id;
 	m_elementX_storage = x;
 	m_elementY_storage = y;
+
+	m_pMap = pMap;
 }
 
 //イニシャライズ
@@ -30,25 +41,22 @@ void CFreezeblock::Init()
 //アクション
 void CFreezeblock::Action()
 {
-	//マップオブジェクト取得
-	CMap* obj_map = (CMap*)Objs::GetObj(OBJ_MAP);
-
 	//停止なら
 	if (m_bStop_flag == true)
 	{
 		//マップのデータがブロックの消去で無くなっていたら
-		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage) == 0)
+		if (m_pMap->GetMap(m_elementX_storage, m_elementY_storage) == 0)
 		{
 			this->SetStatus(false);//ブロック消す
 		}
 
 		//下にブロックがあって、消える処理で消えていたら
-		if (obj_map->GetMap(m_elementX_storage, m_elementY_storage + 1) == 0)
+		if (m_pMap->GetMap(m_elementX_storage, m_elementY_storage + 1) == 0)
 		{
 			//停止フラグを切って、再落下させる
 			m_bStop_flag = false;
 			//m_Again_fall_on = true;
-			obj_map->SetMap(m_elementX_storage, m_elementY_storage, 0);
+			m_pMap->SetMap(m_elementX_storage, m_elementY_storage, 0);
 
 			return;
 		}
@@ -63,18 +71,18 @@ void CFreezeblock::Action()
 	//ベクトル加算
 	m_fPy += m_fVy;
 
-	int x = ((int)m_fPx - 96) / 32;
+	int x = ((int)m_fPx - m_pMap->GetShiftX()) / 32;
 	int y = ((int)m_fPy - 192) / 32;
 
 	//ブロックが一番下に着いたら止める
-	if (obj_map->GetMap(x, y + 1) != 0)
+	if (m_pMap->GetMap(x, y + 1) != 0)
 	{
 		//停止したブロックの要素番号を保存する
 		m_elementX_storage = x;
 		m_elementY_storage = y;
 
 		//マップに停止したブロックの情報を入れる
-		obj_map->SetMap(x, y, m_bColornum);
+		m_pMap->SetMap(x, y, m_bColornum);
 
 		m_bStop_flag = true;//停止フラグON
 	}
