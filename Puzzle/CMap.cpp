@@ -55,29 +55,6 @@ void CMap::Init()
 
 	CNextBlock* m_nextblockclass = new CNextBlock(nextblock_class_pos,LEFT_MAP);
 	Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
-
-	//// エフェクト使用例
-	//RECT_F src, dst, dst2;
-	//src.m_top = 0.f;
-	//src.m_left = 0.f;
-	//src.m_right = 64.f;
-	//src.m_bottom = 64.f;
-	//dst.m_top = 32.f;
-	//dst.m_left = 32.f;
-	//dst.m_right = 64.f;
-	//dst.m_bottom = 64.f;
-	//dst2.m_top = 0.f;
-	//dst2.m_left = 0.f;
-	//dst2.m_right = 96.f;
-	//dst2.m_bottom = 96.f;
-	//float c1[4] = { 1.f,1.f,1.f,0.5f };
-	//float c2[4] = { 1.f,1.f,1.f,1.f };
-	//float c3[4] = { 1.f,1.f,1.f,0.f };
-	//// エフェクトを表示するシステム
-	//CEffectSystem* pEffectSystem = new CEffectSystem(new CExEffect(11, &src, &dst, 50, c1, c2, &dst2));
-	//CSceneObjManager::InsertObj(pEffectSystem, 100, 10);
-	//// 次に表示したいエフェクトを追加
-	//pEffectSystem->AddNextEffect(new CExEffect(11, &src, &dst2, 10, c2, c3));
 }
 
 void CMap::Action()
@@ -278,7 +255,6 @@ void CMap::confirmblock(int x, int y, int id)
 			// エフェクトの生成
 			CreateEffect(dst, 90.f);
 
-			break;//2つ以上あった場合、消えないようにするために脱出
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
@@ -459,7 +435,7 @@ void CMap::confirmblock(int x, int y, int id)
 			// エフェクトを生成
 			CreateEffect(dst, 0.f);
 
-			break;//2つ以上あった場合、消えないようにするために脱出
+			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
 
