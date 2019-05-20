@@ -279,6 +279,7 @@ void CMap::confirmblock(int x, int y, int id)
 			CreateEffect(dst, 90.f);
 
 			break;//2つ以上あった場合、消えないようにするために脱出
+			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
 
