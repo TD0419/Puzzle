@@ -2,6 +2,7 @@
 
 //使用するヘッダー
 #include"GameL/SceneObjManager.h"
+#include"CMap.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -10,7 +11,7 @@ using namespace GameL;
 class CFreezeblock : public CObj
 {
 	public:
-		CFreezeblock(int x,int y,int id);
+		CFreezeblock(int x,int y,int id, CMap* pMap);
 		~CFreezeblock() {};
 		void Init();
 		void Action();
@@ -27,4 +28,6 @@ class CFreezeblock : public CObj
 		int m_bColornum;//ブロックの色
 		int m_elementX_storage;//ブロックの要素番号Xの保存
 		int m_elementY_storage;//ブロックの要素番号Yの保存
+
+		CMap* m_pMap;
 };
