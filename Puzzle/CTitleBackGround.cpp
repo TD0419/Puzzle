@@ -5,6 +5,7 @@
 #include "GameL/SceneManager.h"
 #include "GameL/SetWindow.h"
 #include "GameL/NetWork.h"
+#include "GameL/Audio.h"
 
 #include "CSceneConnect.h"
 #include "CTitleBackGround.h"
@@ -24,11 +25,15 @@ void CTitleBackGround::Action()
 	{
 		// ネットワーク接続画面へ
 		CSceneManager::SetScene(new CSceneConnect(NetWork::ConnectKind::Server));
+
+		Audio::Start(0);
 	}
 	else if (Input::GetVKeyDown('X') == true)
 	{
 		// ネットワーク接続画面へ
 		CSceneManager::SetScene(new CSceneConnect(NetWork::ConnectKind::Client));
+
+		Audio::Start(0);
 	}
 	// ----------------------------------------------------------
 }

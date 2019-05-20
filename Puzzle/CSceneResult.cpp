@@ -5,6 +5,7 @@
 //GameLで使用するヘッダー
 #include "GameL\SceneObjManager.h"
 #include "GameL\DrawTexture.h"
+#include "GameL\Audio.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -33,6 +34,8 @@ void CSceneResult::InitScene()
 	// リザルト画面背景オブジェクト
 	CResultBackGround* pResultBackGround = new CResultBackGround;
 	Objs::InsertObj(pResultBackGround, OBJ_RESULT_BACK_GROUND, 0);
+
+	Audio::LoadAudio(0, L"Asset\\Sound\\Decision.wav", EFFECT);
 }
 
 //実行中メソッド

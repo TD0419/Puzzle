@@ -4,6 +4,7 @@
 #include "GameL/SceneManager.h"
 #include "GameL/SetWindow.h"
 #include "GameL/WinInputs.h"
+#include "GameL/Audio.h"
 
 #include "CResultBackGround.h"
 #include "CSceneTitle.h"
@@ -23,6 +24,8 @@ void CResultBackGround::Action()
 	{
 		// ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
 		CSceneManager::SetScene(new CSceneTitle);
+
+		Audio::Start(0);
 	}
 	// ----------------------------------------------------------
 }

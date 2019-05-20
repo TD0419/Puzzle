@@ -1,6 +1,7 @@
 //使用するヘッダーファイル
 #include "CMap.h"
 #include "GameL/SceneObjManager.h"
+#include "GameL/Audio.h"
 #include "GameHead.h"
 
 #include "CEffect.h"
@@ -507,9 +508,12 @@ void CMap::CreateEffect(RECT_F dst, float fRotation)
 	float fTranslucentColor[4] = { 1.f,1.f,1.f,0.5f };  // 半透明
 
 	// エフェクトを表示するシステム
-	CEffectSystem* pEffectSystem = new CEffectSystem(new CExEffect(11, &src, &dst, 15, fTranslucentColor, fWhiteColor, fRotation));
+	CEffectSystem* pEffectSystem = new CEffectSystem(new CExEffect(11, &src, &dst, 10, fTranslucentColor, fWhiteColor, fRotation));
 	CSceneObjManager::InsertObj(pEffectSystem, 100, 10);
 	// 次に表示したいエフェクトを追加
-	pEffectSystem->AddNextEffect(new CExEffect(12, &src, &dst, 20, fWhiteColor, fWhiteColor, fRotation));
-	pEffectSystem->AddNextEffect(new CExEffect(13, &src, &dst, 15, fWhiteColor, fTranslucentColor, fRotation));
+	pEffectSystem->AddNextEffect(new CExEffect(12, &src, &dst, 10, fWhiteColor, fWhiteColor, fRotation));
+	pEffectSystem->AddNextEffect(new CExEffect(14, &src, &dst, 10, fWhiteColor, fWhiteColor, fRotation));
+	pEffectSystem->AddNextEffect(new CExEffect(13, &src, &dst, 10, fWhiteColor, fTranslucentColor, fRotation));
+
+	Audio::Start(0);
 }

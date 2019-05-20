@@ -14,4 +14,6 @@ class CSceneMain : public CScene
 		void InitScene();//初期化メソッド
 		void Scene();	 //実行中メソッド
 	private:
+		void LoadGraphic(); // 画像読み込み
+		void LoadAudio();	// 音楽読み込み
 };

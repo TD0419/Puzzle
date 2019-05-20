@@ -6,6 +6,7 @@
 #include "GameL\SceneObjManager.h"
 #include "GameL\DrawTexture.h"
 #include "GameL\NetWork.h"
+#include "GameL\Audio.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -29,6 +30,9 @@ void CSceneConnect::InitScene()
 	// ネットワーク接続画面背景オブジェクト
 	CConnectBackGround* pConnectBackGround = new CConnectBackGround;
 	Objs::InsertObj(pConnectBackGround, OBJ_RESULT_BACK_GROUND, 0);
+
+	Audio::LoadAudio(0, L"Asset\\Sound\\Decision.wav", EFFECT);
+	Audio::LoadAudio(1, L"Asset\\Sound\\return.wav", EFFECT);
 }
 
 //実行中メソッド

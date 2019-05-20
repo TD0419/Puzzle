@@ -5,6 +5,7 @@
 #include "GameL/WinInputs.h"
 #include "GameL/NetWork.h"
 #include "GameL/SetWindow.h"
+#include "GameL/Audio.h"
 
 #include "CSceneMain.h"
 #include "CSceneTitle.h"
@@ -53,6 +54,8 @@ void CConnectBackGround::Action()
 					NetWork::Close();
 					NetWork::Delete();
 
+					Audio::Start(1);
+
 					// タイトル画面へ
 					Scene::SetScene(new CSceneTitle());
 				}
@@ -64,6 +67,8 @@ void CConnectBackGround::Action()
 	{
 		if (Input::GetVKeyDown('Z') == true)
 		{
+			Audio::Start(0);
+
 			// ゲーム画面へ
 			Scene::SetScene(new CSceneMain());
 		}
@@ -73,6 +78,8 @@ void CConnectBackGround::Action()
 	{
 		if (Input::GetVKeyDown('Z') == true)
 		{
+			Audio::Start(0);
+
 			// タイトル画面へ
 			Scene::SetScene(new CSceneTitle());
 		}
@@ -100,8 +107,8 @@ void CConnectBackGround::Draw()
 
 	dst.m_top = 0.0f;
 	dst.m_left = 0.0f;
-	dst.m_right = dst.m_left + (float)Window::GetWidth(); // ウィンドウの幅
-	dst.m_bottom = dst.m_top + (float)Window::GetHeight();// ウィンドウの高さ
+	dst.m_right = (float)Window::GetWidth(); // ウィンドウの幅
+	dst.m_bottom = (float)Window::GetHeight();// ウィンドウの高さ
 
 	Draw::Draw(0, &dst, c, 0.f);
 	// -----------------------------------------------------------------
