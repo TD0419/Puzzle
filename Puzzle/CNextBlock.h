@@ -3,6 +3,8 @@
 //使用するヘッダーファイル
 #include "GameL/SceneObjManager.h"
 
+#include "CMap.h"
+
 //使用するネームスペース
 using namespace GameL;
 
@@ -10,7 +12,7 @@ using namespace GameL;
 class CNextBlock : public CObj
 {
 	public:
-		CNextBlock(float a,int b);
+		CNextBlock(float a, CMap* pMap);
 		//CNextBlock() {};
 		~CNextBlock() {};
 		void Init();
@@ -27,4 +29,6 @@ class CNextBlock : public CObj
 		int m_block_num;
 		int m_freeze_block_late;
 		int m_map_LR_judg;
+
+		CMap* m_pMap;
 };

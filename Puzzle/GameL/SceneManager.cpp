@@ -34,9 +34,6 @@ int				CSceneManager::m_TimeCount;
 //登録してるシーンを実行する
 void CSceneManager::GameLoop()
 {
-	m_TimeCount++;	
-	m_TimeStart=timeGetTime();
-	
 	CDirectXDeviec::ViewClear();
 	CDirectXDeviec::ViewDraw2D();
 
@@ -44,22 +41,31 @@ void CSceneManager::GameLoop()
 	SceneAction();	//シーンアクション実行
 	SceneDraw();	//シーン描画
 	
-	m_TimeEnd=timeGetTime();
-	m_Time+= m_TimeEnd - m_TimeStart;
-
 	//FPS----------------
 	// デバッグ時のみ表示
 	#ifdef _DEBUG
 	{
-		static wchar_t  c[8];
-		static float cl[4]={1.0f,1.0f,1.0f,1.0f};
-		if(m_TimeCount>100)
+		static wchar_t  c[256];
+		static float cl[4] = { 1.0f,1.0f,1.0f,1.0f };
+		m_TimeEnd = timeGetTime();
+		// 1秒経過したかどうかを調べる
+		if (timeGetTime() - m_TimeStart > 1000)
 		{
-			swprintf_s(c,L"%d",m_Time/100);
-			m_Time=0;
-			m_TimeCount=0;
+			// 1秒経過
+
+			// 情報初期化
+			m_TimeStart = timeGetTime();
+			m_Time = m_TimeCount;
+			m_TimeCount = 0;
 		}
-		CDrawFont::StrDraw(c,0,0,16,cl);
+		else
+		{
+			// 1秒未経過
+			m_TimeCount++;
+		}
+
+		swprintf_s(c, L"FPS : %lu", m_Time);
+		CDrawFont::StrDraw(c, 0, 0, 32, cl);
 	}
 	#endif
 	//-------------------

@@ -3,7 +3,6 @@
 //使用するヘッダー
 #include "GameL/SceneObjManager.h"
 #include "GameL/DrawTexture.h"
-#include "CNextBlock.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -18,6 +17,10 @@ using namespace GameL;
 #define LEFT_MAP 1000
 #define RIGHT_MAP 2000
 
+struct SendAndReceive
+{
+	// 
+};
 
 //オブジェクト：マップ
 class CMap : public CObj
@@ -34,13 +37,14 @@ class CMap : public CObj
 		void confirmblock(int x, int y, int id);
 		int FreezeBlock_Generate();
 		bool FreezeBlock_Check();
+		float GetShiftX() { return m_shift_x; }
 
 	private:
 		void CreateEffect(RECT_F dst, float fRotation);
 
 	private:
 		int m_map[MAP_Y][MAP_X];
-		float shift_x;
+		float m_shift_x;
 		float nextblock_class_pos;
 
 		int freezeblock_num;
