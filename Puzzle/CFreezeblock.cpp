@@ -71,8 +71,8 @@ void CFreezeblock::Action()
 	//ベクトル加算
 	m_fPy += m_fVy;
 
-	int x = ((int)m_fPx - m_pMap->GetShiftX()) / 32;
-	int y = ((int)m_fPy - 192) / 32;
+	int x = (int)((m_fPx - m_pMap->GetShiftX()) / 32.f);
+	int y = (int)((m_fPy - 192) / 32.f);
 
 	//ブロックが一番下に着いたら止める
 	if (m_pMap->GetMap(x, y + 1) != 0)

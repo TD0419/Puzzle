@@ -17,11 +17,6 @@ using namespace GameL;
 #define LEFT_MAP 1000
 #define RIGHT_MAP 2000
 
-struct SendAndReceive
-{
-	// 
-};
-
 //オブジェクト：マップ
 class CMap : public CObj
 {

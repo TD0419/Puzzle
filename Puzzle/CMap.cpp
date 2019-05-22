@@ -238,18 +238,18 @@ void CMap::confirmblock(int x, int y, int id)
 					m_map[y + m_del_under][x] = 0;
 
 					freezeblock_num += 1;
+
+					// エフェクトの表示位置
+					RECT_F dst;
+					dst.m_top = MAP_SHIFT_Y + y * 32.f;
+					dst.m_left = m_shift_x + x * 32.f;
+					dst.m_right = dst.m_left + 32.f;
+					dst.m_bottom = MAP_SHIFT_Y + (y + m_search_under + 1) * 32.f;
+
+					// エフェクトの生成
+					CreateEffect(dst, 90.f);
 				}
 			}
-
-			// エフェクトの表示位置
-			RECT_F dst;
-			dst.m_top = MAP_SHIFT_Y + y * 32.f;
-			dst.m_left = m_shift_x + x * 32.f;
-			dst.m_right = dst.m_left + 32.f;
-			dst.m_bottom = MAP_SHIFT_Y + (y + m_search_under + 1) * 32.f;
-
-			// エフェクトの生成
-			CreateEffect(dst, 90.f);
 
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
@@ -328,18 +328,19 @@ void CMap::confirmblock(int x, int y, int id)
 
 						freezeblock_num += 1;
 
+						// エフェクトの表示位置を設定
+						RECT_F dst;
+						dst.m_top = MAP_SHIFT_Y + y * 32.f;
+						dst.m_left = m_shift_x + x * 32.f;
+						dst.m_right = m_shift_x + (x + m_search_right + 1) * 32.f;
+						dst.m_bottom = dst.m_top + 32.f;
+
+						// エフェクトを生成
+						CreateEffect(dst, 180.f);
 					}
 				}
 			}
-			// エフェクトの表示位置を設定
-			RECT_F dst;
-			dst.m_top = MAP_SHIFT_Y + y * 32.f;
-			dst.m_left = m_shift_x + x * 32.f;
-			dst.m_right = m_shift_x + (x + m_search_right + 1) * 32.f;
-			dst.m_bottom = dst.m_top + 32.f;
-
-			// エフェクトを生成
-			CreateEffect(dst, 180.f);
+		
 
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
@@ -417,19 +418,19 @@ void CMap::confirmblock(int x, int y, int id)
 						m_map[y][x - m_del_left] = 0;
 
 						freezeblock_num += 1;
+
+						// エフェクトの表示位置を設定
+						RECT_F dst;
+						dst.m_top = MAP_SHIFT_Y + y * 32.f;
+						dst.m_left = m_shift_x + (x - m_search_left) * 32.f;
+						dst.m_right = m_shift_x + (x + 1) * 32.f;
+						dst.m_bottom = dst.m_top + 32.f;
+
+						// エフェクトを生成
+						CreateEffect(dst, 0.f);
 					}
 				}
 			}
-
-			// エフェクトの表示位置を設定
-			RECT_F dst;
-			dst.m_top = MAP_SHIFT_Y + y * 32.f;
-			dst.m_left = m_shift_x + (x - m_search_left) * 32.f;
-			dst.m_right = m_shift_x + (x + 1) * 32.f;
-			dst.m_bottom = dst.m_top + 32.f;
-
-			// エフェクトを生成
-			CreateEffect(dst, 0.f);
 
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}

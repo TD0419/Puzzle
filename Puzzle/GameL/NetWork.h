@@ -12,6 +12,21 @@ constexpr auto IP = ("127.0.0.1");
 
 namespace GameL
 {
+	// 送り合うデータ
+	struct SendData
+	{
+		SendData()
+		{
+			m_generate_block = -1;
+			m_player_operation = -1;
+		}
+
+		// 次に生成するブロック
+		int m_generate_block;
+		// プレイヤー操作(0 : 左, 1 : 右, 2: 下)
+		int m_player_operation;
+	};
+
 	// データ受け取り結果
 	enum class RecvState
 	{

@@ -55,9 +55,21 @@ void CNextBlock::Action()
 			Cblock* p_block = new Cblock(m_block_num, m_Px - 192.f,this, m_pMap);
 			Objs::InsertObj(p_block, OBJ_BLOCK_2, 1);
 
-			//ブロックの数値を決める
-			m_block_num = rand() % 6;
+			/*if (m_pMap->GetName() == OBJ_MAP)
+			{*/
+				//ブロックの数値を決める
+				m_block_num = rand() % 6;
 
+			/*	SendData send_data;
+				send_data.m_generate_block = m_block_num;
+				NetWork::Send((char*)&send_data, sizeof(send_data));
+			}
+			else
+			{
+				SendData send_data;
+				NetWork::Recv((char*)&send_data, sizeof(send_data));
+				m_block_num = send_data.m_generate_block;
+			}*/
 
 			//落下フラグを変える
 			m_generate_block_flag = false;

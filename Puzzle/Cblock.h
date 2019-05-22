@@ -20,6 +20,10 @@ class Cblock : public CObj
 		void Draw();
 		bool Getblock_fall() { return m_block_fall_ok; };
 
+	private:
+		// 移動処理
+		void Move();
+
 	protected:
 		float m_fPx;//位置X
 		float m_fPy;//位置Y
@@ -35,7 +39,6 @@ class Cblock : public CObj
 		int m_bColornum;//ブロックの色
 		int m_elementX_storage;//ブロックの要素番号Xの保存
 		int m_elementY_storage;//ブロックの要素番号Yの保存
-		int m_map_LR_judg;
 
 		CNextBlock* m_pNextBlock;
 		CMap*		m_pMap;
