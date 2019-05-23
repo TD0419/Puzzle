@@ -88,6 +88,11 @@ void Cblock::Action()
 
 		m_bStop_flag = true;//’â~ƒtƒ‰ƒOON
 		
+		if (m_pMap->GetMap(6, 0) != 0)
+		{
+			Scene::SetScene(new CSceneResult());
+		}
+		
 		//Ä—‰º‚É”½‰‚µ‚È‚¢‚æ‚¤‚É
 		if (m_Again_fall_on == false)
 		{

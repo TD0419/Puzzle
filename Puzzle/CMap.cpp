@@ -3,6 +3,7 @@
 #include "GameL/SceneObjManager.h"
 #include "GameL/Audio.h"
 #include "GameHead.h"
+#include <time.h>
 
 #include "CEffect.h"
 
@@ -50,8 +51,15 @@ void CMap::Init()
 	memcpy(m_map, map, sizeof(int) * MAP_Y * MAP_X);
 
 	freezeblock_num = 0;
-	freezeblock = 0;
+	m_enemy_freezeblock = 0;
 	delete_freezeblock = 0;
+	m_fblock_pos = 0;
+
+	//お邪魔ブロックの出現位置調整用配列を初期化
+	for (int x = 0; x < 10; x++)
+	{
+		m_fblock_num_check[x] = false;
+	}
 }
 
 void CMap::Action()
@@ -249,6 +257,7 @@ void CMap::confirmblock(int x, int y, int id)
 
 					// エフェクトの生成
 					CreateEffect(dst, 90.f);
+
 				}
 			}
 
@@ -473,14 +482,16 @@ bool CMap::FreezeBlock_Check()
 //お邪魔ブロック生成
 int CMap::FreezeBlock_Generate()
 {
+	bool a = false;
+	
 	//お邪魔ブロックが沸いた下のブロックがどこにあるか調べる用関数
 	int y_num = 0;
 
 	//お邪魔ブロックの数が０じゃなかったら
-	if (freezeblock != 0)
+	if (m_enemy_freezeblock != 0)
 	{
 		//お邪魔ブロックの数分回す
-		for (int freeze_x = 0; freeze_x < freezeblock; freeze_x++)
+		for (int freeze_x = 0; freeze_x < m_enemy_freezeblock; freeze_x++)
 		{
 			//下列にある一番上のブロックの位置を調べる
 			for (int y = 0; y < 18; y++)
@@ -497,14 +508,43 @@ int CMap::FreezeBlock_Generate()
 				}
 			}
 
+			//乱数関数を調整する
+			srand((unsigned int)time(NULL));
+			
+			//お邪魔ブロックの出現位置を決める
+			do
+			{
+				a = false;
+
+				//乱数で数値を決める
+				m_fblock_pos = rand() % 10;
+
+				//一度出たやつか調べる
+				//まだ出てないなら
+				if (m_fblock_num_check[m_fblock_pos] == false)
+				{
+					//その数字は一度出た判定にする
+					m_fblock_num_check[m_fblock_pos] = true;
+
+					a = true;
+				}
+
+			} while (a == false);
+
 			//お邪魔ブロック出現
-			CFreezeblock* p_fblock = new CFreezeblock(freeze_x + 1,0,8,this);
+			CFreezeblock* p_fblock = new CFreezeblock(m_fblock_pos + 1,0,8,this);
 			Objs::InsertObj(p_fblock, OBJ_FREEZE_BLOCK, 1);
 
 		}
 
 		//お邪魔ブロックの数をなくす
-		freezeblock = 0;
+		m_enemy_freezeblock = 0;
+
+		//お邪魔ブロックの出現位置調整用配列を初期化
+		for (int x = 0; x < 10; x++)
+		{
+			m_fblock_num_check[x] = false;
+		}
 	}
 
 	//お邪魔ブロックが落下するフレーム数を返す
