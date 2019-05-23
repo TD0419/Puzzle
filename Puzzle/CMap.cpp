@@ -50,6 +50,7 @@ void CMap::Init()
 	memcpy(m_map, map, sizeof(int) * MAP_Y * MAP_X);
 
 	freezeblock_num = 0;
+	freezeblock = 0;
 	delete_freezeblock = 0;
 }
 
@@ -440,17 +441,20 @@ void CMap::confirmblock(int x, int y, int id)
 
 	delete_freezeblock = 0;
 
-	if (GetName() == OBJ_MAP)
+	if (freezeblock_num != 0)
 	{
-		((CMap*)Objs::GetObj(OBJ_MAP_PLAY2))->SetFreezeBlock_num(freezeblock_num);
+		if (GetName() == OBJ_MAP)
+		{
+			((CMap*)Objs::GetObj(OBJ_MAP_PLAY2))->SetFreezeBlock_num(freezeblock_num);
 
-		freezeblock_num = 0;
-	}
-	else if (GetName() == OBJ_MAP_PLAY2)
-	{
-		((CMap*)Objs::GetObj(OBJ_MAP))->SetFreezeBlock_num(freezeblock_num);
+			freezeblock_num = 0;
+		}
+		else if (GetName() == OBJ_MAP_PLAY2)
+		{
+			((CMap*)Objs::GetObj(OBJ_MAP))->SetFreezeBlock_num(freezeblock_num);
 
-		freezeblock_num = 0;
+			freezeblock_num = 0;
+		}
 	}
 	
 	return;
@@ -473,10 +477,10 @@ int CMap::FreezeBlock_Generate()
 	int y_num = 0;
 
 	//お邪魔ブロックの数が０じゃなかったら
-	if (freezeblock_num != 0)
+	if (freezeblock != 0)
 	{
 		//お邪魔ブロックの数分回す
-		for (int freeze_x = 0; freeze_x < freezeblock_num; freeze_x++)
+		for (int freeze_x = 0; freeze_x < freezeblock; freeze_x++)
 		{
 			//下列にある一番上のブロックの位置を調べる
 			for (int y = 0; y < 18; y++)
@@ -500,7 +504,7 @@ int CMap::FreezeBlock_Generate()
 		}
 
 		//お邪魔ブロックの数をなくす
-		freezeblock_num = 0;
+		freezeblock = 0;
 	}
 
 	//お邪魔ブロックが落下するフレーム数を返す

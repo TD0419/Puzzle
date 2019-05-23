@@ -30,10 +30,10 @@ void CNextBlock::Action()
 {
 	if (m_generate_block_flag == true)
 	{
-		//FreezeBlock_Generate‚Ì–ß‚è’l‚ð‚Æ‚Á‚Ä‚­‚é
+		//FreezeBlock_Generate‚Ì–ß‚è’l‚ð‚Æ‚Á‚Ä‚­‚é	
 		freeze_time = m_pMap->FreezeBlock_Generate();
 	}
-	
+
 	//freeze_time‚ª‚¶‚á‚È‚©‚Á‚½‚ç
 	if (freeze_time != 0)
 	{
