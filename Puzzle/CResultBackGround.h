@@ -2,6 +2,7 @@
 
 // 使用するヘッダー
 #include"GameL/SceneObjManager.h"
+#include "CMap.h"
 
 // 使用するネームスペース
 using namespace GameL;
@@ -10,9 +11,13 @@ using namespace GameL;
 class CResultBackGround : public CObj
 {
 public:
-	CResultBackGround() {};
+	CResultBackGround(CMap* CMap);
 	~CResultBackGround() {};
 	void Init();
 	void Action();
 	void Draw();
+
+private:
+	CMap* m_pMap;
+	int m_objname;
 };

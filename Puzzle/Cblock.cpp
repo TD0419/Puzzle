@@ -90,7 +90,7 @@ void Cblock::Action()
 		
 		if (m_pMap->GetMap(6, 0) != 0)
 		{
-			Scene::SetScene(new CSceneResult());
+			Scene::SetScene(new CSceneResult(m_pMap));
 		}
 		
 		//Ä—‰º‚É”½‰‚µ‚È‚¢‚æ‚¤‚É

@@ -1,6 +1,7 @@
 #pragma once
 //使用するヘッダーファイル
 #include "GameL\SceneManager.h"
+#include "CMap.h"
 
 //使用するネームスペース
 using namespace GameL;
@@ -9,9 +10,11 @@ using namespace GameL;
 class CSceneResult : public CScene
 {
 public:
-	CSceneResult();
+	CSceneResult(CMap* CMap);
 	~CSceneResult();
 	void InitScene();//初期化メソッド
 	void Scene();	 //実行中メソッド
 private:
+
+	CMap* m_pMap;
 };

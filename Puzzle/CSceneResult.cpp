@@ -14,9 +14,9 @@ using namespace GameL;
 #include "GameHead.h"
 
 //コンストラクタ
-CSceneResult::CSceneResult()
+CSceneResult::CSceneResult(CMap* CMap)
 {
-
+	m_pMap = CMap;
 }
 
 //デストラクタ
@@ -32,7 +32,7 @@ void CSceneResult::InitScene()
 	Draw::LoadImageW(L"side_block.png", 0, TEX_SIZE_32);
 
 	// リザルト画面背景オブジェクト
-	CResultBackGround* pResultBackGround = new CResultBackGround;
+	CResultBackGround* pResultBackGround = new CResultBackGround(m_pMap);
 	Objs::InsertObj(pResultBackGround, OBJ_RESULT_BACK_GROUND, 0);
 
 	Audio::LoadAudio(0, L"Asset\\Sound\\Decision.wav", EFFECT);

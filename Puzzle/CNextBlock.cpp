@@ -2,6 +2,7 @@
 #include "GameL/DrawTexture.h"
 #include "CNextBlock.h"
 #include "GameHead.h"
+#include <time.h>
 
 //使用するネームスペース
 using namespace GameL;
@@ -21,7 +22,18 @@ void CNextBlock::Init()
 	m_freeze_block_late = 0;
 	m_generate_block_flag = false;
 
-	m_block_num = rand() % 6;
+	srand((unsigned int)time(NULL));
+
+	m_block_num = rand() % 100;
+
+	if (m_block_num < 40)
+	{
+		m_block_num = (rand() % 3) + 3;
+	}
+	else
+	{
+		m_block_num = rand() % 3;
+	}
 
 	freeze_time = 0;
 }
@@ -57,8 +69,18 @@ void CNextBlock::Action()
 
 			/*if (m_pMap->GetName() == OBJ_MAP)
 			{*/
-				//ブロックの数値を決める
-				m_block_num = rand() % 6;
+
+			//ブロックの数値を決める
+			m_block_num = rand() % 100;
+				
+			if (m_block_num < 60)
+			{
+				m_block_num = (rand() % 3) + 3;
+			}
+			else
+			{
+				m_block_num = rand() % 3;
+			}
 
 			/*	SendData send_data;
 				send_data.m_generate_block = m_block_num;

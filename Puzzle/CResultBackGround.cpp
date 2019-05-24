@@ -6,11 +6,18 @@
 #include "GameL/WinInputs.h"
 #include "GameL/Audio.h"
 
+#include "GameHead.h"
 #include "CResultBackGround.h"
 #include "CSceneTitle.h"
 
 //使用するネームスペース
 using namespace GameL;
+
+CResultBackGround::CResultBackGround(CMap* CMap)
+{
+	m_pMap = CMap;
+	m_objname = m_pMap->GetName();
+}
 
 void CResultBackGround::Init()
 {
@@ -51,4 +58,13 @@ void CResultBackGround::Draw()
 
 	// 遷移方法を表示
 	Font::StrDraw(L"Next ZKey", 0.f, 400.f, 120.f, c);
+
+	if (m_objname == OBJ_MAP)
+	{
+		Font::StrDraw(L"PLAYER2 is Win!", 0.f, 600.f, 150.f, c);
+	}
+	else if (m_objname == OBJ_MAP_PLAY2)
+	{
+		Font::StrDraw(L"PLAYER1 is Win!", 0.f, 600.f, 150.f, c);
+	}
 }

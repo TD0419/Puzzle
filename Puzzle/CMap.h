@@ -33,7 +33,7 @@ class CMap : public CObj
 		int FreezeBlock_Generate();
 		bool FreezeBlock_Check();
 		float GetShiftX() { return m_shift_x; }
-		void SetFreezeBlock_num(int a){ m_enemy_freezeblock = a; };
+		void SetFreezeBlock_num(int a){ m_enemy_freezeblock += a; };
 
 	private:
 		void CreateEffect(RECT_F dst, float fRotation);
