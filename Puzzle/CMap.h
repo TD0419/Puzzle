@@ -50,6 +50,4 @@ class CMap : public CObj
 		int m_fblock_pos;
 
 		bool m_fblock_num_check[10];
-
-		//CNextBlock* m_nextblockclass;
 };

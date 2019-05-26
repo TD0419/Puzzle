@@ -71,8 +71,65 @@ void Cblock::Action()
 		return;
 	}
 
-	// 移動させる
-	Move();
+	if (m_pMap->GetName() == OBJ_MAP)
+	{
+		char nKeyCode = 0;
+		//Aを押したら
+		// XBOXコン 使用例 if (Input::GetJoyButton(XBoxInput::UP) == true)
+		if (m_Again_fall_on == false)
+		{
+			// 押した瞬間
+			if (Input::GetVKeyDown('A') == true)
+			{
+				nKeyCode = 'A';
+			}
+			else if (Input::GetVKeyDown('D') == true)
+			{
+				nKeyCode = 'D';
+			}
+		}
+
+		if (m_Again_fall_on == false)
+		{
+			g_SendData.m_player_operation = nKeyCode;
+
+			NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
+		}
+
+		// 移動させる
+		Move((int)nKeyCode);
+	}
+	else
+	{
+		char nKeyCode = 0;
+		if (m_Again_fall_on == false)
+		{
+			while (1)
+			{
+				RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
+				if (recv_state == RecvState::Recv_Successful)
+				{
+					break;
+				}
+				else if (recv_state == RecvState::Connect_Cut)
+				{
+					// タイトルに戻る
+					Scene::SetScene(new CSceneTitle);
+
+					// 対戦相手の通信が途絶えた場合
+					MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+					return;
+				}
+			}
+
+			// 操作情報を保存
+			nKeyCode = g_SendData.m_player_operation;
+		}
+
+		// 移動させる
+		Move((int)nKeyCode);
+	}
 
 	//位置を32=1のようにする
 	m_elementX_storage = (int)((m_fPx - m_pMap->GetShiftX()) / 32.f);
@@ -158,7 +215,7 @@ void Cblock::Draw()
 }
 
 // 移動処理をまとめた関数
-void Cblock::Move()
+void Cblock::Move(int nKeyCode)
 {
 	//移動ベクトル初期化
 	m_fVy = 4.0f;
@@ -166,54 +223,30 @@ void Cblock::Move()
 
 	//Aを押したら
 	// XBOXコン 使用例 if (Input::GetJoyButton(XBoxInput::UP) == true)
-	if (Input::GetVKey('A') == true)
+	if (nKeyCode == (int)'A')
 	{
-		//長押し防止
-		//再落下時に入らないように
-		if (m_a_key_push == false && m_Again_fall_on == false)
+		//移動先が160fより小さくなるなら
+		if (m_pMap->GetMap(m_elementX_storage - 1, m_elementY_storage + 1) != 0)
 		{
-			//移動先が160fより小さくなるなら
-			if (m_pMap->GetMap(m_elementX_storage - 1, m_elementY_storage + 1) != 0)
-			{
-				;//何もしない
-			}
-			else
-			{
-				m_fVx = -32.0f;//左に動く
-
-				m_a_key_push = true;
-			}
+			;//何もしない
+		}
+		else
+		{
+			m_fVx = -32.0f;//左に動く
 		}
 	}
-	else
-	{
-		m_a_key_push = false;
-	}
 
-
-	//Dを押したら
-	if (Input::GetVKey('D') == true)
+	if (nKeyCode == (int)'D')
 	{
-		//長押し防止
-		//再落下時に入らないように
-		if (m_d_key_push == false && m_Again_fall_on == false)
+		//移動先が576fより大きくなるから
+		if (m_pMap->GetMap(m_elementX_storage + 1, m_elementY_storage + 1) != 0)
 		{
-			//移動先が576fより大きくなるから
-			if (m_pMap->GetMap(m_elementX_storage + 1, m_elementY_storage + 1) != 0)
-			{
-				;//何もしない
-			}
-			else
-			{
-				m_fVx = 32.0f;//右に動く
-
-				m_d_key_push = true;
-			}
+			;//何もしない
 		}
-	}
-	else
-	{
-		m_d_key_push = false;
+		else
+		{
+			m_fVx = 32.0f;//右に動く
+		}
 	}
 
 	//移動ベクトル加算

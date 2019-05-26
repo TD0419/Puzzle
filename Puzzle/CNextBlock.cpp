@@ -1,5 +1,7 @@
 //使用するヘッダーファイル
 #include "GameL/DrawTexture.h"
+#include "GameL/SceneManager.h"
+
 #include "CNextBlock.h"
 #include "GameHead.h"
 #include <time.h>
@@ -24,16 +26,50 @@ void CNextBlock::Init()
 
 	srand((unsigned int)time(NULL));
 
-	m_block_num = rand() % 100;
-
-	if (m_block_num < 40)
+	if (m_pMap->GetShiftX() == 96)
 	{
-		m_block_num = (rand() % 3) + 3;
+		m_block_num = rand() % 100;
+
+		if (m_block_num < 40)
+		{
+			m_block_num = (rand() % 3) + 3;
+		}
+		else
+		{
+			m_block_num = rand() % 3;
+		}
+
+		// 生成するブロック情報を送る
+		g_SendData.m_generate_block = (char)m_block_num;
+
+		NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
 	}
 	else
 	{
-		m_block_num = rand() % 3;
+		// 生成するブロック情報が来るまで待つ
+		while (1)
+		{
+			RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
+			if (recv_state == RecvState::Recv_Successful)
+			{
+				break;
+			}
+			else if (recv_state == RecvState::Connect_Cut)
+			{
+				// タイトルに戻る
+				Scene::SetScene(new CSceneTitle);
+
+				// 対戦相手の通信が途絶えた場合
+				MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+				return;
+			}
+		}
+		m_block_num = (int)g_SendData.m_generate_block;
 	}
+
+	Cblock* p_block = new Cblock(m_block_num, m_Px - 192.f, this, m_pMap);
+	Objs::InsertObj(p_block, OBJ_BLOCK_2, 1);
 
 	freeze_time = 0;
 }
@@ -67,31 +103,49 @@ void CNextBlock::Action()
 			Cblock* p_block = new Cblock(m_block_num, m_Px - 192.f,this, m_pMap);
 			Objs::InsertObj(p_block, OBJ_BLOCK_2, 1);
 
-			/*if (m_pMap->GetName() == OBJ_MAP)
-			{*/
-
-			//ブロックの数値を決める
-			m_block_num = rand() % 100;
-				
-			if (m_block_num < 60)
+			if (m_pMap->GetName() == OBJ_MAP)
 			{
-				m_block_num = (rand() % 3) + 3;
+				//ブロックの数値を決める
+				m_block_num = rand() % 100;
+
+				if (m_block_num < 60)
+				{
+					m_block_num = (rand() % 3) + 3;
+				}
+				else
+				{
+					m_block_num = rand() % 3;
+				}
+
+				// 生成するブロック情報を送る
+				g_SendData.m_generate_block = (char)m_block_num;
+
+				NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
 			}
 			else
 			{
-				m_block_num = rand() % 3;
-			}
+				// 生成するブロック情報が来るまで待つ
+				while (1)
+				{
+					RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
+					if (recv_state == RecvState::Recv_Successful)
+					{
+						break;
+					}
+					else if (recv_state == RecvState::Connect_Cut)
+					{
+						// タイトルに戻る
+						Scene::SetScene(new CSceneTitle);
 
-			/*	SendData send_data;
-				send_data.m_generate_block = m_block_num;
-				NetWork::Send((char*)&send_data, sizeof(send_data));
+						// 対戦相手の通信が途絶えた場合
+						MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+						return;
+					}
+				}
+
+				m_block_num = (int)g_SendData.m_generate_block;
 			}
-			else
-			{
-				SendData send_data;
-				NetWork::Recv((char*)&send_data, sizeof(send_data));
-				m_block_num = send_data.m_generate_block;
-			}*/
 
 			//落下フラグを変える
 			m_generate_block_flag = false;

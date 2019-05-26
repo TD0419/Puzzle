@@ -46,6 +46,8 @@ bool Client::Connect()
 		return false;
 	}
 
+	Sleep(1000);
+
 	// 正しくサーバーに接続できているかのテスト
 	bool bData = false;
 

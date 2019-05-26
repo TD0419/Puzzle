@@ -20,9 +20,8 @@ class Cblock : public CObj
 		void Draw();
 		bool Getblock_fall() { return m_block_fall_ok; };
 
-	private:
 		// ˆÚ“®ˆ—
-		void Move();
+		void Move(int nKey_Code);
 
 	protected:
 		float m_fPx;//ˆÊ’uX

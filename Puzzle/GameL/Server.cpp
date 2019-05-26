@@ -13,19 +13,20 @@ void Server::Init()
 
 	assert(nError == 0);
 
-	// ソケットの作成
-	m_ServerSocket = socket(AF_INET, SOCK_STREAM, 0);
-
 	// ソケット設定
 	struct sockaddr_in addr;
 	memset(&addr, 0x00, sizeof(addr));
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(PORT);
 	addr.sin_addr.S_un.S_addr = INADDR_ANY;
+
+	// ソケットの作成
+	m_ServerSocket = socket(AF_INET, SOCK_STREAM, 0);
+
 	bind(m_ServerSocket, (struct sockaddr*)&addr, sizeof(addr));
 
 	// TCPクライアントからの接続要求を待てる状態にする
-	listen(m_ServerSocket, 1);
+	listen(m_ServerSocket, 10);
 
 	// ノンブロッキングモードにする
 	u_long val = 1;

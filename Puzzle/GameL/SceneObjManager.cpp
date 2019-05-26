@@ -85,7 +85,7 @@ void CSceneObjManager:: InsertObj(CObj* obj,int name,unsigned int prio)
 
 	//ÉfÅ[É^ìoò^
 	unique_ptr<CObj> ptr_obj(obj);
-	m_ListData->push_front(move(ptr_obj));
+	m_ListData->push_back(move(ptr_obj));
 
 	obj->SetPrio(prio);
 

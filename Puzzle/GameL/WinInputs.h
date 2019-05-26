@@ -26,13 +26,15 @@ namespace GameL
 	{
 		public:
 			static bool WmInput(HWND hWnd,UINT* uMsg, LPARAM* lParam);// ウィンドウプロジーシャーコールバック関数登録用
+			// キーを押したかどうか
 			static bool GetVKey(int v_key);
-			static bool GetVKeyDown(int v_key);						  // キーを押していない状態から押した時のキー入力を取得
+			// キーを押していない状態から押した時のキー入力を取得
+			static bool GetVKeyDown(int v_key);
 			static bool GetJoyButton(XBoxInput xBoxButton);
-			static bool GetJoyButtonDown(XBoxInput xBoxButton);		  // キーを押していない
+			static bool GetJoyButtonDown(XBoxInput xBoxButton);
 			static bool GetMouButtonL();
 			static bool GetMouButtonR();
-			static void Update();									
+			static void Update();
 
 			static int GetPosX();
 			static int GetPosY();
@@ -44,6 +46,7 @@ namespace GameL
 			static int   m_x,m_y;		//マウス座標
 			static bool  m_ButtonL;		//マウスクリック
 			static bool  m_ButtonR;
-			static bool m_KeyCode[256]; // キーコード配列(押しっぱなしを検出する用)
+			static bool m_KeyCode[256];		// キーコード配列(押しっぱなしを検出する用)
+			static bool m_KeyCodeDown[256]; // キーコード配列(押されたかどうかを検出する用)
 	}Input;
 };

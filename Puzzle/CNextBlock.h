@@ -28,7 +28,6 @@ class CNextBlock : public CObj
 
 		int m_block_num;
 		int m_freeze_block_late;
-		int m_map_LR_judg;
 		int freeze_time;
 
 		CMap* m_pMap;

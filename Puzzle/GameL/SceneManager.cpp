@@ -40,6 +40,8 @@ void CSceneManager::GameLoop()
 	Swap();			//シーン切り替え
 	SceneAction();	//シーンアクション実行
 	SceneDraw();	//シーン描画
+
+	Input::Update(); // 入力情報更新
 	
 	//FPS----------------
 	// デバッグ時のみ表示

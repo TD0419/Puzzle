@@ -2,6 +2,8 @@
 
 using namespace GameL;
 
+SendData g_SendData;
+
 NetWorkStandard* NetWork::m_NetWork = 0;
 NetWork::ConnectKind NetWork::m_ConnectKind;
 

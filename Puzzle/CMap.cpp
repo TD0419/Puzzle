@@ -20,8 +20,8 @@ CMap::CMap(float a)
 	Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
 
 	//ブロックオブジェクト読み込み
-	Cblock* p_block = new Cblock(100, m_shift_x + (MAP_X * 32.0f / 2), m_nextblockclass, this);
-	Objs::InsertObj(p_block, OBJ_BLOCK, 1);
+	/*Cblock* p_block = new Cblock(100, m_shift_x + (MAP_X * 32.0f / 2), m_nextblockclass, this);
+	Objs::InsertObj(p_block, OBJ_BLOCK, 1);*/
 }
 
 void CMap::Init()
@@ -64,25 +64,7 @@ void CMap::Init()
 
 void CMap::Action()
 {
-	//// TCPでのデータの受け渡し方法の例
-	//if (NetWork::GetConnectKind() == NetWork::ConnectKind::Server)
-	//{
-	//	int data = 100;
-	//	NetWork::Send((char*)&data, sizeof(data));
-	//}
-	//else if(NetWork::GetConnectKind() == NetWork::ConnectKind::Client)
-	//{
-	//	int data = 0;
-	//	RecvState State = NetWork::Recv((char*)&data, sizeof(data));
-
-	//	// 切断されていないかの確認
-	//	if (State == RecvState::Connect_Cut)
-	//	{
-	//		// 切断された
-	//		// タイトルに戻す
-	//		Scene::SetScene(new CSceneTitle);
-	//	}
-	//}
+	
 }
 
 void CMap::Draw()

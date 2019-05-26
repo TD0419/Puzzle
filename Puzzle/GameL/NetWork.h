@@ -8,7 +8,7 @@
 #pragma comment(lib, "ws2_32.lib")
 
 constexpr auto PORT = (12345);
-constexpr auto IP = ("127.0.0.1");
+constexpr auto IP = ("192.168.2.103");
 
 namespace GameL
 {
@@ -17,15 +17,18 @@ namespace GameL
 	{
 		SendData()
 		{
-			m_generate_block = -1;
-			m_player_operation = -1;
+			m_generate_block = (char)-1;
+			m_player_operation = (char)-1;
 		}
 
 		// 次に生成するブロック
-		int m_generate_block;
-		// プレイヤー操作(0 : 左, 1 : 右, 2: 下)
-		int m_player_operation;
+		char m_generate_block;
+		// プレイヤー操作(キー情報が入る)
+		char m_player_operation;
 	};
+
+	// サーバーとネットワークのデータを送りあう用の変数
+	static SendData g_SendData;
 
 	// データ受け取り結果
 	enum class RecvState

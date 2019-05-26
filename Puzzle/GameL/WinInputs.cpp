@@ -7,6 +7,7 @@ int   CWinInputs::m_x,CWinInputs::m_y;		//マウス座標
 bool  CWinInputs::m_ButtonL;				//マウスクリック
 bool  CWinInputs::m_ButtonR;
 bool  CWinInputs::m_KeyCode[KEYCODE_MAX];	//キーコード配列
+bool  CWinInputs::m_KeyCodeDown[KEYCODE_MAX];
 
 void CWinInputs::Init()
 {
@@ -15,6 +16,7 @@ void CWinInputs::Init()
 	m_ButtonL=false;
 	m_ButtonR=false;
 	memset(m_KeyCode,0x00,sizeof(m_KeyCode));
+	memset(m_KeyCodeDown, 0x00, sizeof(m_KeyCodeDown));
 }
 
 bool CWinInputs::WmInput(HWND hWnd,UINT* uMsg, LPARAM* lParam)
@@ -49,30 +51,18 @@ bool CWinInputs::WmInput(HWND hWnd,UINT* uMsg, LPARAM* lParam)
 bool CWinInputs::GetVKey(int v_key)
 {	
 	if (GetAsyncKeyState(v_key))
+	{
+		m_KeyCode[v_key] = true;
 		return true;
+	}
 	else
+	{
+		m_KeyCode[v_key] = false;
 		return false;
+	}
 	
 	return false;
 }
-
-// 注意----------------------------------------------------------------------
-// GetVKeyDown関数は連続で同じキーを調べてしまうと、最初の処理は正しく動くが、
-// その次からの処理は、押しっぱなし判定をされて正しく動かないこの仕様で
-// 問題があれば、作り直します。
-/* (例)
-	   Zキーを押した瞬間
-	   if(GetVKeyDown('Z') == true)
-	   {
-			// ここに入る(正しい処理);
-	   }
-
-	   if(GetVKeyDown('Z') == true)
-	   {
-			// ここに入らない(正しくない処理、押しっぱなし判定をされている);
-	   }
-*/
-// --------------------------------------------------------------------------
 
 // キーを押していない状態から押した時のキー入力を取得
 // 引数1 int   : 調べたいキー
@@ -87,22 +77,10 @@ bool CWinInputs::GetVKeyDown(int v_key)
 		// 押されていない
 		return false;
 	}
-	else
-	{
-		// まだキーが押されていない
-		if (m_KeyCode[v_key] == false)
-		{
-			m_KeyCode[v_key] = true;
 
-			// 押した瞬間
-			return true;
-		}
-		else
-		{
-			// 押しっぱなし
-			return false;
-		}
-	}
+	m_KeyCode[v_key] = true;
+	// 押しっぱなしまたは、押した瞬間
+	return !(m_KeyCodeDown[v_key]);
 }
 
 bool CWinInputs::GetMouButtonL()
@@ -186,7 +164,7 @@ bool CWinInputs::GetJoyButton(XBoxInput xBoxButton)
 
 // xBoxのジョイコンのボタン入力を取得する
 // 引数1 XBoxInput : 入力を確認したいボタン 
-// 戻り値 bool	   : 押されているかどうかを返す false : 押されていない true : 押されている
+// 戻り値 bool	   : 押されているかどうかを返す false : 押されていない、または押しっぱなし true : 押した瞬間
 bool CWinInputs::GetJoyButtonDown(XBoxInput xBoxButton)
 {
 	// キーが押されているか確認
@@ -199,18 +177,18 @@ bool CWinInputs::GetJoyButtonDown(XBoxInput xBoxButton)
 	}
 	else
 	{
-		// まだキーが押されていない
-		if (m_KeyCode[(int)xBoxButton] == false)
-		{
-			m_KeyCode[(int)xBoxButton] = true;
+		m_KeyCode[(int)xBoxButton] = true;
 
-			// 押した瞬間
-			return true;
-		}
-		else
-		{
-			// 押しっぱなし
-			return false;
-		}
+		// 押しっぱなしまたは、押した瞬間
+		return !(m_KeyCodeDown[(int)xBoxButton]);
+	}
+}
+
+// キー入力情報更新する(押しっぱなし、押した瞬間を分けるため)
+void CWinInputs::Update()
+{
+	for (int i = 0; i < 256; i++)
+	{
+		m_KeyCodeDown[i] = m_KeyCode[i];
 	}
 }
