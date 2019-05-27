@@ -15,7 +15,8 @@ using namespace GameL;
 
 void CTitleBackGround::Init()
 {
-
+	// 文字テクスチャを作成
+	Font::SetStrTex((wchar_t*)L"ジュウオウ断部屋を作る ZKeyに入X");
 }
 
 void CTitleBackGround::Action()

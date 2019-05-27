@@ -89,6 +89,12 @@ void CMap::Draw()
 			dst.m_right = dst.m_left + 32.0f;
 			dst.m_bottom = dst.m_top + 32.0f;
 
+			// ’B‚µ‚Ä‚Í‚¢‚¯‚È‚¢êŠ‚É~‚ğ’u‚­
+			if (y == 0 && x == 6)
+			{
+				Draw::Draw(16, &src, &dst, c, 0.f);
+			}
+
 			if (m_map[y][x] == 99)
 			{
 				Draw::Draw(10, &src, &dst, c, 0.0f);

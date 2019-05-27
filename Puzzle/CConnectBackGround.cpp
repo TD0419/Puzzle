@@ -11,17 +11,19 @@
 #include "CSceneTitle.h"
 #include "CConnectBackGround.h"
 
+#include <time.h>
+
 //使用するネームスペース
 using namespace GameL;
 
 void CConnectBackGround::Init()
 {
 	// 文字テクスチャを作成
-	Font::SetStrTex((wchar_t*)L"接続中.マッチングしまた入れる部屋がありせんZKeyでTitleに戻");
+	Font::SetStrTex((wchar_t*)L"接続中.マッチングしまた入れる部屋がありせんZKeyでTitleに戻対戦 秒");
 
 	m_ConnectState = In_Connection;
 	m_nFontAnimationFrame = 0;
-	m_nGameStartTime = (DWORD)0;
+	m_nGameStartTime = (unsigned int)0;
 }
 
 void CConnectBackGround::Action()
@@ -39,7 +41,8 @@ void CConnectBackGround::Action()
 				while (1)
 				{
 					// ゲームが始まるまでの時間(待ち時間を付ける)
-					m_nGameStartTime = timeGetTime() + (DWORD)5000;
+					// これによって開始時間を同期させる
+					m_nGameStartTime = (unsigned int)time(NULL) + (unsigned int)5;
 
 					if (NetWork::Send((char*)&m_nGameStartTime, sizeof(m_nGameStartTime))
 						== true)
@@ -52,6 +55,7 @@ void CConnectBackGround::Action()
 			{
 				while (1)
 				{
+					// ゲームが始まるまでの時間を受け取る
 					if (NetWork::Recv((char*)&m_nGameStartTime, sizeof(m_nGameStartTime))
 						== RecvState::Recv_Successful)
 					{
@@ -92,8 +96,8 @@ void CConnectBackGround::Action()
 	// 接続完了後の処理
 	else if (m_ConnectState == Connection_Successful)
 	{
-		// 
-		if (m_nGameStartTime / (DWORD)1000 <= timeGetTime() / (DWORD)1000)
+		// 残り時間が0秒になったら
+		if (m_nGameStartTime <= time(NULL))
 		{
 			// ゲーム画面へ
 			Scene::SetScene(new CSceneMain());
@@ -158,15 +162,16 @@ void CConnectBackGround::Draw()
 		// 接続完了したときに表示するメッセージ
 		Font::StrDraw(L"マッチングしました", 100.f, 400.f, 60.f, c);
 
-		DWORD nTime = m_nGameStartTime - timeGetTime();
+		unsigned int nTime = m_nGameStartTime - time(NULL);
 		wchar_t szGameStartTime[256];
-		swprintf_s(szGameStartTime, L"対戦まで %lu秒", nTime / 1000);
+		swprintf_s(szGameStartTime, L"対戦まで %u秒", nTime);
 		Font::StrDraw(szGameStartTime, 100.f, 600.f, 80.f, c);
 	}
 	else if (m_ConnectState == Connection_failure)
 	{
 		// サーバーが起動されていない時にクライアントを立ち上げてしまった場合、
 		Font::StrDraw(L"入れる部屋がありません", 100.f, 200.f, 60.f, c);
-		Font::StrDraw(L"Z KeyでTitleに戻る", 100.f, 400.f, 60.f, c);
+		Font::StrDraw(L"Titleに戻ってください", 100.f, 400.f, 60.f, c);
+		Font::StrDraw(L"Z KeyでTitleに戻る", 100.f, 600.f, 60.f, c);
 	}
 }

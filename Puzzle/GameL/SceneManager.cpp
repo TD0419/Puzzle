@@ -142,7 +142,7 @@ void CSceneManager::Swap()
 		CSceneObjManager::ListDeleteSceneObj();
 		CDrawTexture::DeleteImage(); 
 		CAudio::DeleteAudio();
-		//CDrawFont::ListDelete();
+		CDrawFont::ListDelete();
 		SAFE_DELETE(m_Scene);
 	}
 

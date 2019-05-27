@@ -92,6 +92,8 @@ void CSceneMain::LoadGraphic()
 	Draw::LoadImageW(L"Effect1_4.png", 14, TEX_SIZE_512);
 
 	Draw::LoadImageW(L"next_block_space.png", 15, TEX_SIZE_64);
+
+	Draw::LoadImageW(L"Cross.png", 16, TEX_SIZE_32);
 }
 
 // âπäyì«Ç›çûÇ›

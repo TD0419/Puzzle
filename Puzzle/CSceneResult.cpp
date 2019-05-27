@@ -28,8 +28,8 @@ CSceneResult::~CSceneResult()
 //初期化メソッド
 void CSceneResult::InitScene()
 {
-	// 背景オブジェクトの代わりの画像(差し換えてください(涙))
-	Draw::LoadImageW(L"side_block.png", 0, TEX_SIZE_32);
+	// 背景画像
+	Draw::LoadImageW(L"Result.jpg", 0, TEX_SIZE_512);
 
 	// リザルト画面背景オブジェクト
 	CResultBackGround* pResultBackGround = new CResultBackGround(m_pMap);
