@@ -21,6 +21,7 @@ void CConnectBackGround::Init()
 
 	m_ConnectState = In_Connection;
 	m_nFontAnimationFrame = 0;
+	m_nGameStartTime = (DWORD)0;
 }
 
 void CConnectBackGround::Action()
@@ -32,6 +33,32 @@ void CConnectBackGround::Action()
 		{
 			// 接続成功
 			m_ConnectState = Connection_Successful;
+
+			if (NetWork::GetConnectKind() == NetWork::ConnectKind::Server)
+			{
+				while (1)
+				{
+					// ゲームが始まるまでの時間(待ち時間を付ける)
+					m_nGameStartTime = timeGetTime() + (DWORD)5000;
+
+					if (NetWork::Send((char*)&m_nGameStartTime, sizeof(m_nGameStartTime))
+						== true)
+					{
+						break;
+					}
+				}
+			}
+			else
+			{
+				while (1)
+				{
+					if (NetWork::Recv((char*)&m_nGameStartTime, sizeof(m_nGameStartTime))
+						== RecvState::Recv_Successful)
+					{
+						break;
+					}
+				}
+			}
 		}
 		else
 		{
@@ -65,10 +92,9 @@ void CConnectBackGround::Action()
 	// 接続完了後の処理
 	else if (m_ConnectState == Connection_Successful)
 	{
-		if (Input::GetVKeyDown('Z') == true)
+		// 
+		if (m_nGameStartTime / (DWORD)1000 <= timeGetTime() / (DWORD)1000)
 		{
-			Audio::Start(0);
-
 			// ゲーム画面へ
 			Scene::SetScene(new CSceneMain());
 		}
@@ -99,7 +125,7 @@ void CConnectBackGround::Action()
 
 void CConnectBackGround::Draw()
 {
-	// テスト用の背景描画(差し換えてください)---------------------------
+	// 背景描画
 	//カラー情報
 	float c[4] = { 1.0f,1.0f,1.0f,1.0f };
 
@@ -111,7 +137,6 @@ void CConnectBackGround::Draw()
 	dst.m_bottom = (float)Window::GetHeight();// ウィンドウの高さ
 
 	Draw::Draw(0, &dst, c, 0.f);
-	// -----------------------------------------------------------------
 
 	if (m_ConnectState == In_Connection)
 	{
@@ -132,6 +157,11 @@ void CConnectBackGround::Draw()
 	{
 		// 接続完了したときに表示するメッセージ
 		Font::StrDraw(L"マッチングしました", 100.f, 400.f, 60.f, c);
+
+		DWORD nTime = m_nGameStartTime - timeGetTime();
+		wchar_t szGameStartTime[256];
+		swprintf_s(szGameStartTime, L"対戦まで %lu秒", nTime / 1000);
+		Font::StrDraw(szGameStartTime, 100.f, 600.f, 80.f, c);
 	}
 	else if (m_ConnectState == Connection_failure)
 	{

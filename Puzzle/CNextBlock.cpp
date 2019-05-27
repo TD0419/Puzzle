@@ -18,13 +18,20 @@ CNextBlock::CNextBlock(float a,CMap* pMap)
 
 void CNextBlock::Init()
 {
-	//m_Px = MAP_X * 32.0f + MAP_SHIFT_X;
 	m_Py = MAP_SHIFT_Y;
 
 	m_freeze_block_late = 0;
 	m_generate_block_flag = false;
 
-	srand((unsigned int)time(NULL));
+	// —”‚ð•Ï‚¦‚é
+	if (NetWork::GetConnectKind() == NetWork::ConnectKind::Server)
+	{
+		srand((unsigned int)time(NULL));
+	}
+	else
+	{
+		srand((unsigned int)(time(NULL) + (DWORD)1));
+	}
 
 	if (m_pMap->GetShiftX() == 96)
 	{

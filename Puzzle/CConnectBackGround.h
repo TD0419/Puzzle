@@ -26,4 +26,5 @@ public:
 private:
 	ConnectState m_ConnectState; // ネットワークの接続状況を保存する用
 	int m_nFontAnimationFrame;	 // 文字の表示アニメーション管理
+	DWORD m_nGameStartTime;		 // ゲーム開始時間
 };

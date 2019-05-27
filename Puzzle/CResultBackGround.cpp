@@ -21,7 +21,8 @@ CResultBackGround::CResultBackGround(CMap* CMap)
 
 void CResultBackGround::Init()
 {
-
+	// 文字テクスチャを作成
+	Font::SetStrTex((wchar_t*)L"ResultNx ZKeyPLAYE1Win!2");
 }
 
 void CResultBackGround::Action()
