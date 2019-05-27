@@ -97,6 +97,11 @@ void CSceneMain::LoadGraphic()
 // âπäyì«Ç›çûÇ›
 void CSceneMain::LoadAudio()
 {
-	Audio::LoadAudio(0, L"Asset\\Sound\\Effect_se.wav", EFFECT);
+	Audio::LoadAudio(0, L"Effect_SE.wav", EFFECT);
 	Audio::Volume(-0.8f, 0);
+
+	Audio::LoadAudio(1, L"Game_BGM.wav", BACK_MUSIC);
+
+	// ÉQÅ[ÉÄBGMÇó¨Ç∑
+	Audio::Start(1);
 }

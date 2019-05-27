@@ -35,7 +35,12 @@ void CSceneTitle::InitScene()
 	CTitleBackGround* pTitleBackGround = new CTitleBackGround;
 	Objs::InsertObj(pTitleBackGround, OBJ_TITLE_BACK_GROUND, 0);
 
-	Audio::LoadAudio(0, L"Asset\\Sound\\Decision.wav", EFFECT);
+	Audio::LoadAudio(0, L"Decision_SE.wav", EFFECT);
+	
+	Audio::LoadAudio(1, L"Title_BGM.wav", BACK_MUSIC);
+
+	// タイトルBGMを流す
+	Audio::Start(1);
 }
 
 //実行中メソッド

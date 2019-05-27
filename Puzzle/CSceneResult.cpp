@@ -35,7 +35,12 @@ void CSceneResult::InitScene()
 	CResultBackGround* pResultBackGround = new CResultBackGround(m_pMap);
 	Objs::InsertObj(pResultBackGround, OBJ_RESULT_BACK_GROUND, 0);
 
-	Audio::LoadAudio(0, L"Asset\\Sound\\Decision.wav", EFFECT);
+	Audio::LoadAudio(0, L"Decision_SE.wav", EFFECT);
+
+	Audio::LoadAudio(1, L"Result_BGM.wav", BACK_MUSIC);
+
+	// リザルトBGMを流す
+	Audio::Start(1);
 }
 
 //実行中メソッド

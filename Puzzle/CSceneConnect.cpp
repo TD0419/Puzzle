@@ -31,8 +31,13 @@ void CSceneConnect::InitScene()
 	CConnectBackGround* pConnectBackGround = new CConnectBackGround;
 	Objs::InsertObj(pConnectBackGround, OBJ_RESULT_BACK_GROUND, 0);
 
-	Audio::LoadAudio(0, L"Asset\\Sound\\Decision.wav", EFFECT);
-	Audio::LoadAudio(1, L"Asset\\Sound\\return.wav", EFFECT);
+	Audio::LoadAudio(0, L"Decision_SE.wav", EFFECT);
+	Audio::LoadAudio(1, L"return_SE.wav", EFFECT);
+
+	Audio::LoadAudio(2, L"Connect_BGM.wav", BACK_MUSIC);
+
+	// ネットワーク接続画面BGMを流す
+	Audio::Start(2);
 }
 
 //実行中メソッド

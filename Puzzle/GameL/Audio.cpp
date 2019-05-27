@@ -4,6 +4,10 @@
 #define HRESULT_CHECK(hr) if(FAILED(hr)){ _asm{int 3} }	//簡単なエラーチェックマクロ
 #define SAFE_RESET(p){ if (p) { (p).reset(nullptr);}  }
 
+// サウンドデータが入っているディレクトリを指定
+// (ここで指定することでわざわざ全てのディレクトリを書かなくてもよくなる)
+#define SOUND_DIRECTORY (L"Asset\\Sound\\")
+
 using namespace GameL;
 
 IXAudio2*						CAudio::m_pXAudio2;			//XAudio2オブジェクト
@@ -243,10 +247,12 @@ void CAudio::LoadAudio(int id ,const wchar_t* name,SOUND_TYPE type)
 	//サウンドタイプセット
 	m_AudioData[id]->m_type=type;
 	
-
+	// ディレクトリ情報を追加する
+	wchar_t filename[256];
+	swprintf_s(filename, L"%s%s", SOUND_DIRECTORY, name);
 
 	//waveファイルのメモリ内に展開
-	ifstream ifs(name,ios::in | ios::binary);
+	ifstream ifs(filename,ios::in | ios::binary);
 	if(!ifs)	return;
 
 	unsigned int Size = 0;
