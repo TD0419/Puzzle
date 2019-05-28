@@ -162,7 +162,7 @@ void CConnectBackGround::Draw()
 		// 接続完了したときに表示するメッセージ
 		Font::StrDraw(L"マッチングしました", 100.f, 400.f, 60.f, c);
 
-		unsigned int nTime = m_nGameStartTime - time(NULL);
+		unsigned int nTime = m_nGameStartTime - (unsigned int)time(NULL);
 		wchar_t szGameStartTime[256];
 		swprintf_s(szGameStartTime, L"対戦まで %u秒", nTime);
 		Font::StrDraw(szGameStartTime, 100.f, 600.f, 80.f, c);
