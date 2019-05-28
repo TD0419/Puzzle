@@ -100,7 +100,6 @@ void CSceneMain::LoadGraphic()
 void CSceneMain::LoadAudio()
 {
 	Audio::LoadAudio(0, L"Effect_SE.wav", EFFECT);
-	Audio::Volume(-0.8f, 0);
 
 	Audio::LoadAudio(1, L"Game_BGM.wav", BACK_MUSIC);
 
