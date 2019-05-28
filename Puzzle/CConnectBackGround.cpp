@@ -45,7 +45,7 @@ void CConnectBackGround::Action()
 					m_nGameStartTime = (unsigned int)time(NULL) + (unsigned int)5;
 
 					if (NetWork::Send((char*)&m_nGameStartTime, sizeof(m_nGameStartTime))
-						== true)
+						== SendState::Send_Successful)
 					{
 						break;
 					}

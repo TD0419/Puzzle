@@ -30,9 +30,10 @@ void CNextBlock::Init()
 	}
 	else
 	{
-		srand((unsigned int)(time(NULL) + (DWORD)1));
+		srand((unsigned int)(time(NULL) + (unsigned int)3));
 	}
 
+	// このタイミングではGetNameでは判定できないので、GetShiftXを使用している。
 	if (m_pMap->GetShiftX() == 96)
 	{
 		m_block_num = rand() % 100;
@@ -47,32 +48,12 @@ void CNextBlock::Init()
 		}
 
 		// 生成するブロック情報を送る
-		g_SendData.m_generate_block = (char)m_block_num;
-
-		NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
+		SendNextBlock(m_block_num);
 	}
 	else
 	{
-		// 生成するブロック情報が来るまで待つ
-		while (1)
-		{
-			RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
-			if (recv_state == RecvState::Recv_Successful)
-			{
-				break;
-			}
-			else if (recv_state == RecvState::Connect_Cut)
-			{
-				// タイトルに戻る
-				Scene::SetScene(new CSceneTitle);
-
-				// 対戦相手の通信が途絶えた場合
-				MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
-
-				return;
-			}
-		}
-		m_block_num = (int)g_SendData.m_generate_block;
+		// 対戦相手の次のブロック情報を受け取る
+		m_block_num = RecvNextBlock();
 	}
 
 	Cblock* p_block = new Cblock(m_block_num, m_Px - 192.f, this, m_pMap);
@@ -125,33 +106,12 @@ void CNextBlock::Action()
 				}
 
 				// 生成するブロック情報を送る
-				g_SendData.m_generate_block = (char)m_block_num;
-
-				NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
+				SendNextBlock(m_block_num);
 			}
 			else
 			{
-				// 生成するブロック情報が来るまで待つ
-				while (1)
-				{
-					RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
-					if (recv_state == RecvState::Recv_Successful)
-					{
-						break;
-					}
-					else if (recv_state == RecvState::Connect_Cut)
-					{
-						// タイトルに戻る
-						Scene::SetScene(new CSceneTitle);
-
-						// 対戦相手の通信が途絶えた場合
-						MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
-
-						return;
-					}
-				}
-
-				m_block_num = (int)g_SendData.m_generate_block;
+				// 対戦相手の次のブロック情報を受け取る
+				m_block_num = RecvNextBlock();
 			}
 
 			//落下フラグを変える
@@ -227,4 +187,59 @@ void CNextBlock::Draw()
 	{
 		Draw::Draw(5, &src, &dst, c, 0.0f);//黄色星
 	}
+}
+
+// ネットワークを使用した、次のブロック情報を送る
+// 引数1 int : 送りたい情報
+void CNextBlock::SendNextBlock(int nNextBlock)
+{
+	g_SendData.m_generate_block = (char)nNextBlock;
+
+	// 生成するブロック情報を送る
+	while (1)
+	{
+		SendState send_state = NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
+
+		if (send_state == SendState::Send_Successful)
+		{
+			return;
+		}
+		else if (send_state == SendState::Connect_Cut)
+		{
+			// タイトルに戻る
+			Scene::SetScene(new CSceneTitle);
+
+			// 対戦相手の通信が途絶えた場合
+			MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+			return;
+		}
+	}
+}
+
+// ネットワークを使用した、次のブロック情報を受け取る
+// 戻り値 int : 受け取ったデータを返す データがなければ、-1を返す
+int CNextBlock::RecvNextBlock()
+{
+	// 生成するブロック情報が来るまで待つ
+	while (1)
+	{
+		RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
+		if (recv_state == RecvState::Recv_Successful)
+		{
+			break;
+		}
+		else if (recv_state == RecvState::Connect_Cut)
+		{
+			// タイトルに戻る
+			Scene::SetScene(new CSceneTitle);
+
+			// 対戦相手の通信が途絶えた場合
+			MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+			return -1;
+		}
+	}
+
+	return (int)g_SendData.m_generate_block;
 }

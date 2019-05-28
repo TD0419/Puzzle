@@ -8,7 +8,7 @@
 #pragma comment(lib, "ws2_32.lib")
 
 constexpr auto PORT = (12345);
-//constexpr auto IP = ("192.168.2.102");
+//constexpr auto IP = ("192.168.2.101");
 constexpr auto IP = ("172.17.70.18");
 
 namespace GameL
@@ -31,6 +31,14 @@ namespace GameL
 	// サーバーとネットワークのデータを送りあう用の変数
 	static SendData g_SendData;
 
+	// データ送信結果
+	enum class SendState
+	{
+		Send_Successful, // 送信成功
+		Send_Middle,	// 送信中
+		Connect_Cut		// 相手との接続が切れる
+	};
+
 	// データ受け取り結果
 	enum class RecvState
 	{
@@ -45,7 +53,7 @@ namespace GameL
 	public:
 		virtual void Init() = 0;
 		virtual bool Connect() = 0;								// サーバーに接続
-		virtual bool Send(char* pData, int nDataLen) = 0;		// データを送る
+		virtual SendState Send(char* pData, int nDataLen) = 0;	// データを送る
 		virtual RecvState Recv(char* pData, int nDataLen) = 0;	// データを受け取る
 		virtual void Close() = 0;								// 接続を遮断する
 		virtual void Delete() = 0;
@@ -56,10 +64,10 @@ namespace GameL
 	{
 	public:
 		void Init();
-		bool Connect();							// クライアントに接続
-		bool Send(char* pData, int nDataLen);	// データを送る
+		bool Connect();								// クライアントに接続
+		SendState Send(char* pData, int nDataLen);	// データを送る
 		RecvState Recv(char* pData, int nDataLen);	// データを受け取る
-		void Close();							// 接続を遮断する
+		void Close();								// 接続を遮断する
 		void Delete();
 
 	private:
@@ -72,14 +80,14 @@ namespace GameL
 	{
 	public:
 		void Init();
-		bool Connect();							// サーバーに接続
-		bool Send(char* pData, int nDataLen);	// データを送る
+		bool Connect();								// サーバーに接続
+		SendState Send(char* pData, int nDataLen);	// データを送る
 		RecvState Recv(char* pData, int nDataLen);	// データを受け取る
-		void Close();							// 接続を遮断する
+		void Close();								// 接続を遮断する
 		void Delete();
 
 	private:
-		SOCKET m_Socket;						// サーバーに接続するためのソケット
+		SOCKET m_Socket;							// サーバーに接続するためのソケット
 	};
 
 	// ネットワークを管理するクラス(ネットワークを使用する際をこれを使う)
@@ -96,7 +104,7 @@ namespace GameL
 	public:
 		static void Init(ConnectKind connectkind);
 		static bool Connect();							  // 接続
-		static bool Send(char* pData, int nDataLen);	  // データを送る
+		static SendState Send(char* pData, int nDataLen);	  // データを送る
 		static RecvState Recv(char* pData, int nDataLen); // データを受け取る
 		static void Close();							  // 接続を遮断する
 		static void Delete();

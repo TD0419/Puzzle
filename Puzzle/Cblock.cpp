@@ -35,9 +35,6 @@ void Cblock::Init()
 
 	m_bStop_flag = false;
 
-	m_a_key_push = false;
-	m_d_key_push = false;
-
 	m_elementX_storage = (int)((m_fPx - m_pMap->GetShiftX()) / 32.f);
 	m_elementY_storage = (int)((m_fPy - 192.f) / 32.f);
 
@@ -93,7 +90,27 @@ void Cblock::Action()
 		{
 			g_SendData.m_player_operation = nKeyCode;
 
-			NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
+			while (1)
+			{
+				SendState send_state = NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
+				// 対戦相手のデータ受け取り成功
+				if (send_state == SendState::Send_Successful)
+				{
+					
+					break;
+				}
+				// 対戦相手の通信が途絶えた場合
+				else if (send_state == SendState::Connect_Cut)
+				{
+					// タイトルに戻る
+					Scene::SetScene(new CSceneTitle);
+
+					// 対戦相手の通信が途絶えた場合
+					MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+					return;
+				}
+			}
 		}
 
 		// 移動させる
@@ -107,10 +124,13 @@ void Cblock::Action()
 			while (1)
 			{
 				RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
+				
+				// 対戦相手のデータ受け取り成功
 				if (recv_state == RecvState::Recv_Successful)
 				{
 					break;
 				}
+				// 対戦相手の通信が途絶えた場合
 				else if (recv_state == RecvState::Connect_Cut)
 				{
 					// タイトルに戻る

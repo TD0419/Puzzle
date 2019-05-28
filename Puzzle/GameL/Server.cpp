@@ -74,16 +74,23 @@ bool Server::Connect()
 // 引数1 char* : 送りたいデータ
 // 引数2 int   : 送りたいデータの大きさ
 // 戻り値 bool : 送信成功したかどうか
-bool Server::Send(char* pData, int nDataLen)
+SendState Server::Send(char* pData, int nDataLen)
 {
 	if (send(m_ClientSocket, (const char*)pData, nDataLen, 0) > 0)
 	{
 		// データ送信成功
-		return true;
+		return SendState::Send_Successful;
 	}
 
-	// データ送信失敗
-	return false;
+	int nError = WSAGetLastError();
+	if (nError == WSAEWOULDBLOCK || nError == 0)
+	{
+		// データ受け取り中
+		return SendState::Send_Middle;
+	}
+
+	// データ受け取り失敗
+	return SendState::Connect_Cut;
 }
 
 // データを受け取る
