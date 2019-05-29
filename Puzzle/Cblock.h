@@ -30,8 +30,6 @@ class Cblock : public CObj
 		float m_fVy;//Yベクトル
 
 		bool m_bStop_flag;//ブロック停止フラグ
-		bool m_a_key_push;//aキーの長押し入力防止フラグ
-		bool m_d_key_push;//dキーの長押し入力防止フラグ
 		bool m_Again_fall_on;
 		bool m_block_fall_ok;
 

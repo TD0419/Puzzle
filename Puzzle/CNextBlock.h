@@ -21,6 +21,10 @@ class CNextBlock : public CObj
 		void Setblock_fall(bool a) { m_generate_block_flag = a; }
 
 	private:
+		void SendNextBlock(int nNextBlock); // ネットワークを使用した、次のブロック情報を送る
+		int RecvNextBlock();				// ネットワークを使用した、次のブロック情報を受け取る
+
+	private:
 		float m_Px;
 		float m_Py;
 

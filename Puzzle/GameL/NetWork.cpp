@@ -55,10 +55,10 @@ bool NetWork::Connect()
 }
 
 // データを送る
-// 引数1 char* : 送りたいデータ
-// 引数2 int   : 送りたいデータの大きさ
-// 戻り値 bool : 送信成功したかどうか
-bool NetWork::Send(char* pData, int nDataLen)
+// 引数1 char*		: 送りたいデータ
+// 引数2 int		: 送りたいデータの大きさ
+// 戻り値 SendState : 送信結果(サーバーとの接続切れもここで調べる)
+SendState NetWork::Send(char* pData, int nDataLen)
 { 
 	return m_NetWork->Send(pData, nDataLen); 
 }

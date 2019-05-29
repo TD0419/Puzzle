@@ -72,19 +72,26 @@ bool Client::Connect()
 }
 
 // データを送る
-// 引数1 char* : 送りたいデータ
-// 引数2 int   : 送りたいデータの大きさ
-// 戻り値 bool : 送信成功したかどうか
-bool Client::Send(char* pData, int nDataLen)
+// 引数1 char*		: 送りたいデータ
+// 引数2 int		: 送りたいデータの大きさ
+// 戻り値 SendState : 送信成功したかどうか
+SendState Client::Send(char* pData, int nDataLen)
 {
 	if (send(m_Socket, (const char*)pData, nDataLen, 0) > 0)
 	{
 		// 送信成功
-		return true;
+		return SendState::Send_Successful;
 	}
 
-	// 送信失敗
-	return false;
+	int nError = WSAGetLastError();
+	if (nError == WSAEWOULDBLOCK || nError == 0)
+	{
+		// データ送信中
+		return SendState::Send_Middle;
+	}
+
+	// データ送信失敗
+	return SendState::Connect_Cut;
 }
 
 // データを受け取る
