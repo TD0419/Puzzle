@@ -8,7 +8,7 @@
 #pragma comment(lib, "ws2_32.lib")
 
 constexpr auto PORT = (12345);
-//constexpr auto IP = ("192.168.2.103");
+//constexpr auto IP = ("127.0.0.1");
 constexpr auto IP = ("172.17.70.17");
 
 namespace GameL
@@ -105,14 +105,17 @@ namespace GameL
 	public:
 		static void Init(ConnectKind connectkind);
 		static bool Connect();							  // 接続
-		static SendState Send(char* pData, int nDataLen);	  // データを送る
+		static SendState Send(char* pData, int nDataLen); // データを送る
 		static RecvState Recv(char* pData, int nDataLen); // データを受け取る
 		static void Close();							  // 接続を遮断する
 		static void Delete();
 		static ConnectKind GetConnectKind() { return m_ConnectKind;  }
+		static bool GetisNetWorkConnect() { return m_isNetWorkConnect; }
+		static void NetWorkCut() { m_isNetWorkConnect = false; } // ネットワーク接続が切れた時に呼ぶ関数
 
 	private:
 		static NetWorkStandard* m_NetWork;
 		static ConnectKind m_ConnectKind;
+		static bool m_isNetWorkConnect;			// ネットワーク接続せれているかどうか
 	};
 }

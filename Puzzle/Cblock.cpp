@@ -9,8 +9,6 @@
 //使用するネームスペース
 using namespace GameL;
 
-//extern SendData g_SendData;
-
 Cblock::Cblock(int num, float fPosX, CNextBlock* pNextBlock, CMap* pMap)
 {
 	if (num == 100)
@@ -100,17 +98,22 @@ void Cblock::Action()
 				// 対戦相手の通信が途絶えた場合
 				else if (send_state == SendState::Connect_Cut)
 				{
-					// タイトルに戻る
-					Scene::SetScene(new CSceneTitle);
+					if (NetWork::GetisNetWorkConnect() == true)
+					{
+						// タイトルに戻る
+						Scene::SetScene(new CSceneTitle);
 
-					// 対戦相手の通信が途絶えた場合
-					MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+						// 対戦相手の通信が途絶えた場合
+						MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
 
+						// 接続切れフラグを立てる
+						NetWork::NetWorkCut();
+					}
 					return;
 				}
-
-				
 			}
+
+			Sleep(10);
 		}
 
 		// 移動させる
@@ -118,6 +121,7 @@ void Cblock::Action()
 	}
 	else
 	{
+		int nTime = 0;
 		char nKeyCode = 0;
 		if (m_Again_fall_on == false)
 		{
@@ -133,12 +137,17 @@ void Cblock::Action()
 				// 対戦相手の通信が途絶えた場合
 				else if (recv_state == RecvState::Connect_Cut)
 				{
-					// タイトルに戻る
-					Scene::SetScene(new CSceneTitle);
+					if (NetWork::GetisNetWorkConnect() == true)
+					{
+						// タイトルに戻る
+						Scene::SetScene(new CSceneTitle);
 
-					// 対戦相手の通信が途絶えた場合
-					MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+						// 対戦相手の通信が途絶えた場合
+						MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
 
+						// 接続切れフラグを立てる
+						NetWork::NetWorkCut();
+					}
 					return;
 				}
 			}

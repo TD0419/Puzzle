@@ -6,6 +6,7 @@ SendData g_SendData;
 
 NetWorkStandard* NetWork::m_NetWork = 0;
 NetWork::ConnectKind NetWork::m_ConnectKind;
+bool NetWork::m_isNetWorkConnect = false;
 
 // 引数1 ConnectKind : 自分がサーバー側かクライアント側か
 void NetWork::Init(ConnectKind connectkind)
@@ -51,7 +52,9 @@ void NetWork::Delete()
 // 戻り値 bool : 接続が成功したかどうか
 bool NetWork::Connect()
 {
-	return m_NetWork->Connect();
+	// 接続情報を入れる
+	m_isNetWorkConnect = m_NetWork->Connect();
+	return m_isNetWorkConnect;
 }
 
 // データを送る
@@ -60,7 +63,7 @@ bool NetWork::Connect()
 // 戻り値 SendState : 送信結果(サーバーとの接続切れもここで調べる)
 SendState NetWork::Send(char* pData, int nDataLen)
 { 
-	return m_NetWork->Send(pData, nDataLen); 
+	return m_NetWork->Send(pData, nDataLen);
 }
 
 // データを受け取る
@@ -69,7 +72,7 @@ SendState NetWork::Send(char* pData, int nDataLen)
 // 戻り値 bool : 受け取り結果(サーバーとの接続切れもここで調べる)
 RecvState NetWork::Recv(char* pData, int nDataLen)
 { 
-	return m_NetWork->Recv(pData, nDataLen); 
+	return m_NetWork->Recv(pData, nDataLen);
 }
 
 // 接続を閉じる関数を実行

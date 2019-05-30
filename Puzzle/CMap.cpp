@@ -16,14 +16,9 @@ CMap::CMap(float a)
 	nextblock_class_pos = a;
 
 	CNextBlock* m_nextblockclass = new CNextBlock(nextblock_class_pos, this);
-	/*if (a == 0)
-	{
-		Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 2);
-	}
-	else
-	{*/
-		Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
-	//}
+	
+	Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
+	
 	//ブロックオブジェクト読み込み
 	/*Cblock* p_block = new Cblock(100, m_shift_x + (MAP_X * 32.0f / 2), m_nextblockclass, this);
 	Objs::InsertObj(p_block, OBJ_BLOCK, 1);*/
@@ -520,6 +515,20 @@ int CMap::FreezeBlock_Generate()
 			//乱数関数を調整する
 			srand((unsigned int)time(NULL));
 			
+			// 応急処置
+			// お邪魔の数が11以上でも10個しか出ないようにします。
+			if (freeze_x >= 10)
+			{
+				break;
+			}
+
+			/*
+			* 注意！
+			* 下のdo while文はm_enemy_freezeblockが11以上になると
+			* m_fblock_num_check配列の中身が全てtrueになるので、
+			* 無限ループに陥ります。
+			*/
+
 			//お邪魔ブロックの出現位置を決める
 			do
 			{
