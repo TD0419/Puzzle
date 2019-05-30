@@ -62,12 +62,10 @@ void CResultBackGround::Draw()
 
 	if (m_objname == OBJ_MAP)
 	{
-		//Font::StrDraw(L"PLAYER2 is Win!", 0.f, 600.f, 150.f, c);
 		Font::StrDraw(L"You Lose!", 0.f, 600.f, 150.f, c);
 	}
 	else if (m_objname == OBJ_MAP_PLAY2)
 	{
-		//Font::StrDraw(L"PLAYER1 is Win!", 0.f, 600.f, 150.f, c);
 		Font::StrDraw(L"You Win!", 0.f, 600.f, 150.f, c);
 	}
 }

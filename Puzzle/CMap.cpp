@@ -10,15 +10,20 @@
 //使用するネームスペース
 using namespace GameL;
 
-
 CMap::CMap(float a)
 {
 	m_shift_x = MAP_SHIFT_X + a;
 	nextblock_class_pos = a;
 
 	CNextBlock* m_nextblockclass = new CNextBlock(nextblock_class_pos, this);
-	Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
-
+	/*if (a == 0)
+	{
+		Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 2);
+	}
+	else
+	{*/
+		Objs::InsertObj(m_nextblockclass, OBJ_NEXT_BLOCK, 1);
+	//}
 	//ブロックオブジェクト読み込み
 	/*Cblock* p_block = new Cblock(100, m_shift_x + (MAP_X * 32.0f / 2), m_nextblockclass, this);
 	Objs::InsertObj(p_block, OBJ_BLOCK, 1);*/
@@ -174,6 +179,9 @@ void CMap::confirmblock(int x, int y, int id)
 		return;//調べず終了
 	}
 
+	// 消すブロックの数
+	int nDeleteBlock = 0;
+
 	//置いたとこから下方向に調べる
 	//m_search_under・・・同じブロックがあるかの検索、値の設定
 	//m_del_under・・・ブロックを消すために回すfor文の変数
@@ -231,27 +239,31 @@ void CMap::confirmblock(int x, int y, int id)
 						m_map[y + m_del_under][x + 1] = 0;
 					}
 
-
 					m_map[y + m_del_under][x] = 0;
 
 					freezeblock_num += 1;
 
-					// エフェクトの表示位置
-					RECT_F dst;
-					dst.m_top = MAP_SHIFT_Y + y * 32.f;
-					dst.m_left = m_shift_x + x * 32.f;
-					dst.m_right = dst.m_left + 32.f;
-					dst.m_bottom = MAP_SHIFT_Y + (y + m_search_under + 1) * 32.f;
-
-					// エフェクトの生成
-					CreateEffect(dst, 90.f);
-
+					nDeleteBlock = m_del_under;
 				}
 			}
-
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
+
+	if (nDeleteBlock > 0)
+	{
+		// エフェクトの表示位置
+		RECT_F dst;
+		dst.m_top = MAP_SHIFT_Y + y * 32.f;
+		dst.m_left = m_shift_x + x * 32.f;
+		dst.m_right = dst.m_left + 32.f;
+		dst.m_bottom = MAP_SHIFT_Y + (y + nDeleteBlock + 1) * 32.f;
+
+		// エフェクトの生成
+		CreateEffect(dst, 90.f);
+	}
+
+	nDeleteBlock = 0;
 
 	//置いたとこから右方向に調べる
 	//m_search_right・・・同じブロックがあるかの検索、値の設定
@@ -326,23 +338,28 @@ void CMap::confirmblock(int x, int y, int id)
 
 						freezeblock_num += 1;
 
-						// エフェクトの表示位置を設定
-						RECT_F dst;
-						dst.m_top = MAP_SHIFT_Y + y * 32.f;
-						dst.m_left = m_shift_x + x * 32.f;
-						dst.m_right = m_shift_x + (x + m_search_right + 1) * 32.f;
-						dst.m_bottom = dst.m_top + 32.f;
-
-						// エフェクトを生成
-						CreateEffect(dst, 180.f);
+						nDeleteBlock = m_del_right;
 					}
 				}
 			}
-		
-
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
 	}
+
+	if (nDeleteBlock > 0)
+	{
+		// エフェクトの表示位置を設定
+		RECT_F dst;
+		dst.m_top = MAP_SHIFT_Y + y * 32.f;
+		dst.m_left = m_shift_x + x * 32.f;
+		dst.m_right = m_shift_x + (x + nDeleteBlock + 1) * 32.f;
+		dst.m_bottom = dst.m_top + 32.f;
+
+		// エフェクトを生成
+		CreateEffect(dst, 180.f);
+	}
+
+	nDeleteBlock = 0;
 
 	//置いたとこから左方向に調べる
 	//m_search_left・・・同じブロックがあるかの検索、値の設定
@@ -417,21 +434,25 @@ void CMap::confirmblock(int x, int y, int id)
 
 						freezeblock_num += 1;
 
-						// エフェクトの表示位置を設定
-						RECT_F dst;
-						dst.m_top = MAP_SHIFT_Y + y * 32.f;
-						dst.m_left = m_shift_x + (x - m_search_left) * 32.f;
-						dst.m_right = m_shift_x + (x + 1) * 32.f;
-						dst.m_bottom = dst.m_top + 32.f;
-
-						// エフェクトを生成
-						CreateEffect(dst, 0.f);
+						nDeleteBlock = m_del_left;
 					}
 				}
 			}
-
 			break;//同じ色の星型ブロックが消える条件下にあった場合、遠いほうを消えないようにするために脱出
 		}
+	}
+
+	if (nDeleteBlock > 0)
+	{
+		// エフェクトの表示位置を設定
+		RECT_F dst;
+		dst.m_top = MAP_SHIFT_Y + y * 32.f;
+		dst.m_left = m_shift_x + (x - nDeleteBlock) * 32.f;
+		dst.m_right = m_shift_x + (x + 1) * 32.f;
+		dst.m_bottom = dst.m_top + 32.f;
+
+		// エフェクトを生成
+		CreateEffect(dst, 0.f);
 	}
 
 	freezeblock_num += delete_freezeblock / 2;//お邪魔ブロック生成の総数に消えたお邪魔ブロックの半数を追加する

@@ -44,6 +44,7 @@ namespace GameL
 	{
 		Recv_Successful, // ó‚¯æ‚è¬Œ÷
 		Recv_Middle,	 // ó‚¯æ‚è’†
+		Recv_NoSend,	 // ƒf[ƒ^‚ª‘—‚ç‚ê‚Ä‚¢‚Ü‚¹‚ñ
 		Connect_Cut		 // ‘Šè‚Æ‚ÌÚ‘±‚ªØ‚ê‚é
 	};
 

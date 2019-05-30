@@ -18,7 +18,7 @@ namespace GameL
 	{
 		public:		
 			CObj();
-			virtual ~CObj(){};
+			virtual ~CObj() {}
 			virtual void Init()=0;		//イニシャライズ
 			virtual void Action()=0;	//アクション
 			virtual void Draw()=0;		//ドロー

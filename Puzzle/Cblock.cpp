@@ -9,6 +9,8 @@
 //使用するネームスペース
 using namespace GameL;
 
+//extern SendData g_SendData;
+
 Cblock::Cblock(int num, float fPosX, CNextBlock* pNextBlock, CMap* pMap)
 {
 	if (num == 100)
@@ -84,19 +86,15 @@ void Cblock::Action()
 			{
 				nKeyCode = 'D';
 			}
-		}
-
-		if (m_Again_fall_on == false)
-		{
+		
 			g_SendData.m_player_operation = nKeyCode;
 
 			while (1)
 			{
 				SendState send_state = NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
-				// 対戦相手のデータ受け取り成功
+				// 対戦相手のデータ送信成功
 				if (send_state == SendState::Send_Successful)
 				{
-					
 					break;
 				}
 				// 対戦相手の通信が途絶えた場合
@@ -110,6 +108,8 @@ void Cblock::Action()
 
 					return;
 				}
+
+				
 			}
 		}
 
@@ -126,7 +126,7 @@ void Cblock::Action()
 				RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
 				
 				// 対戦相手のデータ受け取り成功
-				if (recv_state == RecvState::Recv_Successful)
+				if (recv_state == RecvState::Recv_Successful || recv_state == RecvState::Recv_NoSend)
 				{
 					break;
 				}

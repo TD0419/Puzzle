@@ -9,6 +9,8 @@
 //使用するネームスペース
 using namespace GameL;
 
+//extern SendData g_SendData;
+
 CNextBlock::CNextBlock(float a,CMap* pMap)
 {
 	m_Px = MAP_X * 32.0f + MAP_SHIFT_X + a;
@@ -221,11 +223,12 @@ void CNextBlock::SendNextBlock(int nNextBlock)
 // 戻り値 int : 受け取ったデータを返す データがなければ、-1を返す
 int CNextBlock::RecvNextBlock()
 {
+	int nTime = 0;
 	// 生成するブロック情報が来るまで待つ
 	while (1)
 	{
 		RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
-		if (recv_state == RecvState::Recv_Successful)
+		if (recv_state == RecvState::Recv_Successful || recv_state == RecvState::Recv_NoSend)
 		{
 			break;
 		}
@@ -239,6 +242,15 @@ int CNextBlock::RecvNextBlock()
 
 			return -1;
 		}
+		/*else
+		{
+			if (nTime > 5000)
+			{
+				m_is_get_next_block = true;
+				break;
+			}
+			nTime++;
+		}*/
 	}
 
 	return (int)g_SendData.m_generate_block;

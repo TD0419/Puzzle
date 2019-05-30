@@ -99,7 +99,8 @@ SendState Server::Send(char* pData, int nDataLen)
 // 戻り値 bool : 受け取り成功したかどうか
 RecvState Server::Recv(char* pData, int nDataLen)
 {
-	if(recv(m_ClientSocket, pData, nDataLen, 0) > 0)
+	int nRecv = recv(m_ClientSocket, pData, nDataLen, 0);
+	if(nRecv > 0)
 	{
 		// データ受け取り成功
 		return RecvState::Recv_Successful;
@@ -110,6 +111,11 @@ RecvState Server::Recv(char* pData, int nDataLen)
 	{
 		// データ受け取り中
 		return RecvState::Recv_Middle;
+	}
+
+	if (nRecv == -1)
+	{
+		return RecvState::Recv_NoSend;
 	}
 
 	// データ受け取り失敗

@@ -205,7 +205,7 @@ void CEffectSystem::Action()
 		}
 
 		// 次のエフェクト表示するためにオブジェクトマネージャーに追加
-		CSceneObjManager::InsertObj(m_vecEffects[0], GetName(), GetPrio());
+		CSceneObjManager::InsertObj(m_vecEffects[0], GetName(), GetPrio() - 1);
 	}
 }
 

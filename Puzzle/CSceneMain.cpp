@@ -15,6 +15,10 @@ using namespace GameL;
 #include "GameHead.h"
 
 #include <vector>
+#include "GameL/WinInputs.h"
+#include "GameL/NetWork.h"
+
+//extern SendData g_SendData;
 
 //コンストラクタ
 CSceneMain::CSceneMain()
@@ -58,7 +62,72 @@ void CSceneMain::InitScene()
 //実行中メソッド
 void CSceneMain::Scene()
 {
-	
+	// ネットワークテスト中なので、消さないで
+	//// 押した瞬間
+	//if (Input::GetVKeyDown('A') == true)
+	//{
+	//	g_SendData.m_player_operation = 'A';
+	//}
+	//else if (Input::GetVKeyDown('D') == true)
+	//{
+	//	g_SendData.m_player_operation = 'D';
+	//}
+	//else
+	//{
+	//	g_SendData.m_player_operation = 0;
+	//}
+
+	//while (1)
+	//{
+	//	SendState send_state = NetWork::Send((char*)&g_SendData, sizeof(g_SendData));
+	//	// 対戦相手のデータ送信成功
+	//	if (send_state == SendState::Send_Successful)
+	//	{
+	//		break;
+	//	}
+	//	// 対戦相手の通信が途絶えた場合
+	//	else if (send_state == SendState::Connect_Cut)
+	//	{
+	//		// タイトルに戻る
+	//		Scene::SetScene(new CSceneTitle);
+
+	//		// 対戦相手の通信が途絶えた場合
+	//		MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+	//		return;
+	//	}
+	//}
+
+	//while (1)
+	//{
+	//	int nTime = 0;
+	//	RecvState recv_state = NetWork::Recv((char*)&g_SendData, sizeof(g_SendData));
+	//			
+	//	// 対戦相手のデータ受け取り成功
+	//	if (recv_state == RecvState::Recv_Successful || recv_state == RecvState::Recv_NoSend)
+	//	{
+	//		break;
+	//	}
+	//	// 対戦相手の通信が途絶えた場合
+	//	else if (recv_state == RecvState::Connect_Cut)
+	//	{
+	//		// タイトルに戻る
+	//		Scene::SetScene(new CSceneTitle);
+
+	//		// 対戦相手の通信が途絶えた場合
+	//		MessageBox(NULL, L"対戦相手との通信が途絶えました", L"通信エラー", MB_OK);
+
+	//		return;
+	//	}
+	//	else
+	//	{
+	//		if (nTime == 1)
+	//		{
+	//			break;
+	//		}
+	//		nTime++;
+	//	}
+	//}
 }
 
 // 画像読み込み
