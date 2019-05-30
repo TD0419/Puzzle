@@ -147,6 +147,7 @@ list< unique_ptr<CFontCharTex>>::iterator CDrawFont::SetChar(wchar_t c)
 	// ビットマップ取得
 	size = GetGlyphOutline(m_hdc, code, GGO_GRAY4_BITMAP, &GM, 0, NULL, &Mat);
 	ptr  = new BYTE[size];
+	ZeroMemory(ptr, sizeof(BYTE)*size);
 	GetGlyphOutline(m_hdc, code, GGO_GRAY4_BITMAP, &GM, size, ptr, &Mat);
 
 	//テクスチャクリエイト
@@ -177,7 +178,7 @@ list< unique_ptr<CFontCharTex>>::iterator CDrawFont::SetChar(wchar_t c)
 	int Level = 17;										// Level : α値の段階 (GGO_GRAY4_BITMAPなので17段階)
 	DWORD Alpha, Color;
 
-	FillMemory(pBits , sizeof(pBits), 0);
+	ZeroMemory(pBits , sizeof(BYTE)*64*64*4);
 	for(int y=iOfs_y; y<iOfs_y+iBmp_h; y++)
 	{
 		for(unsigned int x=iOfs_x; x<iOfs_x+GM.gmBlackBoxX; x++)
