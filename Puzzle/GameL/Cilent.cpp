@@ -30,7 +30,7 @@ bool Client::Connect()
 	struct sockaddr_in addr;
 	memset(&addr, 0x00, sizeof(addr));
 	addr.sin_family = AF_INET;				// IPv4
-	addr.sin_addr.s_addr = inet_addr(IP);	// 通信するIPアドレス
+	addr.sin_addr.S_un.S_addr = inet_addr(IP);	// 通信するIPアドレス
 	addr.sin_port = htons(PORT);			// 使用するポート設定
 
 	// ノンブロッキングモードにする

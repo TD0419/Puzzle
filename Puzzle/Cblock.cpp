@@ -247,7 +247,7 @@ void Cblock::Draw()
 void Cblock::Move(int nKeyCode)
 {
 	//ˆÚ“®ƒxƒNƒgƒ‹‰Šú‰»
-	m_fVy = 4.0f;
+	m_fVy = 3.0f;
 	m_fVx = 0.0f;
 
 	//A‚ğ‰Ÿ‚µ‚½‚ç
