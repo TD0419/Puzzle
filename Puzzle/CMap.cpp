@@ -491,6 +491,9 @@ int CMap::FreezeBlock_Generate()
 	//お邪魔ブロックが沸いた下のブロックがどこにあるか調べる用関数
 	int y_num = 0;
 
+	// ブロックを出す高さ(マップ配列基準)
+	int h_num = 0;
+
 	//お邪魔ブロックの数が０じゃなかったら
 	if (m_enemy_freezeblock != 0)
 	{
@@ -514,20 +517,19 @@ int CMap::FreezeBlock_Generate()
 
 			//乱数関数を調整する
 			srand((unsigned int)time(NULL));
-			
-			// 応急処置
-			// お邪魔の数が11以上でも10個しか出ないようにします。
-			if (freeze_x >= 10)
-			{
-				break;
-			}
 
-			/*
-			* 注意！
-			* 下のdo while文はm_enemy_freezeblockが11以上になると
-			* m_fblock_num_check配列の中身が全てtrueになるので、
-			* 無限ループに陥ります。
-			*/
+			// ブロックを出したい高さを出す(マップ配列基準)
+			h_num = -(freeze_x / 10);
+
+			// 新しい段なので、前の情報を消す
+			if (freeze_x % 10 == 0)
+			{
+				//お邪魔ブロックの出現位置調整用配列を初期化
+				for (int x = 0; x < 10; x++)
+				{
+					m_fblock_num_check[x] = false;
+				}
+			}
 
 			//お邪魔ブロックの出現位置を決める
 			do
@@ -550,19 +552,13 @@ int CMap::FreezeBlock_Generate()
 			} while (a == false);
 
 			//お邪魔ブロック出現
-			CFreezeblock* p_fblock = new CFreezeblock(m_fblock_pos + 1,0,8,this);
+			CFreezeblock* p_fblock = new CFreezeblock(m_fblock_pos + 1, h_num,8,this);
 			Objs::InsertObj(p_fblock, OBJ_FREEZE_BLOCK, 1);
 
 		}
 
 		//お邪魔ブロックの数をなくす
 		m_enemy_freezeblock = 0;
-
-		//お邪魔ブロックの出現位置調整用配列を初期化
-		for (int x = 0; x < 10; x++)
-		{
-			m_fblock_num_check[x] = false;
-		}
 	}
 
 	//お邪魔ブロックが落下するフレーム数を返す

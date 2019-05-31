@@ -85,6 +85,10 @@ void CFreezeblock::Action()
 		m_pMap->SetMap(x, y, m_bColornum);
 
 		m_bStop_flag = true;//’âŽ~ƒtƒ‰ƒOON
+
+		// ˆÊ’uC³
+		m_fPx = m_pMap->GetShiftX() + (float)m_elementX_storage * 32.f;
+		m_fPy = 192.f + (float)m_elementY_storage * 32.f;
 	}
 }
 

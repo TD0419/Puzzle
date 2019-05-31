@@ -8,8 +8,8 @@
 #pragma comment(lib, "ws2_32.lib")
 
 constexpr auto PORT = (12345);
-//constexpr auto IP = ("127.0.0.1");
-constexpr auto IP = ("172.17.70.17");
+constexpr auto IP = ("127.0.0.1");
+//constexpr auto IP = ("172.17.70.17");
 
 namespace GameL
 {

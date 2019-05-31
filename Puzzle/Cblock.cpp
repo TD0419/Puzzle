@@ -121,6 +121,7 @@ void Cblock::Action()
 	}
 	else
 	{
+		static int count;
 		int nTime = 0;
 		char nKeyCode = 0;
 		if (m_Again_fall_on == false)
@@ -149,6 +150,17 @@ void Cblock::Action()
 						NetWork::NetWorkCut();
 					}
 					return;
+				}
+				else
+				{
+					if (count == 0)
+					{
+						count++;
+					}
+					else if (nTime > 5000)
+					{
+						break;
+					}
 				}
 			}
 
@@ -188,6 +200,10 @@ void Cblock::Action()
 			//落下オッケーフラグが変わったら入れる
 			m_pNextBlock->Setblock_fall(m_block_fall_ok);
 		}
+
+		// 位置修正
+		m_fPx = m_pMap->GetShiftX() + (float)m_elementX_storage * 32.f;
+		m_fPy = 192.f + (float)m_elementY_storage * 32.f;
 	}
 }
 
